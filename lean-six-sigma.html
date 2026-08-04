@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean Six Sigma | Saranraj Ramachandran</title>
+<meta name="description" content="Lean Six Sigma domain — FMEA, takt time, and DMAIC tools, and a Lean Six Sigma adoption barriers case study by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#dmaic">DMAIC</a>
+      <a href="#cases">Case Study</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Lean Six Sigma</h1>
+      <p class="hero-tagline">Green Belt certified. DMAIC-driven process improvement and waste elimination.</p>
+      <p class="hero-summary">Beyond running DMAIC projects, I've researched why Lean Six Sigma adoption
+      actually fails in small-scale industries — the barriers matter as much as the toolkit.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Prioritize and pace the improvement</h2>
+      <div class="tools-grid">
+
+        <!-- FMEA -->
+        <article class="tool-card" id="tool-fmea">
+          <span class="capability-badge badge-red">🔴 RPN risk ranking</span>
+          <header class="tool-header">
+            <h3>FMEA Risk Priority Number</h3>
+            <span class="tool-tag">Failure Mode Analysis</span>
+          </header>
+          <p class="tool-desc">RPN = Severity &times; Occurrence &times; Detection — ranks which failure modes to
+          fix first.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Severity (1&ndash;10)<input type="number" id="fmeaSev" value="7" min="1" max="10"></label>
+              <label>Occurrence (1&ndash;10)<input type="number" id="fmeaOcc" value="4" min="1" max="10"></label>
+              <label>Detection (1&ndash;10)<input type="number" id="fmeaDet" value="5" min="1" max="10"></label>
+            </div>
+            <button class="btn btn-small" id="fmeaCalc">Calculate RPN</button>
+            <div class="tool-result" id="fmeaResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Takt Time -->
+        <article class="tool-card" id="tool-takt">
+          <span class="capability-badge badge-blue">⏱ Demand-paced takt time</span>
+          <header class="tool-header">
+            <h3>Takt Time Calculator</h3>
+            <span class="tool-tag">Flow &amp; Pacing</span>
+          </header>
+          <p class="tool-desc">The rate at which you must produce to match customer demand.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Available Time per Shift (min)<input type="number" id="taktTime" value="450"></label>
+              <label>Customer Demand per Shift (units)<input type="number" id="taktDemand" value="300"></label>
+            </div>
+            <button class="btn btn-small" id="taktCalc">Calculate Takt Time</button>
+            <div class="tool-result" id="taktResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+        <!-- 5S Audit Score -->
+        <article class="tool-card" id="tool-5s">
+          <span class="capability-badge">✅ 5S maturity score</span>
+          <header class="tool-header">
+            <h3>5S Audit Scorecard</h3>
+            <span class="tool-tag">Workplace Organization</span>
+          </header>
+          <p class="tool-desc">Rate each S from 0 (absent) to 5 (fully embedded) for a quick workplace-organization
+          health check.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Sort (0&ndash;5)<input type="number" id="s1" value="4" min="0" max="5"></label>
+              <label>Set in Order (0&ndash;5)<input type="number" id="s2" value="3" min="0" max="5"></label>
+              <label>Shine (0&ndash;5)<input type="number" id="s3" value="4" min="0" max="5"></label>
+              <label>Standardize (0&ndash;5)<input type="number" id="s4" value="2" min="0" max="5"></label>
+              <label>Sustain (0&ndash;5)<input type="number" id="s5" value="2" min="0" max="5"></label>
+            </div>
+            <button class="btn btn-small" id="s5Calc">Score 5S</button>
+            <div class="tool-result" id="s5Result">Enter ratings and score.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DMAIC -->
+  <section class="section section-alt" id="dmaic">
+    <div class="container">
+      <p class="kicker">DMAIC Walkthrough</p>
+      <h2 class="section-title">Engine Assembly Line Productivity</h2>
+      <p class="section-lead">Same case study as the homepage tool, using the Maynard Operation Sequence
+      Technique (MOST) to rebalance an engine assembly line.</p>
+      <article class="tool-card tool-card-wide">
+        <div class="dmaic-steps">
+          <div class="dmaic-step">
+            <span class="dmaic-letter">D</span>
+            <h4>Define</h4>
+            <p>Engine assembly line was missing takt-time targets; cycle time imbalance across stations flagged
+            as the core productivity constraint.</p>
+          </div>
+          <div class="dmaic-step">
+            <span class="dmaic-letter">M</span>
+            <h4>Measure</h4>
+            <p>Station-wise cycle times captured and decomposed into elemental motions using MOST, establishing
+            a baseline standard time per station.</p>
+          </div>
+          <div class="dmaic-step">
+            <span class="dmaic-letter">A</span>
+            <h4>Analyze</h4>
+            <p>Line-balancing analysis identified bottleneck stations and non-value-adding motion sequences
+            driving cycle-time variance.</p>
+          </div>
+          <div class="dmaic-step">
+            <span class="dmaic-letter">I</span>
+            <h4>Improve</h4>
+            <p>Work elements re-sequenced and reallocated across stations using MOST-derived standard times to
+            balance the line to takt time.</p>
+          </div>
+          <div class="dmaic-step">
+            <span class="dmaic-letter">C</span>
+            <h4>Control</h4>
+            <p>Revised SOPs and station standard times documented for sustained line balance and future audits.</p>
+          </div>
+        </div>
+      </article>
+      <p class="section-lead" style="margin-top:24px;">See the <a href="work-system-design.html">Work System
+      Design domain</a> for the line-balancing calculator behind step 3&ndash;4.</p>
+    </div>
+  </section>
+
+  <!-- CASE STUDY -->
+  <section class="section" id="cases">
+    <div class="container">
+      <p class="kicker">Case Study</p>
+      <h2 class="section-title">Why Lean Six Sigma Adoption Stalls</h2>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">Conference &middot; 2022</span>
+          <h3>Exploration of Barriers on Implementation of Lean Six Sigma in Small Scale Industries</h3>
+          <p class="case-meta">ICAIEA International Conference, DoIE, CEG, Anna University</p>
+          <p>Identifies and structures the organizational, financial, and cultural barriers that stop small-scale
+          industries from successfully adopting Lean Six Sigma — a reminder that tool fluency isn't the
+          bottleneck; implementation context is.</p>
+          <p class="case-method"><strong>Focus:</strong> LSS adoption barriers, SMEs</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/lss-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

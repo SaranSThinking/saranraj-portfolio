@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrepreneurship | Saranraj Ramachandran</title>
+<meta name="description" content="Entrepreneurship domain — entrepreneurial intention self-assessment and break-even analysis tools, and a Centre for Entrepreneurship Development case study by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#cases">Case Study</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Entrepreneurship</h1>
+      <p class="hero-tagline">Mentoring student ventures, and researching what actually predicts entrepreneurial
+      intent.</p>
+      <p class="hero-summary">Pioneer of CEG's Centre for Entrepreneurship Development and coordinator for the
+      Naan Mudhalvan program — this domain sits at the intersection of venture mentoring and the research
+      question of what makes students actually pursue entrepreneurship.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Assess intent and viability</h2>
+      <div class="tools-grid">
+
+        <!-- Entrepreneurial Intention -->
+        <article class="tool-card tool-card-wide" id="tool-intention">
+          <span class="capability-badge">🚀 Intention score, live</span>
+          <header class="tool-header">
+            <h3>Entrepreneurial Intention Self-Assessment</h3>
+            <span class="tool-tag">Student Development</span>
+          </header>
+          <p class="tool-desc">A short Likert-style self-check inspired by the entrepreneurial-intention survey
+          research on my CV. Rate each statement 1 (strongly disagree) to 5 (strongly agree).</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>I am confident I could successfully start a business
+                <select id="eiQ1"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I am willing to take financial risk for an idea I believe in
+                <select id="eiQ2"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I actively look for problems worth solving as a business
+                <select id="eiQ3"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>My family/peers would support me starting a venture
+                <select id="eiQ4"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I would choose entrepreneurship over a stable job, given the choice
+                <select id="eiQ5"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="eiCalc">Calculate Intention Score</button>
+            <div class="tool-result" id="eiResult">Rate each item and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Break-Even Analysis -->
+        <article class="tool-card" id="tool-breakeven">
+          <span class="capability-badge badge-blue">💰 Break-even volume + revenue</span>
+          <header class="tool-header">
+            <h3>Break-Even Analysis</h3>
+            <span class="tool-tag">Venture Viability</span>
+          </header>
+          <p class="tool-desc">The first viability check for any new venture or product line.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Fixed Costs (₹/month)<input type="number" id="beFixed" value="80000"></label>
+              <label>Price per Unit (₹)<input type="number" id="bePrice" value="500"></label>
+              <label>Variable Cost per Unit (₹)<input type="number" id="beVarCost" value="300"></label>
+            </div>
+            <button class="btn btn-small" id="beCalc">Calculate Break-Even</button>
+            <div class="tool-result" id="beResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="cases">
+    <div class="container">
+      <p class="kicker">Case Study</p>
+      <h2 class="section-title">Building the Entrepreneurship Ecosystem at CEG</h2>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">Conference &middot; 2022</span>
+          <h3>Survey on Entrepreneurial Intention Among Students of Anna University</h3>
+          <p class="case-meta">ICAIEA International Conference, DoIE, CEG, Anna University</p>
+          <p>Surveyed students to identify which factors — confidence, risk tolerance, family support, perceived
+          opportunity — most strongly predict intent to start a venture, informing how entrepreneurship
+          programming should be designed.</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">2021&ndash;22</span>
+          <h3>Entrepreneurship Pioneer, Centre for Entrepreneurship Development</h3>
+          <p class="case-meta">CEG, Anna University</p>
+          <p>Helped establish the Centre for Entrepreneurship Development at CEG — building the institutional
+          scaffolding for student venture mentoring.</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">2022</span>
+          <h3>Naan Mudhalvan Program Co-ordinator</h3>
+          <p class="case-meta">CEG, Department of Industrial Engineering</p>
+          <p>Coordinated the Tamil Nadu government's skill-development and entrepreneurship initiative at
+          department level, connecting students to industry-relevant venture and employability tracks.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/entrepreneurship-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

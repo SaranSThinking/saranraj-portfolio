@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cognitive Ergonomics | Saranraj Ramachandran</title>
+<meta name="description" content="Cognitive Ergonomics domain — NASA-TLX workload assessment, Fitts's Law, and Signal Detection Theory tools by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#applied">Applied Focus</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Cognitive Ergonomics</h1>
+      <p class="hero-tagline">Mental workload, decision-making, and human&ndash;system interaction — the invisible
+      half of ergonomics.</p>
+      <p class="hero-summary">Where physical ergonomics asks "does this posture hurt the body," cognitive
+      ergonomics asks "does this task overload the mind." These tools implement the standard measures used to
+      quantify mental workload, interface response time, and detection performance in industrial and control-room
+      settings.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Measure the mental side of the task</h2>
+      <div class="tools-grid">
+
+        <!-- NASA-TLX -->
+        <article class="tool-card tool-card-wide" id="tool-tlx">
+          <span class="capability-badge">🧠 Raw NASA-TLX scoring</span>
+          <header class="tool-header">
+            <h3>NASA-TLX Workload Estimator</h3>
+            <span class="tool-tag">Mental Workload</span>
+          </header>
+          <p class="tool-desc">Raw TLX (unweighted average) across the six standard subscales — a fast, validated
+          way to quantify perceived task workload.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Mental Demand (0&ndash;100)<input type="number" id="tlxMental" value="50" min="0" max="100"></label>
+              <label>Physical Demand (0&ndash;100)<input type="number" id="tlxPhysical" value="30" min="0" max="100"></label>
+              <label>Temporal Demand (0&ndash;100)<input type="number" id="tlxTemporal" value="40" min="0" max="100"></label>
+              <label>Performance (0=perfect, 100=failure)<input type="number" id="tlxPerformance" value="30" min="0" max="100"></label>
+              <label>Effort (0&ndash;100)<input type="number" id="tlxEffort" value="50" min="0" max="100"></label>
+              <label>Frustration (0&ndash;100)<input type="number" id="tlxFrustration" value="20" min="0" max="100"></label>
+            </div>
+            <button class="btn btn-small" id="tlxCalc">Calculate Workload</button>
+            <div class="tool-result" id="tlxResult">Enter subscale ratings and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Fitts's Law -->
+        <article class="tool-card" id="tool-fitts">
+          <span class="capability-badge badge-blue">⚡ Movement-time prediction</span>
+          <header class="tool-header">
+            <h3>Fitts&rsquo;s Law Movement Time</h3>
+            <span class="tool-tag">Interface Design</span>
+          </header>
+          <p class="tool-desc">Predicts time to reach a target (control, button, component bin) from distance and
+          target width — used for control-panel and workstation layout.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Distance to Target, D (cm)<input type="number" id="fittsD" value="30"></label>
+              <label>Target Width, W (cm)<input type="number" id="fittsW" value="3"></label>
+            </div>
+            <button class="btn btn-small" id="fittsCalc">Calculate Movement Time</button>
+            <div class="tool-result" id="fittsResult">Enter distance and width.</div>
+          </div>
+        </article>
+
+        <!-- Signal Detection Theory -->
+        <article class="tool-card" id="tool-sdt">
+          <span class="capability-badge badge-amber">🎯 d′ sensitivity &amp; bias</span>
+          <header class="tool-header">
+            <h3>Signal Detection (d&prime; / Criterion)</h3>
+            <span class="tool-tag">Vigilance &amp; Inspection</span>
+          </header>
+          <p class="tool-desc">Separates true detection sensitivity from response bias in inspection or monitoring
+          tasks — hit rate alone can be misleading.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Hit Rate (0&ndash;1)<input type="number" id="sdtHit" value="0.8" step="0.01" min="0" max="1"></label>
+              <label>False Alarm Rate (0&ndash;1)<input type="number" id="sdtFa" value="0.2" step="0.01" min="0" max="1"></label>
+            </div>
+            <button class="btn btn-small" id="sdtCalc">Calculate d&prime;</button>
+            <div class="tool-result" id="sdtResult">Enter hit and false-alarm rates.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="applied">
+    <div class="container">
+      <p class="kicker">Applied Focus</p>
+      <h2 class="section-title">Where this shows up in my teaching &amp; research</h2>
+      <p class="section-lead">Cognitive ergonomics threads through my Ergonomics and Business Analytics courses,
+      and complements the physical-ergonomics fieldwork behind my ISM/SEM and ANP-DEMATEL studies — where
+      workload and decision factors sit alongside posture and force as risk variables.</p>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">Teaching</span>
+          <h3>Human&ndash;System Interaction in Operations Courses</h3>
+          <p>Mental workload and interface-design principles are built into how I frame control-panel and
+          dashboard case studies for UG/PG Operations and Business Analytics students.</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">Research Adjacent</span>
+          <h3>Workload as a Hidden Variable in Ergonomic Modelling</h3>
+          <p>In ergonomic-variable studies (see the <a href="ergonomics.html#cases">Ergonomics case studies</a>),
+          cognitive load and decision fatigue are treated as latent factors alongside posture and force —
+          this domain is where that lens comes from.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/cognitive-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

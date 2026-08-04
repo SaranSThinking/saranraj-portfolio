@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supply Chain &amp; Logistics | Saranraj Ramachandran</title>
+<meta name="description" content="Supply Chain & Logistics domain — EOQ, safety stock, and ABC analysis calculators, and an inventory management patent case study by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#scm">SCM</a>
+      <a href="#logistics">Logistics</a>
+      <a href="#analytics">SC Analytics</a>
+      <a href="#risk">Risk &amp; Resilience</a>
+      <a href="#cases">Case Study</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Supply Chain &amp; Logistics Management</h1>
+      <p class="hero-tagline">Inventory parameters, distribution, analytics, and resilience — the four courses
+      I teach in this space.</p>
+      <p class="hero-summary">Organized by subject: Supply Chain Management, Logistics Management, Supply Chain
+      Analytics, and Supply Chain Risk &amp; Resilience. This domain is also anchored by a filed patent on how
+      inventory parameters and management techniques affect supply chain performance.</p>
+    </div>
+  </section>
+
+  <!-- SCM -->
+  <section class="section" id="scm">
+    <div class="container">
+      <p class="kicker">Supply Chain Management</p>
+      <h2 class="section-title">Size the inventory policy</h2>
+      <p class="section-lead">Core inventory-control calculations — when to order, how much, and what to
+      prioritize.</p>
+      <div class="tools-grid">
+
+        <!-- EOQ + Reorder Point -->
+        <article class="tool-card tool-card-wide" id="tool-eoq">
+          <span class="capability-badge">⚡ EOQ + safety stock + ROP</span>
+          <header class="tool-header">
+            <h3>EOQ, Safety Stock &amp; Reorder Point</h3>
+            <span class="tool-tag">Inventory Control</span>
+          </header>
+          <p class="tool-desc">Economic Order Quantity plus a demand-variability-based safety stock and reorder
+          point.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Annual Demand (units)<input type="number" id="eoqDemand" value="12000"></label>
+              <label>Ordering Cost (₹/order)<input type="number" id="eoqOrder" value="450"></label>
+              <label>Holding Cost (₹/unit/year)<input type="number" id="eoqHold" value="18"></label>
+              <label>Lead Time (days)<input type="number" id="eoqLeadTime" value="7"></label>
+              <label>Demand Std. Deviation (units/day)<input type="number" id="eoqDemandStd" value="6"></label>
+              <label>Service Level Z-score<input type="number" id="eoqZ" value="1.65" step="0.01"></label>
+            </div>
+            <button class="btn btn-small" id="eoqCalc">Calculate</button>
+            <div class="tool-result" id="eoqResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+        <!-- ABC Analysis -->
+        <article class="tool-card tool-card-wide" id="tool-abc">
+          <span class="capability-badge badge-blue">📊 A/B/C value classification</span>
+          <header class="tool-header">
+            <h3>ABC Inventory Classification</h3>
+            <span class="tool-tag">Inventory Prioritization</span>
+          </header>
+          <p class="tool-desc">Paste annual usage value per SKU (comma-separated) to classify items into A (top
+          ~80% of value), B (next ~15%), and C (remaining ~5%) tiers.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label style="grid-column: 1/-1;">Annual Usage Value per SKU (comma-separated)
+                <input type="text" id="abcValues" value="120000, 85000, 62000, 40000, 22000, 15000, 9000, 6000, 4000, 2000">
+              </label>
+            </div>
+            <button class="btn btn-small" id="abcCalc">Classify</button>
+            <div class="tool-result" id="abcResult">Enter usage values and classify.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGISTICS -->
+  <section class="section section-alt" id="logistics">
+    <div class="container">
+      <p class="kicker">Logistics Management</p>
+      <h2 class="section-title">Move it at the right cost and speed</h2>
+      <p class="section-lead">Landed cost and mode-selection decisions — where freight cost trades off against
+      transit time and in-transit inventory carrying cost.</p>
+      <div class="tools-grid">
+
+        <!-- Total Landed Cost -->
+        <article class="tool-card" id="tool-landedcost">
+          <span class="capability-badge badge-amber">💰 True delivered cost</span>
+          <header class="tool-header">
+            <h3>Total Landed Cost</h3>
+            <span class="tool-tag">Procurement &amp; Distribution</span>
+          </header>
+          <p class="tool-desc">The true cost of a delivered unit, not just its purchase price.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Product Cost (₹/unit)<input type="number" id="lcProduct" value="500"></label>
+              <label>Freight Cost (₹/unit)<input type="number" id="lcFreight" value="35"></label>
+              <label>Customs Duty (%)<input type="number" id="lcDuty" value="8"></label>
+              <label>Insurance (%)<input type="number" id="lcInsurance" value="1.5"></label>
+              <label>Handling / Other (₹/unit)<input type="number" id="lcHandling" value="12"></label>
+              <label>Units<input type="number" id="lcUnits" value="1000"></label>
+            </div>
+            <button class="btn btn-small" id="lcCalc">Calculate Landed Cost</button>
+            <div class="tool-result" id="lcResult">Enter cost components and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Transportation Mode Comparison -->
+        <article class="tool-card tool-card-wide" id="tool-transport">
+          <span class="capability-badge">🚚 3-mode cost comparison</span>
+          <header class="tool-header">
+            <h3>Transportation Mode Comparison</h3>
+            <span class="tool-tag">Mode Selection</span>
+          </header>
+          <p class="tool-desc">Air costs more per unit but cuts in-transit carrying cost; sea is cheap but ties up
+          capital longer. Compares total cost (freight + in-transit holding cost) across three modes.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Unit Value (₹)<input type="number" id="tmValue" value="500"></label>
+              <label>Annual Holding Cost Rate (%)<input type="number" id="tmHoldRate" value="20"></label>
+              <label>Mode A Freight (₹/unit)<input type="number" id="tmFreightA" value="15" title="e.g. Sea"></label>
+              <label>Mode A Transit (days)<input type="number" id="tmDaysA" value="30"></label>
+              <label>Mode B Freight (₹/unit)<input type="number" id="tmFreightB" value="45" title="e.g. Road"></label>
+              <label>Mode B Transit (days)<input type="number" id="tmDaysB" value="7"></label>
+              <label>Mode C Freight (₹/unit)<input type="number" id="tmFreightC" value="120" title="e.g. Air"></label>
+              <label>Mode C Transit (days)<input type="number" id="tmDaysC" value="2"></label>
+            </div>
+            <button class="btn btn-small" id="tmCalc">Compare Modes</button>
+            <div class="tool-result" id="tmResult">Enter mode data and compare.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SC ANALYTICS -->
+  <section class="section" id="analytics">
+    <div class="container">
+      <p class="kicker">Supply Chain Analytics</p>
+      <h2 class="section-title">Forecast and diagnose demand distortion</h2>
+      <p class="section-lead">Turning historical demand data into a forecast, and checking whether orders are
+      amplifying demand signal as they move upstream.</p>
+      <div class="tools-grid">
+
+        <!-- Demand Forecast -->
+        <article class="tool-card tool-card-wide" id="tool-forecast">
+          <span class="capability-badge badge-blue">📈 MA + exponential smoothing forecast</span>
+          <header class="tool-header">
+            <h3>Demand Forecast (Moving Average &amp; Exponential Smoothing)</h3>
+            <span class="tool-tag">Forecasting</span>
+          </header>
+          <p class="tool-desc">Paste historical period demand to get next-period forecasts from both methods,
+          plus fit error (MAD).</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label style="grid-column: 1/-1;">Historical Demand, oldest&rarr;newest (comma-separated)
+                <input type="text" id="fcData" value="210, 225, 198, 240, 235, 250, 260, 245">
+              </label>
+              <label>Moving Average Window (n)<input type="number" id="fcWindow" value="3" min="2"></label>
+              <label>Smoothing Constant &alpha; (0&ndash;1)<input type="number" id="fcAlpha" value="0.3" step="0.01" min="0" max="1"></label>
+            </div>
+            <button class="btn btn-small" id="fcCalc">Generate Forecast</button>
+            <div class="tool-result" id="fcResult">Enter demand history and generate.</div>
+          </div>
+        </article>
+
+        <!-- Bullwhip Effect -->
+        <article class="tool-card" id="tool-bullwhip">
+          <span class="capability-badge badge-amber">📉 Demand distortion ratio</span>
+          <header class="tool-header">
+            <h3>Bullwhip Effect Ratio</h3>
+            <span class="tool-tag">Demand Distortion</span>
+          </header>
+          <p class="tool-desc">Compares order variability to end-customer demand variability along the chain.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Order Quantities (comma-separated)<input type="text" id="bwOrders" value="180, 260, 150, 310, 140, 300"></label>
+              <label>Actual Demand (comma-separated)<input type="text" id="bwDemand" value="210, 225, 198, 240, 235, 250"></label>
+            </div>
+            <button class="btn btn-small" id="bwCalc">Calculate Ratio</button>
+            <div class="tool-result" id="bwResult">Enter order and demand series.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SC RISK & RESILIENCE -->
+  <section class="section section-alt" id="risk">
+    <div class="container">
+      <p class="kicker">Supply Chain Risk &amp; Resilience</p>
+      <h2 class="section-title">Find the exposure before it finds you</h2>
+      <p class="section-lead">Structured risk scoring and a resilience maturity check — the same
+      probability&times;impact logic as FMEA, applied to the chain instead of a single process.</p>
+      <div class="tools-grid">
+
+        <!-- Risk Exposure Matrix -->
+        <article class="tool-card" id="tool-scrisk">
+          <span class="capability-badge badge-red">🔴 Likelihood × impact scoring</span>
+          <header class="tool-header">
+            <h3>Supply Risk Exposure Score</h3>
+            <span class="tool-tag">Risk Register</span>
+          </header>
+          <p class="tool-desc">Rate a specific risk (single-source supplier, geopolitical, logistics disruption)
+          on likelihood and impact.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Likelihood (1&ndash;5)<input type="number" id="srLikelihood" value="3" min="1" max="5"></label>
+              <label>Impact (1&ndash;5)<input type="number" id="srImpact" value="4" min="1" max="5"></label>
+              <label>Detectability (1=easy, 5=hard to detect)<input type="number" id="srDetect" value="3" min="1" max="5"></label>
+            </div>
+            <button class="btn btn-small" id="srCalc">Score Risk</button>
+            <div class="tool-result" id="srResult">Rate the risk and score.</div>
+          </div>
+        </article>
+
+        <!-- Resilience Index -->
+        <article class="tool-card" id="tool-resilience">
+          <span class="capability-badge">🛡 4-pillar resilience index</span>
+          <header class="tool-header">
+            <h3>Supply Chain Resilience Index</h3>
+            <span class="tool-tag">Resilience Maturity</span>
+          </header>
+          <p class="tool-desc">Rate your chain 0 (absent) to 5 (mature) on four resilience pillars.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Redundancy (0&ndash;5)<input type="number" id="resRedundancy" value="2" min="0" max="5"></label>
+              <label>Visibility (0&ndash;5)<input type="number" id="resVisibility" value="3" min="0" max="5"></label>
+              <label>Flexibility (0&ndash;5)<input type="number" id="resFlexibility" value="2" min="0" max="5"></label>
+              <label>Collaboration (0&ndash;5)<input type="number" id="resCollaboration" value="3" min="0" max="5"></label>
+            </div>
+            <button class="btn btn-small" id="resCalc">Calculate Resilience</button>
+            <div class="tool-result" id="resResult">Rate the pillars and calculate.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cases">
+    <div class="container">
+      <p class="kicker">Case Study</p>
+      <h2 class="section-title">Inventory Parameters &amp; Supply Chain Performance</h2>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">Patent &middot; 2022</span>
+          <h3>Impact of Inventory Parameters &amp; Management Techniques on Supply Chain Performance</h3>
+          <p class="case-meta">Patent No. 202321011890 &middot; Ready for Publication</p>
+          <p>Examines how inventory parameters and management techniques directly shape supply chain
+          performance and customer satisfaction — framing inventory management as a core strategic lever, not
+          a back-office function.</p>
+          <p class="case-method"><strong>Focus:</strong> Inventory parameters, SCM performance</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">Patent &middot; 2022</span>
+          <h3>Industrial ERP System over Blockchain Technology</h3>
+          <p class="case-meta">Patent No. 202221025755 &middot; Published 08.07.2022</p>
+          <p>Combines ERP's modular business-data management with blockchain's secure multi-party transaction
+          tracking — relevant to supply chain traceability and coordination across partners.</p>
+          <p class="case-method"><strong>Focus:</strong> ERP, blockchain, transaction integrity</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/supply-chain-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organisational Behaviour | Saranraj Ramachandran</title>
+<meta name="description" content="Organisational Behaviour domain — leadership-style and team-development-stage tools, and a national team captaincy/coaching case study by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#cases">Case Study</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Organisational Behaviour</h1>
+      <p class="hero-tagline">Team dynamics, leadership, and change management — tested on the shop floor and on
+      the competition floor.</p>
+      <p class="hero-summary">This domain draws as much from captaining a national fencing team and coaching over
+      70 athletes as it does from the classroom — leadership and team performance under pressure are the same
+      problem whether the "shop floor" is a factory or a competition mat.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Diagnose the team</h2>
+      <div class="tools-grid">
+
+        <!-- Leadership Style -->
+        <article class="tool-card tool-card-wide" id="tool-leadership">
+          <span class="capability-badge">🤝 3-style leadership lean</span>
+          <header class="tool-header">
+            <h3>Leadership Style Self-Assessment</h3>
+            <span class="tool-tag">Leadership</span>
+          </header>
+          <p class="tool-desc">Rate how strongly each statement reflects your default approach (1 = rarely,
+          5 = almost always) to see your lean across three classic leadership styles.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>I set clear direction and expect it to be followed
+                <select id="lsQ1"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I involve the team in decisions before finalizing them
+                <select id="lsQ2"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I hand off ownership and let capable people run with it
+                <select id="lsQ3"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I step in quickly when standards slip
+                <select id="lsQ4"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I prioritize consensus over speed
+                <select id="lsQ5"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+              <label>I trust the team to self-correct without my input
+                <select id="lsQ6"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="lsCalc">Calculate Leadership Lean</button>
+            <div class="tool-result" id="lsResult">Rate each item and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Tuckman Stage -->
+        <article class="tool-card" id="tool-tuckman">
+          <span class="capability-badge badge-blue">👥 Team-stage diagnosis</span>
+          <header class="tool-header">
+            <h3>Team Development Stage Finder</h3>
+            <span class="tool-tag">Team Dynamics</span>
+          </header>
+          <p class="tool-desc">Select the behavior that best matches your team right now to identify its Tuckman
+          stage.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label style="grid-column: 1/-1;">Which best describes the team today?
+                <select id="tuckmanBehavior">
+                  <option value="forming">Polite, cautious, unclear roles — people are feeling each other out</option>
+                  <option value="storming" selected>Friction, competing opinions, roles being contested</option>
+                  <option value="norming">Roles settling, norms forming, cooperation increasing</option>
+                  <option value="performing">High trust, autonomous execution, strong output</option>
+                  <option value="adjourning">Wrapping up, disbanding, reflecting on the work</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="tuckmanCalc">Identify Stage</button>
+            <div class="tool-result" id="tuckmanResult">Select a description and identify.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="cases">
+    <div class="container">
+      <p class="kicker">Case Study</p>
+      <h2 class="section-title">Leadership Under Pressure</h2>
+      <p class="section-lead">Full details in the <a href="index.html#beyond">Beyond Academics</a> section of the
+      homepage.</p>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">2018&ndash;19</span>
+          <h3>Captain, National Team — All India National Fencing</h3>
+          <p class="case-meta">GND University, Punjab</p>
+          <p>Led a national team under direct competitive pressure, translating individual talent into coordinated
+          performance — the team achieved a historic medal-winning result.</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">2021</span>
+          <h3>Peak Performance Coach, National Fencing</h3>
+          <p class="case-meta">Anna University Team</p>
+          <p>Worked directly with national-level athletes on performance strategy and mindset — applied
+          organisational behaviour concepts (motivation, goal-setting, resilience) outside a classroom setting.</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">2019, 2022&ndash;24</span>
+          <h3>Head Coach, Ball Badminton (NSO Camps &amp; Induction Programs)</h3>
+          <p class="case-meta">Anna University, MIT Campus</p>
+          <p>Mentored 70+ players across multiple cohorts on motor skills, fitness, resilience, and goal-setting —
+          repeated, hands-on team-development practice.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/ob-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

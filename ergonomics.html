@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ergonomics | Saranraj Ramachandran</title>
+<meta name="description" content="Ergonomics domain — RULA/REBA posture screening, NIOSH Lifting Equation, anthropometric workstation design, and ergonomics case studies by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#cases">Case Studies</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- DOMAIN HERO -->
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Ergonomics</h1>
+      <p class="hero-tagline">Human factors, posture, and workload assessment — turning physical and cognitive
+      strain into measurable, fixable risk.</p>
+      <p class="hero-summary">This is where my research concentration sits most heavily: ergonomic variable
+      modelling, workplace risk prioritization, and productivity-linked ergonomic assessment across IT,
+      automobile, and manufacturing settings. Below are working tools built on standard IE ergonomics
+      techniques, plus write-ups of published/presented studies.</p>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Try the assessments</h2>
+      <p class="section-lead">Simplified, educational implementations of standard ergonomics techniques — useful
+      for quick screening and teaching; not a substitute for a full certified assessment.</p>
+
+      <div class="tools-grid">
+
+        <!-- RULA / REBA -->
+        <article class="tool-card tool-card-wide" id="tool-rula-reba">
+          <span class="capability-badge badge-red">🔴 Live RULA/REBA screening</span>
+          <header class="tool-header">
+            <h3>RULA / REBA Posture Risk Screener</h3>
+            <span class="tool-tag">Posture Assessment</span>
+          </header>
+          <p class="tool-desc">Simplified additive scoring inspired by RULA (Rapid Upper Limb Assessment) and
+          REBA (Rapid Entire Body Assessment) worksheets. Switch mode to screen upper-limb-only tasks (desk work,
+          assembly) or whole-body tasks (lifting, material handling).</p>
+
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="rula" id="modeRula">RULA (Upper Limb)</button>
+            <button class="mode-btn" data-mode="reba" id="modeReba">REBA (Whole Body)</button>
+          </div>
+
+          <div class="tool-body" id="rulaPanel">
+            <div class="tool-inputs">
+              <label>Upper Arm Position
+                <select id="rUpperArm">
+                  <option value="1">Neutral (&plusmn;20&deg;)</option>
+                  <option value="2" selected>20&ndash;45&deg; flexed/extended</option>
+                  <option value="3">45&ndash;90&deg; flexed</option>
+                  <option value="4">&gt;90&deg; flexed / abducted</option>
+                </select>
+              </label>
+              <label>Lower Arm Position
+                <select id="rLowerArm">
+                  <option value="1" selected>60&ndash;100&deg; flexion</option>
+                  <option value="2">&lt;60&deg; or &gt;100&deg;</option>
+                </select>
+              </label>
+              <label>Wrist Position
+                <select id="rWrist">
+                  <option value="1" selected>Neutral</option>
+                  <option value="2">Slight deviation</option>
+                  <option value="3">Large deviation</option>
+                </select>
+              </label>
+              <label>Neck Position
+                <select id="rNeck">
+                  <option value="1" selected>0&ndash;10&deg; flexion</option>
+                  <option value="2">10&ndash;20&deg; flexion</option>
+                  <option value="3">&gt;20&deg; flexion</option>
+                  <option value="4">Extended / twisted</option>
+                </select>
+              </label>
+              <label>Trunk Position
+                <select id="rTrunk">
+                  <option value="1" selected>Upright</option>
+                  <option value="2">0&ndash;20&deg; flexion</option>
+                  <option value="3">20&ndash;60&deg; flexion</option>
+                  <option value="4">&gt;60&deg; or twisted</option>
+                </select>
+              </label>
+              <label>Muscle Use
+                <select id="rMuscle">
+                  <option value="0" selected>Intermittent, &lt;4x/min</option>
+                  <option value="1">Static hold or &gt;4x/min repetition</option>
+                </select>
+              </label>
+              <label>Force / Load
+                <select id="rForce">
+                  <option value="0" selected>&lt;2kg, intermittent</option>
+                  <option value="1">2&ndash;10kg, intermittent</option>
+                  <option value="2">&gt;10kg or repeated/shock load</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="rulaCalc">Score RULA</button>
+            <div class="tool-result" id="rulaResult">Select values and score.</div>
+          </div>
+
+          <div class="tool-body" id="rebaPanel" style="display:none;">
+            <div class="tool-inputs">
+              <label>Trunk Position
+                <select id="bTrunk">
+                  <option value="1" selected>Upright</option>
+                  <option value="2">0&ndash;20&deg; flexion/extension</option>
+                  <option value="3">20&ndash;60&deg; flexion</option>
+                  <option value="4">&gt;60&deg; flexion or twisted</option>
+                </select>
+              </label>
+              <label>Neck Position
+                <select id="bNeck">
+                  <option value="1" selected>0&ndash;20&deg; flexion</option>
+                  <option value="2">&gt;20&deg; flexion or extended</option>
+                  <option value="3">Twisted / side-bent</option>
+                </select>
+              </label>
+              <label>Leg Support
+                <select id="bLegs">
+                  <option value="1" selected>Bilateral, weight evenly borne</option>
+                  <option value="2">Unilateral / unstable base</option>
+                  <option value="3">Knee(s) bent &gt;60&deg; or unsupported</option>
+                  <option value="4">Squatting / kneeling, unsupported</option>
+                </select>
+              </label>
+              <label>Upper Arm Position
+                <select id="bUpperArm">
+                  <option value="1">Neutral (&plusmn;20&deg;)</option>
+                  <option value="2" selected>20&ndash;45&deg; flexed/extended</option>
+                  <option value="3">45&ndash;90&deg; flexed</option>
+                  <option value="4">&gt;90&deg; flexed / abducted</option>
+                </select>
+              </label>
+              <label>Lower Arm Position
+                <select id="bLowerArm">
+                  <option value="1" selected>60&ndash;100&deg; flexion</option>
+                  <option value="2">&lt;60&deg; or &gt;100&deg;</option>
+                </select>
+              </label>
+              <label>Wrist Position
+                <select id="bWrist">
+                  <option value="1" selected>Neutral</option>
+                  <option value="2">Slight deviation</option>
+                  <option value="3">Large deviation</option>
+                </select>
+              </label>
+              <label>Load / Force
+                <select id="bLoad">
+                  <option value="0" selected>&lt;5kg</option>
+                  <option value="1">5&ndash;10kg</option>
+                  <option value="2">&gt;10kg or shock/rapid buildup</option>
+                </select>
+              </label>
+              <label>Coupling (Grip)
+                <select id="bCoupling">
+                  <option value="0" selected>Good handle / grip</option>
+                  <option value="1">Fair — acceptable but not ideal</option>
+                  <option value="2">Poor — unhandled but possible</option>
+                  <option value="3">Unacceptable — awkward, no handle</option>
+                </select>
+              </label>
+              <label>Activity
+                <select id="bActivity">
+                  <option value="0" selected>Static / infrequent</option>
+                  <option value="1">Repeated small range or unstable</option>
+                  <option value="2">Rapid large-range posture changes</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="rebaCalc">Score REBA</button>
+            <div class="tool-result" id="rebaResult">Select values and score.</div>
+          </div>
+
+          <p class="tool-footnote">Educational simplified scoring, not the official RULA/REBA lookup tables — use
+          the full worksheets for certified workplace assessments.</p>
+        </article>
+
+        <!-- NIOSH Lifting Equation -->
+        <article class="tool-card tool-card-wide" id="tool-niosh">
+          <span class="capability-badge">⚡ RWL + Lifting Index, live</span>
+          <header class="tool-header">
+            <h3>NIOSH Lifting Equation</h3>
+            <span class="tool-tag">Manual Material Handling</span>
+          </header>
+          <p class="tool-desc">Computes the Recommended Weight Limit (RWL) and Lifting Index (LI) for a manual
+          lifting task using the 1994 NIOSH revised lifting equation.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Load Weight, L (kg)<input type="number" id="nLoad" value="15"></label>
+              <label>Horizontal Distance, H (cm)<input type="number" id="nH" value="35"></label>
+              <label>Vertical Location at Origin, V (cm)<input type="number" id="nV" value="75"></label>
+              <label>Vertical Travel Distance, D (cm)<input type="number" id="nD" value="50"></label>
+              <label>Asymmetry Angle, A (&deg;)<input type="number" id="nA" value="0"></label>
+              <label>Lift Frequency, F (lifts/min)<input type="number" id="nF" value="2"></label>
+              <label>Duration
+                <select id="nDur">
+                  <option value="1">&le; 1 hour</option>
+                  <option value="2" selected>&le; 2 hours</option>
+                  <option value="8">&le; 8 hours</option>
+                </select>
+              </label>
+              <label>Coupling Quality
+                <select id="nCoupling">
+                  <option value="good" selected>Good</option>
+                  <option value="fair">Fair</option>
+                  <option value="poor">Poor</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="nioshCalc">Calculate RWL &amp; LI</button>
+            <div class="tool-result" id="nioshResult">Enter task parameters and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Anthropometric Workstation -->
+        <article class="tool-card tool-card-wide" id="tool-anthro">
+          <span class="capability-badge badge-blue">📐 Workstation fit check</span>
+          <header class="tool-header">
+            <h3>Anthropometric Workstation Sizing</h3>
+            <span class="tool-tag">Workstation Design</span>
+          </header>
+          <p class="tool-desc">Percentage-of-stature method for quick workstation dimension guidance based on
+          worker height and task type.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Worker Stature (cm)<input type="number" id="aHeight" value="170"></label>
+              <label>Work Posture
+                <select id="aPosture">
+                  <option value="standing" selected>Standing</option>
+                  <option value="sitting">Sitting</option>
+                </select>
+              </label>
+              <label>Task Type
+                <select id="aTask">
+                  <option value="precision">Precision work</option>
+                  <option value="light" selected>Light assembly</option>
+                  <option value="heavy">Heavy work</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="anthroCalc">Get Recommended Dimensions</button>
+            <div class="tool-result" id="anthroResult">Enter stature and calculate.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="section section-alt" id="cases">
+    <div class="container">
+      <p class="kicker">Case Studies</p>
+      <h2 class="section-title">Published &amp; Presented Work</h2>
+
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">Conference &middot; 2019</span>
+          <h3>Modelling &amp; Analysis of Ergonomic Variables in the IT Industry</h3>
+          <p class="case-meta">ICBAI International Conference, IISc Bangalore</p>
+          <p>Used Interpretive Structural Modelling (ISM) and Structural Equation Modelling (SEM) to map how
+          ergonomic variables in IT workplaces relate to and influence one another, identifying which factors
+          act as root drivers versus downstream symptoms.</p>
+          <p class="case-method"><strong>Methods:</strong> ISM, SEM</p>
+        </article>
+
+        <article class="case-card">
+          <span class="tool-tag">Conference &middot; 2022</span>
+          <h3>Quantifying &amp; Prioritizing Ergonomic Measures in an Automobile Industry</h3>
+          <p class="case-meta">ICAIEA International Conference, DoIE, CEG, Anna University</p>
+          <p>Applied Analytic Network Process (ANP) and DEMATEL to rank candidate ergonomic interventions on an
+          automobile shop floor by impact and interdependency, giving plant management a prioritized action list
+          rather than a flat checklist.</p>
+          <p class="case-method"><strong>Methods:</strong> ANP, DEMATEL</p>
+        </article>
+
+        <article class="case-card">
+          <span class="tool-tag">Journal &middot; Communicated</span>
+          <h3>Ergonomic Effect on Manufacturing Industries&rsquo; Productivity — A Review</h3>
+          <p class="case-meta">R. Saranraj and Dr. T. Ramesh Babu</p>
+          <p>A literature review consolidating how ergonomic risk factors — posture, workload, environment —
+          translate into measurable productivity loss in manufacturing settings, framing ergonomics as a
+          productivity lever rather than only a compliance concern.</p>
+          <p class="case-method"><strong>Focus:</strong> Ergonomics&ndash;productivity linkage</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/ergonomics-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

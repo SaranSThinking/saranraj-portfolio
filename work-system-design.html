@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work System Design | Saranraj Ramachandran</title>
+<meta name="description" content="Work System Design domain — OEE, standard time, and line-balancing calculators, and an engine assembly line MOST case study by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#cases">Case Study</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Work System Design</h1>
+      <p class="hero-tagline">Productivity, OEE, process capability, and SOPs — engineering the work itself, not
+      just the workstation.</p>
+      <p class="hero-summary">This is classical Industrial Engineering: time-and-motion study, line balancing,
+      and equipment effectiveness. It's also where my published productivity work sits — the MOST-based engine
+      assembly line study on my CV started here.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Design and measure the work system</h2>
+      <div class="tools-grid">
+
+        <!-- OEE -->
+        <article class="tool-card" id="tool-oee">
+          <span class="capability-badge">⚡ Live OEE calculation</span>
+          <header class="tool-header">
+            <h3>OEE Calculator</h3>
+            <span class="tool-tag">Equipment Effectiveness</span>
+          </header>
+          <p class="tool-desc">Overall Equipment Effectiveness = Availability &times; Performance &times; Quality.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Availability (%)<input type="number" id="oeeAvail" value="90" min="0" max="100"></label>
+              <label>Performance (%)<input type="number" id="oeePerf" value="85" min="0" max="100"></label>
+              <label>Quality (%)<input type="number" id="oeeQual" value="98" min="0" max="100"></label>
+            </div>
+            <button class="btn btn-small" id="oeeCalc">Calculate OEE</button>
+            <div class="tool-result" id="oeeResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Standard Time -->
+        <article class="tool-card" id="tool-stdtime">
+          <span class="capability-badge badge-blue">⏱ Standard time chain</span>
+          <header class="tool-header">
+            <h3>Standard Time Calculator</h3>
+            <span class="tool-tag">Time &amp; Motion Study</span>
+          </header>
+          <p class="tool-desc">Observed time &rarr; Normal time &rarr; Standard time, the core time-study
+          chain behind MOST-based standards.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Observed Time (min)<input type="number" id="stObserved" value="1.2" step="0.01"></label>
+              <label>Performance Rating (%)<input type="number" id="stRating" value="110"></label>
+              <label>Allowance (%)<input type="number" id="stAllowance" value="15"></label>
+            </div>
+            <button class="btn btn-small" id="stCalc">Calculate Standard Time</button>
+            <div class="tool-result" id="stResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Line Balancing -->
+        <article class="tool-card tool-card-wide" id="tool-linebalance">
+          <span class="capability-badge badge-amber">⚙️ Min-station line balance</span>
+          <header class="tool-header">
+            <h3>Assembly Line Balancing</h3>
+            <span class="tool-tag">Line Balancing</span>
+          </header>
+          <p class="tool-desc">Enter task times (comma-separated, in seconds/minutes) and the desired cycle time to
+          get the minimum number of workstations and resulting balance efficiency.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label style="grid-column: 1/-1;">Task Times (comma-separated)
+                <input type="text" id="lbTasks" value="45, 38, 55, 30, 42, 48, 25">
+              </label>
+              <label>Desired Cycle Time<input type="number" id="lbCycle" value="55"></label>
+            </div>
+            <button class="btn btn-small" id="lbCalc">Balance Line</button>
+            <div class="tool-result" id="lbResult">Enter task times and cycle time.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="cases">
+    <div class="container">
+      <p class="kicker">Case Study</p>
+      <h2 class="section-title">Engine Assembly Line Productivity (MOST)</h2>
+      <p class="section-lead">The full DMAIC walkthrough of this study lives on the
+      <a href="index.html#tool-dmaic">Lean Six Sigma tool on the homepage</a> — summarized here from a Work
+      System Design angle.</p>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">Journal &middot; Communicated</span>
+          <h3>Productivity Improvement of an Engine Assembly Line Using MOST</h3>
+          <p class="case-meta">R. Saranraj and Dr. T. Ramesh Babu</p>
+          <p>Station-wise cycle times were decomposed into elemental motions using the Maynard Operation Sequence
+          Technique (MOST), establishing standard times used to rebalance the line against takt time and reduce
+          bottleneck-driven idle time.</p>
+          <p class="case-method"><strong>Method:</strong> MOST, line balancing</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/work-system-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

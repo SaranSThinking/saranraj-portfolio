@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quality Management | Saranraj Ramachandran</title>
+<meta name="description" content="Quality Management domain — Process Capability and control-chart calculators, and an NBA/NAAC academic quality systems case study by Saranraj Ramachandran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#cases">Case Study</a>
+      <a href="index.html#expertise">All Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero domain-hero">
+    <div class="container">
+      <a href="index.html#expertise" class="back-link">&larr; All Domains</a>
+      <p class="eyebrow">Domain &middot; Areas of Expertise</p>
+      <h1>Quality Management</h1>
+      <p class="hero-tagline">Statistical process control and quality systems — for the shop floor and for
+      academic accreditation alike.</p>
+      <p class="hero-summary">M.E. in Quality Engineering &amp; Management, and years coordinating NBA and NAAC
+      accreditation processes at CEG — quality management here spans both statistical process control and the
+      systems-level work of running an accredited academic department.</p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="container">
+      <p class="kicker">Hands-on Tools</p>
+      <h2 class="section-title">Check the process</h2>
+      <div class="tools-grid">
+
+        <!-- Cp/Cpk -->
+        <article class="tool-card" id="tool-cpk">
+          <span class="capability-badge">⚡ Instant Cp/Cpk scoring</span>
+          <header class="tool-header">
+            <h3>Process Capability (Cp / Cpk)</h3>
+            <span class="tool-tag">SPC</span>
+          </header>
+          <p class="tool-desc">Checks whether a process can consistently meet specification.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Upper Spec Limit (USL)<input type="number" id="cpkUsl" value="10.5"></label>
+              <label>Lower Spec Limit (LSL)<input type="number" id="cpkLsl" value="9.5"></label>
+              <label>Process Mean<input type="number" id="cpkMean" value="10.0"></label>
+              <label>Std. Deviation<input type="number" id="cpkStd" value="0.12"></label>
+            </div>
+            <button class="btn btn-small" id="cpkCalc">Calculate Cp / Cpk</button>
+            <div class="tool-result" id="cpkResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+        <!-- Control Chart Limits -->
+        <article class="tool-card" id="tool-controlchart">
+          <span class="capability-badge badge-blue">📊 3σ control limits</span>
+          <header class="tool-header">
+            <h3>X&#772;&ndash;R Control Chart Limits</h3>
+            <span class="tool-tag">SPC</span>
+          </header>
+          <p class="tool-desc">Computes 3&sigma; control limits for subgroup averages and ranges.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Grand Mean (X&#772;&#772;)<input type="number" id="ccMean" value="25.4" step="0.01"></label>
+              <label>Average Range (R&#772;)<input type="number" id="ccRange" value="1.8" step="0.01"></label>
+              <label>Subgroup Size (n)
+                <select id="ccN">
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5" selected>5</option>
+                  <option value="6">6</option>
+                </select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="ccCalc">Calculate Limits</button>
+            <div class="tool-result" id="ccResult">Enter values and calculate.</div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="cases">
+    <div class="container">
+      <p class="kicker">Case Study</p>
+      <h2 class="section-title">Academic Quality Systems Leadership</h2>
+      <div class="case-grid">
+        <article class="case-card">
+          <span class="tool-tag">2024</span>
+          <h3>NBA PTV Co-ordinator</h3>
+          <p class="case-meta">CEG, Department of Industrial Engineering</p>
+          <p>Coordinated documentation, evidence compilation, and peer-team-visit readiness for National Board of
+          Accreditation review — outcome-based education criteria applied at department scale.</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">2023</span>
+          <h3>NAAC PTV Co-ordinator</h3>
+          <p class="case-meta">CEG, Department of Industrial Engineering</p>
+          <p>Led peer-team-visit preparation for NAAC accreditation, building on prior NAAC documentation and
+          design coordination experience (2021&ndash;22).</p>
+        </article>
+        <article class="case-card">
+          <span class="tool-tag">2021&ndash;22</span>
+          <h3>NAAC Documentation &amp; Design In-charge</h3>
+          <p class="case-meta">CEG, Department of Industrial Engineering</p>
+          <p>Owned documentation structure and design for NAAC submissions — the systems layer that makes
+          quality evidence auditable, not just present.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/quality-tools.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

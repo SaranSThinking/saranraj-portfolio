@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Decision Making (MCDM) | Saranraj Ramachandran</title>
+<meta name="description" content="A Weighted Sum Model multi-criteria decision-making tool for personal decisions like job offers, apartments, or schools.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/personal-projects.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="index.html#expertise">Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero pp-hero">
+    <div class="container">
+      <a href="personal-projects.html" class="back-link">&larr; Back to projects</a>
+      <span class="pp-badge">Case Study &middot; Personal Decision Making &middot; 2025</span>
+      <h1>Personal Decision Making (MCDM)</h1>
+      <p class="hero-tagline">A Weighted Sum Model — the same multi-criteria decision-making technique used to
+      prioritize supplier or vendor choices — pointed at your next job offer, apartment, or grad school pick.</p>
+      <p class="hero-summary">Big personal decisions rarely fail from lack of options — they fail from
+      comparing options on gut feel instead of the criteria that actually matter to you, weighted honestly.</p>
+
+      <div class="pp-stat-row">
+        <div class="pp-stat-chip"><span class="stat-num">WSM</span><span class="stat-label">Weighted Sum Model (SAW)</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">&Sigma;w&middot;r</span><span class="stat-label">Weighted score per option</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">100%</span><span class="stat-label">Criteria weights, normalized</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">0</span><span class="stat-label">server upload — runs in your browser</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="container">
+      <p class="pp-section-num">01 /</p>
+      <h2>The Problem.</h2>
+      <p class="pp-section-mono">// "I keep going back and forth"</p>
+      <p class="pp-body">When a decision has several options and several things that matter — salary vs. growth
+      vs. location, or rent vs. commute vs. space — most people compare them in their head, where one loud
+      criterion (usually the most recent conversation) quietly dominates the rest.</p>
+      <p class="pp-body">MCDM (Multi-Criteria Decision Making) techniques exist precisely to make every
+      criterion's influence explicit and auditable — including to yourself.</p>
+    </div>
+  </section>
+
+  <section class="pp-section section-alt">
+    <div class="container">
+      <p class="pp-section-num">02 /</p>
+      <h2>Methodology.</h2>
+      <p class="pp-section-mono">// weighted sum model (simple additive weighting)</p>
+      <div class="pp-methodology-grid">
+        <div class="pp-method-card">
+          <h4>Criteria Weights</h4>
+          <p>Each criterion gets a weight reflecting how much it matters to you; weights are normalized to sum
+          to 100% regardless of the raw numbers entered.</p>
+        </div>
+        <div class="pp-method-card">
+          <h4>Option Ratings</h4>
+          <p>Each option is rated 1&ndash;10 against every criterion — your honest, criterion-by-criterion
+          judgment, not an overall gut score.</p>
+        </div>
+        <div class="pp-method-card">
+          <h4>Weighted Sum</h4>
+          <p><code>Score = &Sigma;(weight_i &times; rating_i)</code>. Every criterion contributes exactly its
+          declared weight — no criterion can quietly dominate.</p>
+        </div>
+        <div class="pp-method-card">
+          <h4>Ranking</h4>
+          <p>Options are ranked by total weighted score — and because the weights are visible, you can see
+          exactly why one option won.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="container">
+      <p class="pp-section-num">03 /</p>
+      <h2>What&rsquo;s in the build.</h2>
+      <p class="pp-section-mono">// shipped features</p>
+      <div class="pp-feature-grid">
+        <div class="pp-feature-card"><h4>Any decision, any criteria</h4><p>Type your own criteria, weights, and
+        options — job offers, apartments, universities, even which laptop to buy.</p></div>
+        <div class="pp-feature-card"><h4>Auto-generated rating matrix</h4><p>Enter criteria and options once;
+        the tool builds the full ratings grid for you to fill in.</p></div>
+        <div class="pp-feature-card"><h4>Weight auto-normalization</h4><p>Weights don't need to sum to exactly
+        100 — the tool normalizes them so the ranking is always valid.</p></div>
+        <div class="pp-feature-card"><h4>Visual ranked bars</h4><p>Final scores render as ranked horizontal
+        bars, not just a table, so the winner is obvious at a glance.</p></div>
+        <div class="pp-feature-card"><h4>Sample decision</h4><p>A "choosing a job offer" example loads with
+        criteria, weights, and ratings pre-filled.</p></div>
+        <div class="pp-feature-card"><h4>Decision history</h4><p>Past decisions and their winners are logged
+        locally, so you can compare how you weighted similar choices before.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section section-alt">
+    <div class="container">
+      <p class="pp-section-num">04 /</p>
+      <h2>Stack &amp; Outcome.</h2>
+      <p class="pp-section-mono">// what it took, what it shipped</p>
+      <div class="pp-stack-outcome">
+        <div>
+          <h4 style="color:var(--navy); margin:0 0 10px;">Stack</h4>
+          <div class="pp-stack-chips">
+            <span class="chip">HTML5</span>
+            <span class="chip">Vanilla JavaScript (ES6)</span>
+            <span class="chip">Dynamic DOM generation</span>
+            <span class="chip">Web Storage API</span>
+            <span class="chip">No build step</span>
+          </div>
+        </div>
+        <div class="pp-outcome">
+          <h4 style="color:var(--navy); margin:0 0 10px;">Outcome</h4>
+          <p>The decision gets made on the criteria you actually declared matter, weighted the way you actually
+          weighted them — and if the "obvious" choice doesn't win, that's worth noticing too.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section" id="live-tool">
+    <div class="container">
+      <p class="kicker">Live Tool</p>
+      <h2 class="section-title">Try it below</h2>
+      <div class="pp-live-embed">
+        <div class="pp-live-embed-header">
+          <span><span class="live-dot">LIVE</span>personal-decision-mcdm &middot; runs entirely in your browser</span>
+          <button class="btn btn-small" id="pmcdmSample">Load Sample Decision</button>
+        </div>
+        <div class="pp-live-embed-body">
+
+          <div class="tool-inputs">
+            <label>Decision Name<input type="text" id="pmcdmName" placeholder="e.g. Choosing a Job Offer"></label>
+            <label style="grid-column:1/-1;">Criteria (comma-separated)
+              <input type="text" id="pmcdmCriteria" value="Salary, Growth, Location, Work-Life Balance">
+            </label>
+            <label style="grid-column:1/-1;">Weights %, same order (comma-separated)
+              <input type="text" id="pmcdmWeights" value="35, 25, 20, 20">
+            </label>
+            <label style="grid-column:1/-1;">Options (comma-separated)
+              <input type="text" id="pmcdmOptions" value="Offer A, Offer B, Offer C">
+            </label>
+          </div>
+          <button class="btn btn-small" id="pmcdmGenerate">Generate Rating Matrix</button>
+
+          <div id="pmcdmMatrix" style="margin-top:20px;"></div>
+
+          <button class="btn btn-small" id="pmcdmCalc" style="margin-top:16px;">Calculate Ranking</button>
+          <div id="pmcdmRanking" style="margin-top:16px;"></div>
+
+          <h4 style="margin-top:28px;color:var(--navy);">Decision History</h4>
+          <table class="pp-data-table" id="pmcdmTable"></table>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/personal-decision-mcdm.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Journal | Saranraj Ramachandran</title>
+<meta name="description" content="A reflection journal that snapshots data from all your other personal-project tools — supply chain, quality control, study, productivity, breakeven, decisions, and ergonomics — into each entry.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/personal-projects.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">Saranraj<span class="brand-dot">.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="index.html#expertise">Domains</a>
+      <a href="personal-projects.html">Learn by Doing</a>
+      <a href="index.html#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero pp-hero">
+    <div class="container">
+      <a href="personal-projects.html" class="back-link">&larr; Back to projects</a>
+      <span class="pp-badge">Case Study &middot; Personal Journal &middot; 2025</span>
+      <h1>Personal Journal</h1>
+      <p class="hero-tagline">A reflection journal that pulls a live snapshot from every other tool on this
+      page — supply chain, quality control, study, productivity, breakeven, decisions, and ergonomics — into
+      each entry.</p>
+      <p class="hero-summary">The other six personal projects each generate a number. This is where the
+      numbers and the reflection meet — so "why did I decide that" has the data sitting right next to it.</p>
+
+      <div class="pp-stat-row">
+        <div class="pp-stat-chip"><span class="stat-num">7</span><span class="stat-label">Tools snapshotted per entry</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">8</span><span class="stat-label">Reflection tags</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">1-click</span><span class="stat-label">Attach today's full snapshot</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">0</span><span class="stat-label">server upload — runs in your browser</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="container">
+      <p class="pp-section-num">01 /</p>
+      <h2>The Problem.</h2>
+      <p class="pp-section-mono">// data in one tab, reflection in another</p>
+      <p class="pp-body">Every tool above this one generates a real number — an OEE score, a control-chart flag,
+      a regression fit, a decision ranking. But that number lives and dies in its own tool. By the time you sit
+      down to reflect on your week, you've forgotten what the numbers actually said.</p>
+      <p class="pp-body">This project closes that loop: writing a journal entry can pull today's numbers from
+      every other tool automatically, so the reflection and the evidence sit in the same place.</p>
+    </div>
+  </section>
+
+  <section class="pp-section section-alt">
+    <div class="container">
+      <p class="pp-section-num">02 /</p>
+      <h2>Methodology.</h2>
+      <p class="pp-section-mono">// read-only snapshot at write-time</p>
+      <div class="pp-methodology-grid">
+        <div class="pp-method-card">
+          <h4>Shared Local Storage</h4>
+          <p>Every personal-project tool on this site writes its results to the browser's Web Storage. This
+          journal reads (never writes to) those same keys.</p>
+        </div>
+        <div class="pp-method-card">
+          <h4>Lightweight Recompute</h4>
+          <p>Rather than trusting stale saved summaries, the journal recomputes each tool's headline metric
+          (OEE average, control-chart flags, regression R&sup2;, etc.) fresh, every time.</p>
+        </div>
+        <div class="pp-method-card">
+          <h4>Tag-Based Organization</h4>
+          <p>Entries are tagged by which part of your life they're about, so you can filter your history down
+          to just "Study" or just "Ergonomics" reflections.</p>
+        </div>
+        <div class="pp-method-card">
+          <h4>Graceful Absence</h4>
+          <p>If a given tool has no data yet, it's simply omitted from the snapshot — nothing breaks, and the
+          journal works from day one even before you've touched the other six tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="container">
+      <p class="pp-section-num">03 /</p>
+      <h2>What&rsquo;s in the build.</h2>
+      <p class="pp-section-mono">// shipped features</p>
+      <div class="pp-feature-grid">
+        <div class="pp-feature-card"><h4>One-click full snapshot</h4><p>Attach a live read of all seven tools
+        to any entry with a single checkbox.</p></div>
+        <div class="pp-feature-card"><h4>Live dashboard preview</h4><p>See your current cross-tool snapshot
+        any time, without writing an entry.</p></div>
+        <div class="pp-feature-card"><h4>Eight reflection tags</h4><p>Supply Chain, Quality, Study,
+        Productivity, Breakeven, Decisions, Ergonomics, and General.</p></div>
+        <div class="pp-feature-card"><h4>Filterable timeline</h4><p>Browse your full journal or filter down to
+        entries about one specific tool.</p></div>
+        <div class="pp-feature-card"><h4>Sample entries</h4><p>Three illustrative entries load instantly so you
+        can see the format before writing your own.</p></div>
+        <div class="pp-feature-card"><h4>Local persistence</h4><p>Your journal is saved in the browser between
+        visits — nothing is sent anywhere, including the snapshots.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section section-alt">
+    <div class="container">
+      <p class="pp-section-num">04 /</p>
+      <h2>Stack &amp; Outcome.</h2>
+      <p class="pp-section-mono">// what it took, what it shipped</p>
+      <div class="pp-stack-outcome">
+        <div>
+          <h4 style="color:var(--navy); margin:0 0 10px;">Stack</h4>
+          <div class="pp-stack-chips">
+            <span class="chip">HTML5</span>
+            <span class="chip">Vanilla JavaScript (ES6)</span>
+            <span class="chip">Cross-tool Web Storage reads</span>
+            <span class="chip">No build step</span>
+          </div>
+        </div>
+        <div class="pp-outcome">
+          <h4 style="color:var(--navy); margin:0 0 10px;">Outcome</h4>
+          <p>The seven standalone tools on this site stop being seven disconnected exercises and start acting
+          like one personal analytics practice — with a running, dated, evidence-backed record of it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section" id="live-tool">
+    <div class="container">
+      <p class="kicker">Live Tool</p>
+      <h2 class="section-title">Try it below</h2>
+      <div class="pp-live-embed">
+        <div class="pp-live-embed-header">
+          <span><span class="live-dot">LIVE</span>personal-journal &middot; runs entirely in your browser</span>
+          <button class="btn btn-small" id="pjSample">Load Sample Entries</button>
+        </div>
+        <div class="pp-live-embed-body">
+
+          <h4 style="color:var(--navy);margin:0 0 12px;">Current Snapshot (live, from your other tools)</h4>
+          <div id="pjSnapshotPreview" class="tool-result">No data yet — visit the other tools and log a
+          few things, then come back here.</div>
+
+          <div class="pp-log-form" style="margin-top:20px;">
+            <label>Date<input type="date" id="pjDate"></label>
+            <label>Tag
+              <select id="pjTag">
+                <option>General</option>
+                <option>Supply Chain</option>
+                <option>Quality Control</option>
+                <option>Study</option>
+                <option>Productivity</option>
+                <option>Breakeven</option>
+                <option>Decision-Making</option>
+                <option>Ergonomics</option>
+              </select>
+            </label>
+            <label style="flex:1 1 100%;">Entry
+              <textarea id="pjText" rows="3" style="width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-family:var(--font-body);"></textarea>
+            </label>
+            <label style="flex-direction:row;align-items:center;gap:8px;">
+              <input type="checkbox" id="pjAttach" checked style="width:auto;"> Attach today's snapshot
+            </label>
+            <button class="btn btn-small" id="pjAdd">Add Entry</button>
+          </div>
+
+          <div style="margin:20px 0 12px;display:flex;gap:12px;align-items:center;">
+            <label style="font-size:0.85rem;color:var(--text-muted);">Filter by tag
+              <select id="pjFilter">
+                <option value="All">All</option>
+                <option>General</option>
+                <option>Supply Chain</option>
+                <option>Quality Control</option>
+                <option>Study</option>
+                <option>Productivity</option>
+                <option>Breakeven</option>
+                <option>Decision-Making</option>
+                <option>Ergonomics</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="pjTimeline"></div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; <span id="year"></span> Saranraj Ramachandran. Department of Industrial Engineering, CEG, Anna University.</p>
+  </div>
+</footer>
+
+<script src="js/personal-journal.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
