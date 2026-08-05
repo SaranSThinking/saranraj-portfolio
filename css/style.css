@@ -509,45 +509,37 @@ img, svg { max-width: 100%; display: block; }
   font-size: 0.78rem;
 }
 
-/* Course Feedback Scores */
-.table-scroll {
-  overflow-x: auto;
+/* Course Feedback Score */
+.feedback-average {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  padding: 32px;
 }
-.feedback-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.88rem;
-  min-width: 640px;
-}
-.feedback-table th, .feedback-table td {
-  text-align: left;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-.feedback-table th {
+.feedback-average-num {
   font-family: var(--font-mono);
-  color: var(--text-muted);
-  font-weight: 600;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: var(--card-bg);
-}
-.feedback-table td { color: var(--text); background: var(--bg-alt); }
-.feedback-table tbody tr:last-child td { border-bottom: none; }
-.feedback-status {
-  color: var(--teal);
-  font-weight: 600;
-  font-size: 0.8rem;
-}
-.feedback-score {
-  font-family: var(--font-mono);
+  font-size: 3.2rem;
   font-weight: 700;
   color: var(--navy);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.feedback-average-num span {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.feedback-average-stats {
+  flex: 1;
+  min-width: 280px;
+  margin-top: 0;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: none;
 }
 
 /* Testimonials */
@@ -891,6 +883,8 @@ img, svg { max-width: 100%; display: block; }
   .pp-stack-outcome { grid-template-columns: 1fr; }
   .pp-project-grid { grid-template-columns: 1fr; }
   .testimonial-grid { grid-template-columns: 1fr; }
+  .feedback-average { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .feedback-average-stats { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 720px) {
