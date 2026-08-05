@@ -1,6 +1,6 @@
 # `js/`
 
-Every script is plain ES6, loaded with a `<script src="...">` tag — no bundler, no modules, no npm
+Every script is plain ES6, loaded with a `<script src="...">` tag - no bundler, no modules, no npm
 dependencies. `main.js` is shared across the whole site; every other file implements the calculators for one
 specific page.
 
@@ -23,7 +23,7 @@ specific page.
 | **`ergonomics-tools.js`** | Ergonomics | RULA/REBA mode toggle + scoring, NIOSH Lifting Equation (RWL/LI with real frequency-multiplier and coupling tables), anthropometric workstation sizing |
 | **`cognitive-tools.js`** | Cognitive Ergonomics | NASA-TLX (Raw TLX), Fitts's Law movement time, Signal Detection Theory (includes a self-contained inverse-normal-CDF approximation) |
 | **`work-system-tools.js`** | Work System Design | OEE calculator, Standard Time chain (observed → normal → standard), assembly line balancing |
-| **`supply-chain-tools.js`** | Supply Chain & Logistics | EOQ/safety-stock/ROP, ABC classification, Total Landed Cost, Transportation Mode Comparison, Demand Forecast (moving average + exponential smoothing), Bullwhip Effect Ratio, Supply Risk Exposure Score, Resilience Index — 8 tools, the largest domain file |
+| **`supply-chain-tools.js`** | Supply Chain & Logistics | EOQ/safety-stock/ROP, ABC classification, Total Landed Cost, Transportation Mode Comparison, Demand Forecast (moving average + exponential smoothing), Bullwhip Effect Ratio, Supply Risk Exposure Score, Resilience Index - 8 tools, the largest domain file |
 | **`quality-tools.js`** | Quality Management | Cp/Cpk, X̄–R control chart limits (A2/D3/D4 constants for n=2–6) |
 | **`lss-tools.js`** | Lean Six Sigma | FMEA Risk Priority Number, Takt Time, 5S Audit Scorecard |
 | **`entrepreneurship-tools.js`** | Entrepreneurship | Entrepreneurial Intention self-assessment, Break-Even Analysis |
@@ -46,5 +46,5 @@ SVG with no charting library.
 | **`personal-ergonomic-analysis.js`** | Combined anthropometric-fit + posture-risk audit, rule-based recommendation engine | `pea_log_v1` |
 | **`personal-journal.js`** | Tagged reflection journal that *reads* (never writes) the `localStorage` keys above from all 6 other personal tools to attach a live cross-tool snapshot to each entry. Delisted from the "Learn by Doing" hub, so it (and `personal-journal.html`) stays at the repo root rather than under `projects/` | `pj_entries_v1` |
 
-All `localStorage` data stays entirely in the visitor's own browser — nothing is transmitted anywhere, which
+All `localStorage` data stays entirely in the visitor's own browser - nothing is transmitted anywhere, which
 is also why the cross-tool journal snapshot only works within a single browser/device.

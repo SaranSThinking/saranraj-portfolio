@@ -37,7 +37,7 @@
       <span class="pp-badge">Case Study &middot; Personal Study Predictor &middot; 2025</span>
       <h1>Personal Study Predictor</h1>
       <p class="hero-tagline">A least-squares regression model fitted live on your own study-hours-vs-score
-      data — the same math behind demand forecasting, pointed at your next exam instead.</p>
+      data - the same math behind demand forecasting, pointed at your next exam instead.</p>
       <p class="hero-summary">Log a handful of past study sessions and their scores, and the model tells you
       the trend line, how well it fits, and how many hours you'd need for a target grade.</p>
 
@@ -45,7 +45,7 @@
         <div class="pp-stat-chip"><span class="stat-num">y=mx+b</span><span class="stat-label">Least-squares fit</span></div>
         <div class="pp-stat-chip"><span class="stat-num">R&sup2;</span><span class="stat-label">Goodness-of-fit, live</span></div>
         <div class="pp-stat-chip"><span class="stat-num">&larr;</span><span class="stat-label">Reverse-solve: hours for target score</span></div>
-        <div class="pp-stat-chip"><span class="stat-num">0</span><span class="stat-label">server upload — runs in your browser</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">0</span><span class="stat-label">server upload - runs in your browser</span></div>
       </div>
     </div>
   </section>
@@ -55,7 +55,7 @@
       <p class="pp-section-num">01 /</p>
       <h2>The Problem.</h2>
       <p class="pp-section-mono">// "how much should I actually study for this?"</p>
-      <p class="pp-body">Students plan study time by gut feel — "I'll do 3 hours" — with no reference to how
+      <p class="pp-body">Students plan study time by gut feel - "I'll do 3 hours" - with no reference to how
       their own past effort has actually translated into scores. The relationship is rarely made explicit, so
       the same over- or under-preparation mistakes repeat every exam cycle.</p>
       <p class="pp-body">A simple regression model, fit on a student's own history rather than a generic study
@@ -77,7 +77,7 @@
         <div class="pp-method-card">
           <h4>R&sup2; Goodness of Fit</h4>
           <p><code>R&sup2; = 1 &minus; SS_res / SS_tot</code>. How much of the score variation the study-hours
-          trend actually explains — low R&sup2; means other factors dominate.</p>
+          trend actually explains - low R&sup2; means other factors dominate.</p>
         </div>
         <div class="pp-method-card">
           <h4>Forward Prediction</h4>
@@ -99,15 +99,15 @@
       <p class="pp-section-mono">// shipped features</p>
       <div class="pp-feature-grid">
         <div class="pp-feature-card"><h4>Log past sessions</h4><p>Add study-hours/score pairs from real past
-        exams — the model refits instantly on every new point.</p></div>
+        exams - the model refits instantly on every new point.</p></div>
         <div class="pp-feature-card"><h4>Live scatter + trend line</h4><p>An inline SVG plot of every data point
-        against the fitted regression line — no charting library required.</p></div>
+        against the fitted regression line - no charting library required.</p></div>
         <div class="pp-feature-card"><h4>Forward prediction</h4><p>Enter planned study hours, get a predicted
         score from your own trend.</p></div>
         <div class="pp-feature-card"><h4>Reverse target-solving</h4><p>Enter a target score, get the study
         hours your own history implies you'd need.</p></div>
         <div class="pp-feature-card"><h4>Fit-quality warning</h4><p>Flags when R&sup2; is too low to trust the
-        prediction — teaching that not every trend line is reliable.</p></div>
+        prediction - teaching that not every trend line is reliable.</p></div>
         <div class="pp-feature-card"><h4>Sample dataset</h4><p>Preloaded study-hours/score history so you can
         see the model work before logging your own.</p></div>
       </div>
@@ -133,7 +133,7 @@
         <div class="pp-outcome">
           <h4 style="color:var(--navy); margin:0 0 10px;">Outcome</h4>
           <p>A student sees, in real numbers, whether "study more" actually predicts a better score for them
-          specifically — and gets a concrete hours target instead of a vague intention.</p>
+          specifically - and gets a concrete hours target instead of a vague intention.</p>
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
-# Saranraj Ramachandran — Industrial Engineering Portfolio
+# Saranraj Ramachandran - Industrial Engineering Portfolio
 
 **Live site:** https://saransthinking.github.io/saranraj-portfolio/
 
 A static portfolio site for Saranraj Ramachandran, Teaching Fellow (Department of Industrial Engineering, CEG,
 Anna University). Nine expertise-domain pages, each with live interactive calculators grounded in real IE/AI-ML
 methods, plus a "Learn by Doing" hub of seven hands-on personal-productivity tools. Pure HTML/CSS/vanilla
-JavaScript — no framework, no build step, no server-side code.
+JavaScript - no framework, no build step, no server-side code.
 
 ## Site Map
 
@@ -39,8 +39,8 @@ Each `projects/<slug>/` folder has its own `README.md` with that project's probl
 saranraj-portfolio/
 ├── index.html                 # Homepage
 ├── personal-projects.html     # "Learn by Doing" hub
-├── css/                       # Shared stylesheets — see css/README.md
-├── js/                        # Shared + per-page scripts — see js/README.md
+├── css/                       # Shared stylesheets - see css/README.md
+├── js/                        # Shared + per-page scripts - see js/README.md
 └── projects/
     └── <slug>/
         ├── index.html          # The project's page
@@ -50,13 +50,13 @@ saranraj-portfolio/
 ## Shared Assets
 
 ### `css/`
-- **`style.css`** — the core design system: CSS custom-property palette (dark theme — near-black background,
+- **`style.css`** - the core design system: CSS custom-property palette (dark theme - near-black background,
   electric-blue/emerald accents), typography (Inter + JetBrains Mono), header/nav, hero, section templates,
   expertise cards, the `.tool-card` component used by every calculator, capability badges, timeline, research/
   publication lists, skills chips, footer, the domain-page template (mode toggle, case-study cards), the
   personal-project case-study template (`.pp-*` classes: stat rows, numbered sections, methodology/feature
   grids), and all responsive breakpoints.
-- **`personal-projects.css`** — widget-level styles specific to the "Learn by Doing" live tools: pantry item
+- **`personal-projects.css`** - widget-level styles specific to the "Learn by Doing" live tools: pantry item
   cards and health-status badges, log forms, data tables, the MCDM rating matrix and ranked bars, journal
   entries, and the live-indicator dot.
 
