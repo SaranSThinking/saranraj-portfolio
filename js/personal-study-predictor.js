@@ -68,7 +68,7 @@ function pspRenderChart(points, fit) {
   const yFor = y => padT + (1 - (y - yMin) / yRange) * (height - padT - padB);
 
   const circles = points.map(p =>
-    `<circle cx="${xFor(p.hours)}" cy="${yFor(p.score)}" r="4" fill="#10b981" />`
+    `<circle cx="${xFor(p.hours)}" cy="${yFor(p.score)}" r="4" fill="#059669" />`
   ).join('');
 
   const lineX1 = xMin, lineX2 = xMax;
@@ -77,7 +77,7 @@ function pspRenderChart(points, fit) {
 
   chartEl.innerHTML = `
     <svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;background:var(--bg-alt);border-radius:10px;">
-      <line x1="${xFor(lineX1)}" y1="${yFor(lineY1)}" x2="${xFor(lineX2)}" y2="${yFor(lineY2)}" stroke="#5e6ad2" stroke-width="1.5" />
+      <line x1="${xFor(lineX1)}" y1="${yFor(lineY1)}" x2="${xFor(lineX2)}" y2="${yFor(lineY2)}" stroke="#4338ca" stroke-width="1.5" />
       ${circles}
     </svg>
   `;
@@ -91,7 +91,7 @@ function pspRenderFit(fit) {
   }
   let warning = '';
   if (fit.r2 < 0.5) {
-    warning = '<br><span style="color:#ef4444;">Fit is weak — other factors likely matter more than hours studied for you.</span>';
+    warning = '<br><span style="color:#dc2626;">Fit is weak — other factors likely matter more than hours studied for you.</span>';
   }
   fitEl.innerHTML =
     `Fitted line: score = <strong>${fit.slope.toFixed(2)}</strong> &times; hours + <strong>${fit.intercept.toFixed(2)}</strong> ` +

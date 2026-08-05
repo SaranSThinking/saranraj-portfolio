@@ -54,12 +54,12 @@ function pbeRenderChart(input, result) {
 
   chartEl.innerHTML = `
     <svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;background:var(--bg-alt);border-radius:10px;">
-      <line x1="${crossX}" y1="${padT}" x2="${crossX}" y2="${height - padB}" stroke="#10b981" stroke-dasharray="4,4" stroke-width="1.2" />
-      <text x="${crossX}" y="${padT + 10}" text-anchor="middle" font-size="10" fill="#10b981">breakeven</text>
-      <polyline points="${buyLine}" fill="none" stroke="#5e6ad2" stroke-width="1.8" />
-      <polyline points="${altLine}" fill="none" stroke="#ef4444" stroke-width="1.8" />
-      <text x="${padL}" y="${padT}" font-size="10" fill="#5e6ad2">— Buy</text>
-      <text x="${padL + 50}" y="${padT}" font-size="10" fill="#ef4444">— Pay per use</text>
+      <line x1="${crossX}" y1="${padT}" x2="${crossX}" y2="${height - padB}" stroke="#059669" stroke-dasharray="4,4" stroke-width="1.2" />
+      <text x="${crossX}" y="${padT + 10}" text-anchor="middle" font-size="10" fill="#059669">breakeven</text>
+      <polyline points="${buyLine}" fill="none" stroke="#4338ca" stroke-width="1.8" />
+      <polyline points="${altLine}" fill="none" stroke="#dc2626" stroke-width="1.8" />
+      <text x="${padL}" y="${padT}" font-size="10" fill="#4338ca">— Buy</text>
+      <text x="${padL + 50}" y="${padT}" font-size="10" fill="#dc2626">— Pay per use</text>
     </svg>
   `;
 }
