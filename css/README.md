@@ -11,10 +11,10 @@ The core design system. Organized top to bottom as:
 |---|---|
 | `:root` variables | Dark-theme color palette (`--bg`, `--card-bg`, `--navy` [electric blue accent], `--teal` [emerald accent], `--red`, `--amber`, `--text`, `--text-muted`, `--border`), font stacks (`--font-body`: Inter, `--font-mono`: JetBrains Mono), shadows, radius |
 | Header / nav | `.site-header`, `.main-nav`, `.nav-cta`, mobile `.nav-toggle` |
-| Hero | `.hero`, `.eyebrow`, `.hero-stats` — used on the homepage and (as `.pp-hero`) on project pages |
-| Section templates | `.section`, `.section-alt`, `.kicker`, `.section-title` — the alternating-background section rhythm used everywhere |
-| About / expertise grid | `.about-grid`, `.expertise-grid`, `.expertise-card` — the 9 domain cards on the homepage |
-| **Tool cards** | `.tool-card`, `.tool-header`, `.tool-tag`, `.tool-inputs`, `.tool-result`, `.capability-badge` — the component every calculator on every domain page is built from |
+| Hero | `.hero`, `.eyebrow`, `.hero-stats` - used on the homepage and (as `.pp-hero`) on project pages |
+| Section templates | `.section`, `.section-alt`, `.kicker`, `.section-title` - the alternating-background section rhythm used everywhere |
+| About / expertise grid | `.about-grid`, `.expertise-grid`, `.expertise-card` - the 9 domain cards on the homepage |
+| **Tool cards** | `.tool-card`, `.tool-header`, `.tool-tag`, `.tool-inputs`, `.tool-result`, `.capability-badge` - the component every calculator on every domain page is built from |
 | DMAIC | `.dmaic-steps`, `.dmaic-step`, `.dmaic-letter` |
 | Timeline / research / skills | `.timeline`, `.research-grid`, `.pub-list`, `.skills-grid`, `.chip` |
 | Domain-page template | `.domain-hero`, `.back-link`, `.mode-toggle` (RULA/REBA switcher), `.case-grid`, `.case-card` |
@@ -33,7 +33,7 @@ Widget-level styles specific to the interactive apps under `projects/personal-*/
 | Generic log/table widgets | `.pp-log-form`, `.pp-data-table` (reused by the Quality Control, Study Predictor, Productivity OEE, Breakeven, and Ergonomic Analysis tools) |
 | MCDM | `.pmcdm-matrix-table` (dynamically generated rating grid), `.pp-rank-row` / `.pp-rank-fill` (ranked horizontal bars) |
 | Journal | `.pj-entry`, `.pj-snapshot-chip` (cross-tool data snapshot chips) |
-| Live indicator | `.live-dot` — the pulsing red dot used in each project's "live tool" header |
+| Live indicator | `.live-dot` - the pulsing red dot used in each project's "live tool" header |
 
 Both files use the same `:root` custom properties from `style.css`, so any palette change there cascades
-automatically — no color values are duplicated in `personal-projects.css`.
+automatically - no color values are duplicated in `personal-projects.css`.

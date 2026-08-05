@@ -37,15 +37,15 @@
       <span class="pp-badge">Case Study &middot; Personal Quality Control &middot; 2025</span>
       <h1>Personal Quality Control</h1>
       <p class="hero-tagline">An Individuals&ndash;Moving Range (I-MR) control chart applied to a metric from
-      your own life — sleep, steps, study hours, mood, anything you log daily.</p>
+      your own life - sleep, steps, study hours, mood, anything you log daily.</p>
       <p class="hero-summary">The same statistical process control logic that flags a defective batch on a
-      factory line can flag the one night your sleep genuinely broke pattern — versus normal day-to-day noise.</p>
+      factory line can flag the one night your sleep genuinely broke pattern - versus normal day-to-day noise.</p>
 
       <div class="pp-stat-row">
         <div class="pp-stat-chip"><span class="stat-num">I-MR</span><span class="stat-label">Individuals & Moving Range chart</span></div>
         <div class="pp-stat-chip"><span class="stat-num">2.66&sigma;</span><span class="stat-label">Control limit constant (d2, n=2)</span></div>
-        <div class="pp-stat-chip"><span class="stat-num">1</span><span class="stat-label">reading per day — no subgroups needed</span></div>
-        <div class="pp-stat-chip"><span class="stat-num">0</span><span class="stat-label">server upload — runs in your browser</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">1</span><span class="stat-label">reading per day - no subgroups needed</span></div>
+        <div class="pp-stat-chip"><span class="stat-num">0</span><span class="stat-label">server upload - runs in your browser</span></div>
       </div>
     </div>
   </section>
@@ -57,7 +57,7 @@
       <p class="pp-section-mono">// "was that day actually unusual, or just noise?"</p>
       <p class="pp-body">Habit trackers show you a graph, but not whether a bad day was a real signal or just
       ordinary variation. Without a baseline and control limits, every dip looks alarming and every improvement
-      looks like a trend — so nothing actually changes behavior.</p>
+      looks like a trend - so nothing actually changes behavior.</p>
       <p class="pp-body">Statistical Process Control solves exactly this problem on a factory floor: separate
       common-cause variation (normal noise) from special-cause variation (something genuinely changed). This
       project applies that same logic to a personal daily metric.</p>
@@ -82,12 +82,12 @@
         </div>
         <div class="pp-method-card">
           <h4>Out-of-Control Flagging</h4>
-          <p>Any day outside the control limits is flagged as a likely special cause — worth investigating,
+          <p>Any day outside the control limits is flagged as a likely special cause - worth investigating,
           unlike ordinary day-to-day fluctuation inside the band.</p>
         </div>
         <div class="pp-method-card">
           <h4>Baseline Re-centering</h4>
-          <p>As you log more days, the center line and limits recompute from your actual running history —
+          <p>As you log more days, the center line and limits recompute from your actual running history -
           your personal process, not a generic benchmark.</p>
         </div>
       </div>
@@ -100,18 +100,18 @@
       <h2>What&rsquo;s in the build.</h2>
       <p class="pp-section-mono">// shipped features</p>
       <div class="pp-feature-grid">
-        <div class="pp-feature-card"><h4>Any metric, your label</h4><p>Name the metric and its unit — sleep
-        hours, steps, study hours, mood score — the math doesn't care what you're measuring.</p></div>
+        <div class="pp-feature-card"><h4>Any metric, your label</h4><p>Name the metric and its unit - sleep
+        hours, steps, study hours, mood score - the math doesn't care what you're measuring.</p></div>
         <div class="pp-feature-card"><h4>One-line daily log</h4><p>Add a date and a value; control limits and
         flags recompute instantly from the full history.</p></div>
         <div class="pp-feature-card"><h4>Live control chart</h4><p>An inline SVG plot of every reading against
-        the center line and control limits — no charting library required.</p></div>
+        the center line and control limits - no charting library required.</p></div>
         <div class="pp-feature-card"><h4>Out-of-control table</h4><p>Every day is listed with its moving range
         and a clear flag for any point outside the limits.</p></div>
         <div class="pp-feature-card"><h4>Sample dataset</h4><p>Loads a 14-day sample with one deliberately
         planted outlier so you can see a real flag before logging your own data.</p></div>
         <div class="pp-feature-card"><h4>Local persistence</h4><p>Your log is saved in the browser between
-        visits — nothing is sent anywhere.</p></div>
+        visits - nothing is sent anywhere.</p></div>
       </div>
     </div>
   </section>
@@ -134,7 +134,7 @@
         </div>
         <div class="pp-outcome">
           <h4 style="color:var(--navy); margin:0 0 10px;">Outcome</h4>
-          <p>A student logging even two weeks of a metric gets a real, personally-calibrated control chart — the
+          <p>A student logging even two weeks of a metric gets a real, personally-calibrated control chart - the
           fastest way to internalize the difference between "normal variation" and "something actually changed"
           that SPC theory is built on.</p>
         </div>
@@ -158,7 +158,7 @@
             <label>Date<input type="date" id="pqcDate"></label>
             <label>Value<input type="number" id="pqcValue" value="7.5" step="0.1"></label>
             <button class="btn btn-small" id="pqcAdd">Add Reading</button>
-            <button class="btn btn-small" id="pqcClear" style="background:#f87272;">Clear Log</button>
+            <button class="btn btn-small" id="pqcClear" style="background:#ef4444;">Clear Log</button>
           </div>
 
           <div id="pqcChart"></div>
