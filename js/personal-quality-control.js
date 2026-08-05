@@ -70,7 +70,7 @@ function pqcRenderChart(result) {
   const linePoints = rows.map((r, i) => `${xFor(i)},${yFor(r.value)}`).join(' ');
 
   const circles = rows.map((r, i) =>
-    `<circle cx="${xFor(i)}" cy="${yFor(r.value)}" r="4" fill="${r.outOfControl ? '#f87272' : '#34d399'}" />`
+    `<circle cx="${xFor(i)}" cy="${yFor(r.value)}" r="4" fill="${r.outOfControl ? '#ef4444' : '#10b981'}" />`
   ).join('');
 
   const refLine = (v, color, label) =>
@@ -79,10 +79,10 @@ function pqcRenderChart(result) {
 
   chartEl.innerHTML = `
     <svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;background:var(--bg-alt);border-radius:10px;">
-      ${refLine(ucl, '#f87272', 'UCL ' + ucl.toFixed(2))}
-      ${refLine(mean, '#4d97ff', 'X̄ ' + mean.toFixed(2))}
-      ${refLine(lcl, '#f87272', 'LCL ' + lcl.toFixed(2))}
-      <polyline points="${linePoints}" fill="none" stroke="#4d97ff" stroke-width="1.5" />
+      ${refLine(ucl, '#ef4444', 'UCL ' + ucl.toFixed(2))}
+      ${refLine(mean, '#5e6ad2', 'X̄ ' + mean.toFixed(2))}
+      ${refLine(lcl, '#ef4444', 'LCL ' + lcl.toFixed(2))}
+      <polyline points="${linePoints}" fill="none" stroke="#5e6ad2" stroke-width="1.5" />
       ${circles}
     </svg>
   `;

@@ -2,7 +2,7 @@
 
 **Live site:** https://saransthinking.github.io/saranraj-portfolio/
 
-A static portfolio site for Saranraj Ramachandran, Teaching Fellow (Department of Industrial Engineering, CEG,
+A static portfolio site for Saranraj Ramachandran, Lecturer (Department of Industrial Engineering, CEG,
 Anna University). Nine expertise-domain pages, each with live interactive calculators grounded in real IE/AI-ML
 methods, plus a "Learn by Doing" hub of seven hands-on personal-productivity tools. Pure HTML/CSS/vanilla
 JavaScript - no framework, no build step, no server-side code.
