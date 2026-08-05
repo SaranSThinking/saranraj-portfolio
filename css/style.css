@@ -657,6 +657,16 @@ img, svg { max-width: 100%; display: block; }
   font-style: italic;
 }
 
+.group-heading {
+  font-family: var(--font-display);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
 .case-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
