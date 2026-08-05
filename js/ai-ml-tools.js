@@ -102,15 +102,15 @@ document.getElementById('rulCalc').addEventListener('click', () => {
   }
 
   if (current >= threshold) {
-    resultEl.innerHTML = `Sensor reading has already reached the failure threshold — <strong>schedule maintenance now</strong>.`;
+    resultEl.innerHTML = `Sensor reading has already reached the failure threshold - <strong>schedule maintenance now</strong>.`;
     return;
   }
 
   const rulDays = (threshold - current) / rate;
   let urgency;
-  if (rulDays <= 3) urgency = 'Critical — schedule maintenance immediately';
-  else if (rulDays <= 10) urgency = 'Urgent — schedule within the next maintenance window';
-  else urgency = 'Stable — monitor on normal schedule';
+  if (rulDays <= 3) urgency = 'Critical - schedule maintenance immediately';
+  else if (rulDays <= 10) urgency = 'Urgent - schedule within the next maintenance window';
+  else urgency = 'Stable - monitor on normal schedule';
 
   resultEl.innerHTML =
     `Estimated RUL = <strong>${rulDays.toFixed(1)} days</strong> &middot; ${urgency}`;

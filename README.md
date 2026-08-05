@@ -50,8 +50,8 @@ saranraj-portfolio/
 ## Shared Assets
 
 ### `css/`
-- **`style.css`** - the core design system: CSS custom-property palette (dark theme - near-black background,
-  electric-blue/emerald accents), typography (Inter + JetBrains Mono), header/nav, hero, section templates,
+- **`style.css`** - the core design system: CSS custom-property palette (light theme - off-white background,
+  deep indigo/emerald accents), typography (Inter + JetBrains Mono), header/nav, hero, section templates,
   expertise cards, the `.tool-card` component used by every calculator, capability badges, timeline, research/
   publication lists, skills chips, footer, the domain-page template (mode toggle, case-study cards), the
   personal-project case-study template (`.pp-*` classes: stat rows, numbered sections, methodology/feature

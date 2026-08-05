@@ -12,7 +12,7 @@ document.getElementById('tlxCalc').addEventListener('click', () => {
   if (raw <= 20) level = 'Low workload';
   else if (raw <= 50) level = 'Moderate workload';
   else if (raw <= 70) level = 'High workload';
-  else level = 'Very high workload — redesign the task';
+  else level = 'Very high workload - redesign the task';
 
   document.getElementById('tlxResult').innerHTML =
     `Raw TLX = <strong>${raw.toFixed(1)}</strong> / 100 &middot; ${level}`;
@@ -78,8 +78,8 @@ document.getElementById('sdtCalc').addEventListener('click', () => {
   const criterion = -0.5 * (zHit + zFa);
 
   let bias;
-  if (criterion > 0.2) bias = 'Conservative — biased toward missing signals';
-  else if (criterion < -0.2) bias = 'Liberal — biased toward false alarms';
+  if (criterion > 0.2) bias = 'Conservative - biased toward missing signals';
+  else if (criterion < -0.2) bias = 'Liberal - biased toward false alarms';
   else bias = 'Roughly neutral response bias';
 
   resultEl.innerHTML =

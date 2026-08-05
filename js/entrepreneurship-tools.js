@@ -8,8 +8,8 @@ document.getElementById('eiCalc').addEventListener('click', () => {
   let level;
   if (pct >= 80) level = 'Very high entrepreneurial intention';
   else if (pct >= 60) level = 'Moderate-to-high intention';
-  else if (pct >= 40) level = 'Moderate intention — exploring the idea';
-  else level = 'Low intention — leaning toward stability';
+  else if (pct >= 40) level = 'Moderate intention - exploring the idea';
+  else level = 'Low intention - leaning toward stability';
 
   document.getElementById('eiResult').innerHTML =
     `Score = <strong>${total}/25</strong> (${pct.toFixed(0)}%) &middot; ${level}`;

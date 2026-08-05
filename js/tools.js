@@ -7,8 +7,8 @@ document.getElementById('oeeCalc').addEventListener('click', () => {
 
   let tier;
   if (oee >= 85) tier = 'World-class';
-  else if (oee >= 60) tier = 'Typical — room to improve';
-  else tier = 'Low — investigate losses';
+  else if (oee >= 60) tier = 'Typical - room to improve';
+  else tier = 'Low - investigate losses';
 
   document.getElementById('oeeResult').innerHTML =
     `OEE = <strong>${oee.toFixed(1)}%</strong> &middot; ${tier}`;
@@ -34,8 +34,8 @@ document.getElementById('cpkCalc').addEventListener('click', () => {
 
   let verdict;
   if (cpk >= 1.33) verdict = 'Capable process';
-  else if (cpk >= 1.0) verdict = 'Marginally capable — tighten control';
-  else verdict = 'Not capable — process exceeds spec limits';
+  else if (cpk >= 1.0) verdict = 'Marginally capable - tighten control';
+  else verdict = 'Not capable - process exceeds spec limits';
 
   resultEl.innerHTML =
     `Cp = <strong>${cp.toFixed(2)}</strong> &middot; Cpk = <strong>${cpk.toFixed(2)}</strong> &middot; ${verdict}`;
@@ -49,7 +49,7 @@ document.getElementById('ergoCalc').addEventListener('click', () => {
   const score = posture + load + duration;
 
   let level, action;
-  if (score <= 4) { level = 'Low'; action = 'Acceptable — monitor periodically.'; }
+  if (score <= 4) { level = 'Low'; action = 'Acceptable - monitor periodically.'; }
   else if (score <= 6) { level = 'Medium'; action = 'Further investigation needed; change may be required.'; }
   else if (score <= 8) { level = 'High'; action = 'Investigate and implement change soon.'; }
   else { level = 'Very High'; action = 'Implement change immediately.'; }

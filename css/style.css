@@ -915,4 +915,7 @@ img, svg { max-width: 100%; display: block; }
   .main-nav.open { transform: translateY(0); }
   .nav-toggle { display: flex; }
   .dmaic-steps { grid-template-columns: 1fr; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .feedback-average-stats { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
 }

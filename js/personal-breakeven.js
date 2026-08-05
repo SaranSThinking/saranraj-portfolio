@@ -14,13 +14,13 @@ function pbeCompute(input) {
   let breakEvenUses = null, breakEvenWeeks = null, verdict;
 
   if (savingsPerUse <= 0) {
-    verdict = 'Never breaks even — the per-use cost is not actually lower when you own it.';
+    verdict = 'Never breaks even - the per-use cost is not actually lower when you own it.';
   } else {
     breakEvenUses = input.fixed / savingsPerUse;
     breakEvenWeeks = input.usesPerWeek > 0 ? breakEvenUses / input.usesPerWeek : Infinity;
     verdict = breakEvenWeeks <= input.horizon
-      ? `Worth buying — breaks even in ~${breakEvenWeeks.toFixed(1)} weeks, within your ${input.horizon}-week horizon.`
-      : `Not yet worth it — breaks even in ~${breakEvenWeeks.toFixed(1)} weeks, beyond your ${input.horizon}-week horizon.`;
+      ? `Worth buying - breaks even in ~${breakEvenWeeks.toFixed(1)} weeks, within your ${input.horizon}-week horizon.`
+      : `Not yet worth it - breaks even in ~${breakEvenWeeks.toFixed(1)} weeks, beyond your ${input.horizon}-week horizon.`;
   }
 
   return { savingsPerUse, breakEvenUses, breakEvenWeeks, verdict };
@@ -58,8 +58,8 @@ function pbeRenderChart(input, result) {
       <text x="${crossX}" y="${padT + 10}" text-anchor="middle" font-size="10" fill="#059669">breakeven</text>
       <polyline points="${buyLine}" fill="none" stroke="#4338ca" stroke-width="1.8" />
       <polyline points="${altLine}" fill="none" stroke="#dc2626" stroke-width="1.8" />
-      <text x="${padL}" y="${padT}" font-size="10" fill="#4338ca">— Buy</text>
-      <text x="${padL + 50}" y="${padT}" font-size="10" fill="#dc2626">— Pay per use</text>
+      <text x="${padL}" y="${padT}" font-size="10" fill="#4338ca">- Buy</text>
+      <text x="${padL + 50}" y="${padT}" font-size="10" fill="#dc2626">- Pay per use</text>
     </svg>
   `;
 }

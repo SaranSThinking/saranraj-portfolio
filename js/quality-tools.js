@@ -18,8 +18,8 @@ document.getElementById('cpkCalc').addEventListener('click', () => {
 
   let verdict;
   if (cpk >= 1.33) verdict = 'Capable process';
-  else if (cpk >= 1.0) verdict = 'Marginally capable — tighten control';
-  else verdict = 'Not capable — process exceeds spec limits';
+  else if (cpk >= 1.0) verdict = 'Marginally capable - tighten control';
+  else verdict = 'Not capable - process exceeds spec limits';
 
   resultEl.innerHTML =
     `Cp = <strong>${cp.toFixed(2)}</strong> &middot; Cpk = <strong>${cpk.toFixed(2)}</strong> &middot; ${verdict}`;

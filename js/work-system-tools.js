@@ -7,8 +7,8 @@ document.getElementById('oeeCalc').addEventListener('click', () => {
 
   let tier;
   if (oee >= 85) tier = 'World-class';
-  else if (oee >= 60) tier = 'Typical — room to improve';
-  else tier = 'Low — investigate losses';
+  else if (oee >= 60) tier = 'Typical - room to improve';
+  else tier = 'Low - investigate losses';
 
   document.getElementById('oeeResult').innerHTML =
     `OEE = <strong>${oee.toFixed(1)}%</strong> &middot; ${tier}`;
@@ -50,7 +50,7 @@ document.getElementById('lbCalc').addEventListener('click', () => {
   const maxTask = Math.max(...tasks);
   if (maxTask > cycle) {
     resultEl.innerHTML =
-      `Task of <strong>${maxTask}</strong> exceeds the cycle time of <strong>${cycle}</strong> — ` +
+      `Task of <strong>${maxTask}</strong> exceeds the cycle time of <strong>${cycle}</strong> - ` +
       `no feasible line balance until that task is split or the cycle time is raised.`;
     return;
   }

@@ -9,7 +9,7 @@ The core design system. Organized top to bottom as:
 
 | Section | What it styles |
 |---|---|
-| `:root` variables | Dark-theme color palette (`--bg`, `--card-bg`, `--navy` [electric blue accent], `--teal` [emerald accent], `--red`, `--amber`, `--text`, `--text-muted`, `--border`), font stacks (`--font-body`: Inter, `--font-mono`: JetBrains Mono), shadows, radius |
+| `:root` variables | Light-theme color palette (`--bg`, `--card-bg`, `--navy` [deep indigo accent], `--teal` [muted emerald accent], `--red`, `--amber`, `--text`, `--text-muted`, `--border`), font stacks (`--font-body`: Inter, `--font-mono`: JetBrains Mono), shadows, radius |
 | Header / nav | `.site-header`, `.main-nav`, `.nav-cta`, mobile `.nav-toggle` |
 | Hero | `.hero`, `.eyebrow`, `.hero-stats` - used on the homepage and (as `.pp-hero`) on project pages |
 | Section templates | `.section`, `.section-alt`, `.kicker`, `.section-title` - the alternating-background section rhythm used everywhere |

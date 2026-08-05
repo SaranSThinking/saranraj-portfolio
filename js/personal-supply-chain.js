@@ -91,7 +91,7 @@ function pscRenderItems() {
         </div>
       </div>
     `;
-  }).join('') || '<p class="tool-desc">No items yet — add one above or reset to the sample household.</p>';
+  }).join('') || '<p class="tool-desc">No items yet - add one above or reset to the sample household.</p>';
 
   pscRenderShoppingList(z);
 }
@@ -113,7 +113,7 @@ function pscRenderShoppingList(z) {
     const m = pscMetrics(item, z);
     const qty = Math.max(Math.ceil(m.eoq), item.minOrder);
     (bySupplier[item.supplier] = bySupplier[item.supplier] || []).push(
-      `${item.name} — ${qty} ${item.unit}`
+      `${item.name} - ${qty} ${item.unit}`
     );
   });
 

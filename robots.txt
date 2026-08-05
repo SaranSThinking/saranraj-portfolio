@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saransthinking.github.io/saranraj-portfolio/sitemap.xml

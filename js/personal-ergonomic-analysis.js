@@ -51,16 +51,16 @@ function peaRun() {
   const score = Math.max(0, Math.min(100, rawScore));
 
   let tier;
-  if (score >= 80) tier = 'Good — minor or no issues';
-  else if (score >= 60) tier = 'Needs improvement — a few fixable issues';
-  else tier = 'Poor — multiple issues compounding';
+  if (score >= 80) tier = 'Good - minor or no issues';
+  else if (score >= 60) tier = 'Needs improvement - a few fixable issues';
+  else tier = 'Poor - multiple issues compounding';
 
   scoreEl.innerHTML = `Workspace Ergonomic Score = <strong>${score.toFixed(0)}/100</strong> &middot; ${tier}`;
 
   const recs = [];
-  if (deskPenalty > 0) recs.push(`Desk is ${desk > recDesk ? 'higher' : 'lower'} than recommended by ${Math.abs(deskDelta).toFixed(1)}cm — target ≈ ${recDesk.toFixed(1)}cm.`);
-  if (chairPenalty > 0) recs.push(`Chair is ${chair > recChair ? 'higher' : 'lower'} than recommended by ${Math.abs(chairDelta).toFixed(1)}cm — target ≈ ${recChair.toFixed(1)}cm.`);
-  if (monitorPenalty > 0) recs.push(`Monitor top is ${monitor > recMonitor ? 'higher' : 'lower'} than recommended by ${Math.abs(monitorDelta).toFixed(1)}cm — target ≈ ${recMonitor.toFixed(1)}cm.`);
+  if (deskPenalty > 0) recs.push(`Desk is ${desk > recDesk ? 'higher' : 'lower'} than recommended by ${Math.abs(deskDelta).toFixed(1)}cm - target ≈ ${recDesk.toFixed(1)}cm.`);
+  if (chairPenalty > 0) recs.push(`Chair is ${chair > recChair ? 'higher' : 'lower'} than recommended by ${Math.abs(chairDelta).toFixed(1)}cm - target ≈ ${recChair.toFixed(1)}cm.`);
+  if (monitorPenalty > 0) recs.push(`Monitor top is ${monitor > recMonitor ? 'higher' : 'lower'} than recommended by ${Math.abs(monitorDelta).toFixed(1)}cm - target ≈ ${recMonitor.toFixed(1)}cm.`);
   if (upperArm >= 2) recs.push('Bring keyboard/mouse closer to reduce shoulder reach.');
   if (wrist >= 2) recs.push('Consider a wrist rest or lower keyboard tray to neutralize wrist angle.');
   if (neck >= 2) recs.push('Raise monitor top closer to eye level to reduce neck flexion.');
@@ -68,7 +68,7 @@ function peaRun() {
 
   recEl.innerHTML = recs.length
     ? `<div class="tool-result"><strong>Prioritized fixes:</strong><ul style="margin:8px 0 0;padding-left:18px;">${recs.map(r => `<li>${r}</li>`).join('')}</ul></div>`
-    : '<div class="tool-result">No issues flagged — your setup matches the recommended fit and posture targets.</div>';
+    : '<div class="tool-result">No issues flagged - your setup matches the recommended fit and posture targets.</div>';
 
   peaEntries.push({
     date: new Date().toISOString().slice(0, 10),

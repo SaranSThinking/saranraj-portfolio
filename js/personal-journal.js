@@ -120,7 +120,7 @@ function pjRenderSnapshotChips(snapshot, containerId) {
   const el = document.getElementById(containerId);
   if (!snapshot.length) {
     el.innerHTML = containerId === 'pjSnapshotPreview'
-      ? 'No data yet — visit the other tools and log a few things, then come back here.'
+      ? 'No data yet - visit the other tools and log a few things, then come back here.'
       : '';
     return;
   }
@@ -191,12 +191,12 @@ document.getElementById('pjSample').addEventListener('click', () => {
   pjEntries.push(
     {
       date: iso(2), tag: 'Productivity',
-      text: 'Rough day — kept getting pulled into meetings. Availability was clearly the bottleneck, not effort.',
+      text: 'Rough day - kept getting pulled into meetings. Availability was clearly the bottleneck, not effort.',
       snapshot: [{ label: 'Productivity', text: 'Avg OEE 52% across 3 day(s)' }]
     },
     {
       date: iso(1), tag: 'Study',
-      text: 'Fit is finally strong enough to trust — going with the trend line\'s recommended hours for the next exam.',
+      text: 'Fit is finally strong enough to trust - going with the trend line\'s recommended hours for the next exam.',
       snapshot: [{ label: 'Study', text: '8 sessions, R&sup2;=0.94' }]
     },
     {

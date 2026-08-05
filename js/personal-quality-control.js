@@ -97,7 +97,7 @@ function pqcRenderTable(result, unit) {
     <tr>
       <td>${r.date}</td>
       <td>${r.value}</td>
-      <td>${r.mr === null ? '—' : r.mr.toFixed(2)}</td>
+      <td>${r.mr === null ? '-' : r.mr.toFixed(2)}</td>
       <td class="${r.outOfControl ? 'pp-flag-out' : ''}">${r.outOfControl ? 'OUT OF CONTROL' : 'In control'}</td>
     </tr>
   `).join('');

@@ -180,9 +180,9 @@ document.getElementById('bwCalc').addEventListener('click', () => {
   const ratio = (cvOrders ** 2) / (cvDemand ** 2);
 
   let verdict;
-  if (ratio <= 1.1) verdict = 'Little to no amplification — orders track demand closely.';
-  else if (ratio <= 2) verdict = 'Moderate bullwhip effect — some amplification upstream.';
-  else verdict = 'Strong bullwhip effect — orders are amplifying demand signal significantly.';
+  if (ratio <= 1.1) verdict = 'Little to no amplification - orders track demand closely.';
+  else if (ratio <= 2) verdict = 'Moderate bullwhip effect - some amplification upstream.';
+  else verdict = 'Strong bullwhip effect - orders are amplifying demand signal significantly.';
 
   resultEl.innerHTML =
     `Bullwhip Ratio (CV&sup2; orders / CV&sup2; demand) = <strong>${ratio.toFixed(2)}</strong><br>${verdict}`;
@@ -202,10 +202,10 @@ document.getElementById('srCalc').addEventListener('click', () => {
 
   const score = likelihood * impact * detect;
   let tier;
-  if (score >= 80) tier = 'Critical exposure — mitigate immediately';
-  else if (score >= 45) tier = 'High exposure — active mitigation plan needed';
-  else if (score >= 20) tier = 'Moderate exposure — monitor and plan contingency';
-  else tier = 'Low exposure — routine monitoring';
+  if (score >= 80) tier = 'Critical exposure - mitigate immediately';
+  else if (score >= 45) tier = 'High exposure - active mitigation plan needed';
+  else if (score >= 20) tier = 'Moderate exposure - monitor and plan contingency';
+  else tier = 'Low exposure - routine monitoring';
 
   resultEl.innerHTML = `Risk Score = <strong>${score}</strong> / 125 &middot; ${tier}`;
 });
@@ -225,10 +225,10 @@ document.getElementById('resCalc').addEventListener('click', () => {
   const pct = (total / 20) * 100;
 
   let tier;
-  if (pct >= 80) tier = 'Resilient — well-positioned to absorb disruption';
-  else if (pct >= 55) tier = 'Developing resilience — real gaps remain';
-  else if (pct >= 30) tier = 'Fragile — a single disruption could be severe';
-  else tier = 'Highly vulnerable — minimal resilience capacity';
+  if (pct >= 80) tier = 'Resilient - well-positioned to absorb disruption';
+  else if (pct >= 55) tier = 'Developing resilience - real gaps remain';
+  else if (pct >= 30) tier = 'Fragile - a single disruption could be severe';
+  else tier = 'Highly vulnerable - minimal resilience capacity';
 
   resultEl.innerHTML = `Resilience Score = <strong>${total}/20</strong> (${pct.toFixed(0)}%) &middot; ${tier}`;
 });

@@ -106,9 +106,9 @@ function ppoRenderSummary(entries) {
   const worst = Math.min(...oeeValues);
 
   let tier;
-  if (avg >= 85) tier = 'World-class average — rare, and worth understanding why.';
-  else if (avg >= 60) tier = 'Typical range — look at the lowest-scoring days for the biggest loss.';
-  else tier = 'Low average — availability or quality is likely the dominant loss, check the breakdown.';
+  if (avg >= 85) tier = 'World-class average - rare, and worth understanding why.';
+  else if (avg >= 60) tier = 'Typical range - look at the lowest-scoring days for the biggest loss.';
+  else tier = 'Low average - availability or quality is likely the dominant loss, check the breakdown.';
 
   summaryEl.innerHTML =
     `Average OEE across ${entries.length} day(s) = <strong>${avg.toFixed(1)}%</strong> &middot; ` +

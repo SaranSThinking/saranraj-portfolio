@@ -12,7 +12,7 @@ document.getElementById('fmeaCalc').addEventListener('click', () => {
 
   const rpn = sev * occ * det;
   let tier;
-  if (rpn >= 200) tier = 'Critical — act immediately';
+  if (rpn >= 200) tier = 'Critical - act immediately';
   else if (rpn >= 100) tier = 'High priority';
   else if (rpn >= 50) tier = 'Moderate priority';
   else tier = 'Low priority';
@@ -50,10 +50,10 @@ document.getElementById('s5Calc').addEventListener('click', () => {
   const pct = (total / 25) * 100;
 
   let tier;
-  if (pct >= 80) tier = 'Excellent — embedded 5S culture';
-  else if (pct >= 60) tier = 'Good — sustain and standardize further';
-  else if (pct >= 40) tier = 'Developing — needs consistent reinforcement';
-  else tier = 'Weak — 5S not yet established';
+  if (pct >= 80) tier = 'Excellent - embedded 5S culture';
+  else if (pct >= 60) tier = 'Good - sustain and standardize further';
+  else if (pct >= 40) tier = 'Developing - needs consistent reinforcement';
+  else tier = 'Weak - 5S not yet established';
 
   resultEl.innerHTML = `Score = <strong>${total}/25</strong> (${pct.toFixed(0)}%) &middot; ${tier}`;
 });

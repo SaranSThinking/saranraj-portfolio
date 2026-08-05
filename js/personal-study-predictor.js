@@ -91,7 +91,7 @@ function pspRenderFit(fit) {
   }
   let warning = '';
   if (fit.r2 < 0.5) {
-    warning = '<br><span style="color:#dc2626;">Fit is weak — other factors likely matter more than hours studied for you.</span>';
+    warning = '<br><span style="color:#dc2626;">Fit is weak - other factors likely matter more than hours studied for you.</span>';
   }
   fitEl.innerHTML =
     `Fitted line: score = <strong>${fit.slope.toFixed(2)}</strong> &times; hours + <strong>${fit.intercept.toFixed(2)}</strong> ` +
@@ -159,7 +159,7 @@ document.getElementById('pspCalcBtn').addEventListener('click', () => {
   }
   if (!isNaN(targetScore)) {
     if (Math.abs(slope) < 1e-9) {
-      html += `Slope is essentially flat — study hours don't predict score changes in this data.`;
+      html += `Slope is essentially flat - study hours don't predict score changes in this data.`;
     } else {
       const neededHours = (targetScore - intercept) / slope;
       html += `To reach a score of <strong>${targetScore}</strong>, the trend implies &asymp; <strong>${neededHours.toFixed(1)}h</strong> of study.`;

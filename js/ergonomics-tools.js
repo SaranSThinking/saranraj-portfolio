@@ -122,10 +122,10 @@ document.getElementById('nioshCalc').addEventListener('click', () => {
   const LI = RWL > 0 ? load / RWL : Infinity;
 
   let verdict;
-  if (!isFinite(LI)) verdict = 'RWL is zero at these extremes — task geometry exceeds equation limits.';
-  else if (LI <= 1) verdict = 'Low risk — most workers should be able to perform this lift safely.';
-  else if (LI <= 3) verdict = 'Moderate risk — task redesign recommended.';
-  else verdict = 'High risk — task redesign strongly recommended.';
+  if (!isFinite(LI)) verdict = 'RWL is zero at these extremes - task geometry exceeds equation limits.';
+  else if (LI <= 1) verdict = 'Low risk - most workers should be able to perform this lift safely.';
+  else if (LI <= 3) verdict = 'Moderate risk - task redesign recommended.';
+  else verdict = 'High risk - task redesign strongly recommended.';
 
   resultEl.innerHTML =
     `RWL = <strong>${RWL.toFixed(1)} kg</strong> &middot; LI = <strong>${isFinite(LI) ? LI.toFixed(2) : '&infin;'}</strong><br>${verdict}`;
@@ -161,5 +161,5 @@ document.getElementById('anthroCalc').addEventListener('click', () => {
       `Recommended desk height &asymp; <strong>${deskHeight.toFixed(0)} cm</strong> &middot; ` +
       `Seated eye height (monitor top reference) &asymp; <strong>${eyeHeight.toFixed(0)} cm</strong>`;
   }
-  resultEl.innerHTML = html + '<br><span class="tool-footnote-inline">Percentage-of-stature guideline — approximate, for teaching use.</span>';
+  resultEl.innerHTML = html + '<br><span class="tool-footnote-inline">Percentage-of-stature guideline - approximate, for teaching use.</span>';
 });
