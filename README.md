@@ -3,15 +3,20 @@
 **Live site:** https://saransthinking.github.io/saranraj-portfolio/
 
 A static portfolio site for Saranraj Ramachandran, Lecturer (Department of Industrial Engineering, CEG,
-Anna University). Nine expertise-domain pages, each with live interactive calculators grounded in real IE/AI-ML
-methods, plus a "Learn by Doing" hub of seven hands-on personal-productivity tools. Pure HTML/CSS/vanilla
-JavaScript - no framework, no build step, no server-side code.
+Anna University). A lean homepage links out to nine expertise-domain pages (each with live interactive
+calculators grounded in real IE/AI-ML methods), a "Learn by Doing" hub of seven hands-on
+personal-productivity tools, and four profile pages covering background, research, teaching, and
+recognition in depth. Pure HTML/CSS/vanilla JavaScript - no framework, no build step, no server-side code.
 
 ## Site Map
 
 | Section | Path | Description |
 |---|---|---|
-| Home | [`index.html`](index.html) | Bio, timeline, publications, teaching roles, skills, contact |
+| Home | [`index.html`](index.html) | Hero, brief bio teaser, expertise grid, Learn-by-Doing CTA, contact |
+| About | [`about.html`](about.html) | Full bio, professional timeline, education, beyond academics |
+| Research | [`research.html`](research.html) | Journals, conference papers, patents, awards |
+| Teaching | [`teaching.html`](teaching.html) | Coordination roles, invited lectures, trainings delivered, consultancies |
+| Recognition | [`recognition.html`](recognition.html) | Certifications, skills, course feedback score, testimonials |
 | Learn by Doing hub | [`personal-projects.html`](personal-projects.html) | Index of the 7 personal projects |
 | Ergonomics | [`projects/ergonomics/`](projects/ergonomics/) | RULA/REBA, NIOSH Lifting Equation, anthropometric sizing |
 | Cognitive Ergonomics | [`projects/cognitive-ergonomics/`](projects/cognitive-ergonomics/) | NASA-TLX, Fitts's Law, Signal Detection Theory |
@@ -37,7 +42,11 @@ Each `projects/<slug>/` folder has its own `README.md` with that project's probl
 
 ```
 saranraj-portfolio/
-├── index.html                 # Homepage
+├── index.html                 # Homepage (lean - hero, teaser, expertise grid, CTA, contact)
+├── about.html                 # Bio, professional timeline, education, beyond academics
+├── research.html              # Publications, patents, awards
+├── teaching.html               # Roles, trainings delivered, consultancies
+├── recognition.html           # Certifications, skills, feedback score, testimonials
 ├── personal-projects.html     # "Learn by Doing" hub
 ├── css/                       # Shared stylesheets - see css/README.md
 ├── js/                        # Shared + per-page scripts - see js/README.md

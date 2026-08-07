@@ -10,11 +10,11 @@ specific page.
 |---|---|---|
 | **`main.js`** | Every page | Mobile nav toggle, scroll-progress bar, footer copyright year |
 
-## Homepage
+## Homepage & profile pages
 
-| File | Does |
-|---|---|
-| **`tools.js`** | The 5 embedded tools on `index.html`: OEE, Cp/Cpk, Ergonomic Risk Quick-Check, EOQ Optimizer calculators (the DMAIC case study on the homepage is static content, no script needed) |
+`index.html`, `about.html`, `research.html`, `teaching.html`, and `recognition.html` are all static content -
+they only load `main.js`. The interactive calculators that used to be embedded directly on the homepage were
+removed as duplicates of the versions on the domain pages; `personal-projects.html` links out to those instead.
 
 ## Domain pages (`projects/<slug>/`)
 

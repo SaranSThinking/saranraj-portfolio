@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://saransthinking.github.io/saranraj-portfolio/</loc></url>
+  <url><loc>https://saransthinking.github.io/saranraj-portfolio/about.html</loc></url>
+  <url><loc>https://saransthinking.github.io/saranraj-portfolio/research.html</loc></url>
+  <url><loc>https://saransthinking.github.io/saranraj-portfolio/teaching.html</loc></url>
+  <url><loc>https://saransthinking.github.io/saranraj-portfolio/recognition.html</loc></url>
   <url><loc>https://saransthinking.github.io/saranraj-portfolio/personal-projects.html</loc></url>
   <url><loc>https://saransthinking.github.io/saranraj-portfolio/projects/supply-chain/</loc></url>
   <url><loc>https://saransthinking.github.io/saranraj-portfolio/projects/ergonomics/</loc></url>
