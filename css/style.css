@@ -637,28 +637,6 @@ img, svg { max-width: 100%; display: block; }
   margin: 0 0 6px;
 }
 .credential-issuer { color: var(--text-muted); font-size: 0.86rem; margin: 0; }
-.credential-stats {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.credential-stat {
-  text-align: center;
-  min-width: 90px;
-}
-.credential-stat .stat-num {
-  font-family: var(--font-mono);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--amber);
-  display: block;
-}
-.credential-stat .stat-label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  display: block;
-  margin-top: 2px;
-}
 
 /* Skills */
 .skills-grid {
