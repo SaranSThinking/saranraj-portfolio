@@ -315,7 +315,6 @@ img, svg { max-width: 100%; display: block; }
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .expertise-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
-.expertise-icon { font-size: 1.8rem; margin-bottom: 12px; }
 .expertise-card h3 { margin: 0 0 8px; color: var(--navy); font-size: 1.05rem; }
 .expertise-card p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
 
