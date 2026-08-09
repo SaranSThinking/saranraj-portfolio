@@ -57,11 +57,11 @@ function ppoRenderChart(entries) {
     const x = padL + i * barWidth + barWidth * 0.15;
     const w = barWidth * 0.7;
     const y = yFor(Math.min(oee, 100));
-    const barColor = oee >= 85 ? '#059669' : oee >= 60 ? '#d97706' : '#dc2626';
+    const barColor = oee >= 85 ? '#96690a' : oee >= 60 ? '#a8641a' : '#b3261e';
     const label = e.date.slice(5);
     return `
       <rect x="${x}" y="${y}" width="${w}" height="${height - padB - y}" fill="${barColor}" rx="2" />
-      <text x="${x + w / 2}" y="${height - padB + 14}" text-anchor="middle" font-size="9" fill="#6b7280">${label}</text>
+      <text x="${x + w / 2}" y="${height - padB + 14}" text-anchor="middle" font-size="9" fill="#5c6b7c">${label}</text>
       <text x="${x + w / 2}" y="${y - 4}" text-anchor="middle" font-size="9" fill="#ffffff">${oee.toFixed(0)}%</text>
     `;
   }).join('');
@@ -70,8 +70,8 @@ function ppoRenderChart(entries) {
 
   chartEl.innerHTML = `
     <svg viewBox="0 0 ${width} ${height}" style="width:100%;height:auto;background:var(--bg-alt);border-radius:10px;">
-      <line x1="${padL}" y1="${benchmarkY}" x2="${width - padR}" y2="${benchmarkY}" stroke="#4338ca" stroke-dasharray="4,4" stroke-width="1.2" />
-      <text x="${width - padR}" y="${benchmarkY - 4}" text-anchor="end" font-size="10" fill="#4338ca">85% world-class</text>
+      <line x1="${padL}" y1="${benchmarkY}" x2="${width - padR}" y2="${benchmarkY}" stroke="#1b3a5c" stroke-dasharray="4,4" stroke-width="1.2" />
+      <text x="${width - padR}" y="${benchmarkY - 4}" text-anchor="end" font-size="10" fill="#1b3a5c">85% world-class</text>
       ${bars}
     </svg>
   `;

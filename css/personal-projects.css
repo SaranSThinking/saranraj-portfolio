@@ -62,10 +62,10 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-.psc-health-reorder-now { background: rgba(220,38,38,0.12); color: #dc2626; }
-.psc-health-reorder-soon { background: rgba(217,119,6,0.12); color: #d97706; }
-.psc-health-healthy { background: rgba(5,150,105,0.12); color: #059669; }
-.psc-health-overstocked { background: rgba(67,56,202,0.1); color: #4338ca; }
+.psc-health-reorder-now { background: rgba(179,38,30,0.12); color: #b3261e; }
+.psc-health-reorder-soon { background: rgba(168,100,26,0.12); color: #a8641a; }
+.psc-health-healthy { background: rgba(150,105,10,0.12); color: #96690a; }
+.psc-health-overstocked { background: rgba(27,58,92,0.1); color: #1b3a5c; }
 
 .psc-item-metrics {
   display: grid;
@@ -89,8 +89,8 @@
   cursor: pointer;
 }
 .psc-item-actions button:hover { border-color: var(--teal); color: var(--teal); }
-.psc-item-actions button.psc-remove { color: #dc2626; }
-.psc-item-actions button.psc-remove:hover { border-color: #dc2626; }
+.psc-item-actions button.psc-remove { color: #b3261e; }
+.psc-item-actions button.psc-remove:hover { border-color: #b3261e; }
 
 .psc-shopping-list h4 { color: var(--navy); font-size: 0.95rem; margin: 0 0 12px; }
 .psc-shopping-group { margin-bottom: 14px; }
@@ -137,7 +137,7 @@
   border-bottom: 1px solid var(--border);
 }
 .pp-data-table th { color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
-.pp-data-table td.pp-flag-out { color: #dc2626; font-weight: 700; }
+.pp-data-table td.pp-flag-out { color: #b3261e; font-weight: 700; }
 
 /* MCDM rating matrix + ranked bars */
 .pmcdm-matrix-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
