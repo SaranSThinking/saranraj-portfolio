@@ -89,6 +89,10 @@ document.getElementById('pmcdmCalc').addEventListener('click', () => {
     return;
   }
   const weightSum = weightsRaw.reduce((a, b) => a + b, 0);
+  if (weightSum <= 0) {
+    window.alert('Weights must sum to a positive number.');
+    return;
+  }
   const weights = weightsRaw.map(w => (w / weightSum) * 100);
 
   const ratingInputs = document.querySelectorAll('.pmcdm-rating');

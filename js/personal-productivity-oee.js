@@ -133,6 +133,10 @@ document.getElementById('ppoAdd').addEventListener('click', () => {
     window.alert('Enter a valid date and non-negative values for all fields.');
     return;
   }
+  if (tasksReworked > tasksCompleted) {
+    window.alert('Tasks reworked can\'t exceed tasks completed.');
+    return;
+  }
 
   ppoEntries = ppoEntries.filter(e => e.date !== date);
   ppoEntries.push({ date, plannedHours, actualHours, tasksPlanned, tasksCompleted, tasksReworked });
