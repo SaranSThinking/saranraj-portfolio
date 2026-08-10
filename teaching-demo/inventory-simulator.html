@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Decision Simulator | Saranraj Ramachandran</title>
+<style>
+  :root{
+    --navy:#1b3a5c; --navy-dark:#0a1930; --navy-soft:#2c5480;
+    --gold:#96690a; --gold-light:#c9962e;
+    --red:#b3261e;
+    --bg:#faf8f3; --bg-alt:#f2efe7; --card-bg:#ffffff;
+    --text:#16213a; --text-muted:#5c6b7c; --border:#e3dfd3;
+    --shadow:0 1px 3px rgba(10,25,48,.06), 0 8px 24px rgba(10,25,48,.08);
+    --radius:14px;
+    --font:'Segoe UI',Calibri,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.5;}
+  .container{max-width:1080px;margin:0 auto;padding:32px 24px 60px;}
+  header{text-align:center;margin-bottom:36px;}
+  header .eyebrow{color:var(--gold);font-weight:700;letter-spacing:.06em;font-size:.8rem;text-transform:uppercase;margin:0 0 8px;}
+  header h1{margin:0 0 8px;font-size:2rem;color:var(--navy);}
+  header p{margin:0;color:var(--text-muted);font-size:1rem;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;}
+  @media (max-width:860px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow);}
+  .card h2{margin:0 0 4px;color:var(--navy);font-size:1.25rem;}
+  .card .sub{color:var(--text-muted);font-size:.85rem;margin:0 0 18px;}
+  .field-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+  label{display:flex;flex-direction:column;gap:6px;font-size:.8rem;color:var(--text-muted);font-weight:600;flex:1;min-width:130px;}
+  input,select{border:1px solid var(--border);border-radius:8px;padding:9px 10px;font-family:var(--font);font-size:.95rem;background:var(--bg);color:var(--text);}
+  .result-row{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap;}
+  .stat{flex:1;min-width:120px;background:var(--navy);color:#fff;border-radius:10px;padding:14px 12px;text-align:center;}
+  .stat .num{font-size:1.5rem;font-weight:800;display:block;}
+  .stat .lbl{font-size:.72rem;color:var(--gold-light);text-transform:uppercase;letter-spacing:.03em;}
+  .stat.alt{background:var(--gold);}
+  .stat.alt .lbl{color:#fdf1dc;}
+  svg{width:100%;height:auto;background:var(--bg-alt);border-radius:10px;margin-top:18px;}
+  .quickcheck{margin-top:8px;}
+  .quickcheck button{background:var(--gold);color:#fff;border:none;border-radius:100px;padding:11px 22px;font-weight:700;font-size:.9rem;cursor:pointer;}
+  .quickcheck button:hover{background:var(--gold-light);}
+  .qc-result{margin-top:16px;font-size:.9rem;color:var(--text);display:none;}
+  .qc-result.show{display:block;}
+  .qc-compare{display:flex;gap:14px;margin-top:12px;}
+  .qc-compare div{flex:1;background:var(--bg-alt);border-radius:10px;padding:14px;text-align:center;}
+  .qc-compare .num{font-size:1.3rem;font-weight:800;color:var(--navy);}
+  .qc-compare .lbl{font-size:.75rem;color:var(--text-muted);}
+  footer{text-align:center;margin-top:20px;color:var(--text-muted);font-size:.78rem;}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <p class="eyebrow">Live Teaching Tool &middot; Supply Chain Management</p>
+    <h1>Inventory Decision Simulator</h1>
+    <p>Change any input below and every number, and the chart, recomputes instantly &mdash; the exact scenario from today's session, live.</p>
+  </header>
+
+  <div class="grid">
+    <!-- EOQ CARD -->
+    <div class="card">
+      <h2>Economic Order Quantity</h2>
+      <p class="sub">EOQ = &radic;(2DS / H)</p>
+      <div class="field-row">
+        <label>Annual Demand (D)<input type="number" id="eD" value="12000" step="100"></label>
+        <label>Ordering Cost (S, &#8377;)<input type="number" id="eS" value="5000" step="100"></label>
+        <label>Holding Cost (H, &#8377;/unit/yr)<input type="number" id="eH" value="40" step="1"></label>
+      </div>
+      <div class="result-row">
+        <div class="stat"><span class="num" id="outEOQ">-</span><span class="lbl">EOQ (units)</span></div>
+        <div class="stat"><span class="num" id="outOrders">-</span><span class="lbl">Orders / yr</span></div>
+        <div class="stat alt"><span class="num" id="outTotalCost">-</span><span class="lbl">Total Cost (&#8377;/yr)</span></div>
+      </div>
+      <svg id="eoqChart" viewBox="0 0 480 240"></svg>
+
+      <div class="quickcheck">
+        <button id="qcBtn">Quick Check: what if holding cost doubles?</button>
+        <div class="qc-result" id="qcResult">
+          <div class="qc-compare">
+            <div><span class="num" id="qcBefore">-</span><div class="lbl">EOQ before</div></div>
+            <div><span class="num" id="qcAfter">-</span><div class="lbl">EOQ after (H &times; 2)</div></div>
+          </div>
+          <p style="margin:12px 0 0;color:var(--text-muted);font-size:.85rem;">EOQ falls by a factor of 1/&radic;2 &mdash; inversely proportional to &radic;H, not to H itself.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAFETY STOCK / ROP CARD -->
+    <div class="card">
+      <h2>Safety Stock &amp; Reorder Point</h2>
+      <p class="sub">SS = z &times; &sigma; &times; &radic;L &nbsp;&middot;&nbsp; ROP = (d&#772; &times; L) + SS</p>
+      <div class="field-row">
+        <label>Lead Time (weeks, L)<input type="number" id="rL" value="2" step="1"></label>
+        <label>Weekly Demand (d&#772;)<input type="number" id="rD" value="230" step="5"></label>
+        <label>Std. Dev. of Demand (&sigma;)<input type="number" id="rSig" value="60" step="5"></label>
+      </div>
+      <div class="field-row">
+        <label>Target Service Level
+          <select id="rZ">
+            <option value="1.28">90%</option>
+            <option value="1.65" selected>95%</option>
+            <option value="2.05">98%</option>
+            <option value="2.33">99%</option>
+          </select>
+        </label>
+      </div>
+      <div class="result-row">
+        <div class="stat"><span class="num" id="outSS">-</span><span class="lbl">Safety Stock</span></div>
+        <div class="stat alt"><span class="num" id="outROP">-</span><span class="lbl">Reorder Point</span></div>
+      </div>
+      <svg id="ssChart" viewBox="0 0 480 240"></svg>
+    </div>
+  </div>
+
+  <footer>Built by Saranraj Ramachandran for a teaching demonstration &middot; Supply Chain Management, Semester II</footer>
+</div>
+
+<script>
+const NAVY = '#1b3a5c', GOLD = '#96690a', GOLD_L = '#c9962e', RED = '#b3261e', STEEL='#5c6b7c';
+
+function eoq(D,S,H){ return Math.sqrt((2*D*S)/H); }
+
+function renderEOQChart(D,S,H,Q){
+  const svg = document.getElementById('eoqChart');
+  const w=480,h=240,padL=42,padR=14,padT=14,padB=28;
+  const qs=[]; const n=7;
+  for(let i=0;i<n;i++){ qs.push(Q*0.3 + (Q*1.7-Q*0.3)*(i/(n-1))); }
+  const ordering = qs.map(q=>(D/q)*S);
+  const holding = qs.map(q=>(q/2)*H);
+  const total = qs.map((q,i)=>ordering[i]+holding[i]);
+  const allVals=[...ordering,...holding,...total];
+  const yMax=Math.max(...allVals)*1.05, yMin=0;
+  const xFor = q => padL + ((q - qs[0])/(qs[n-1]-qs[0])) * (w-padL-padR);
+  const yFor = v => padT + (1-(v-yMin)/(yMax-yMin)) * (h-padT-padB);
+  const line = (arr,color) => `<polyline fill="none" stroke="${color}" stroke-width="2.5" points="${qs.map((q,i)=>`${xFor(q)},${yFor(arr[i])}`).join(' ')}" />`;
+  const eoqX = xFor(Q);
+  svg.innerHTML = `
+    <line x1="${padL}" y1="${h-padB}" x2="${w-padR}" y2="${h-padB}" stroke="#d8d2c2" stroke-width="1"/>
+    <line x1="${eoqX}" y1="${padT}" x2="${eoqX}" y2="${h-padB}" stroke="${GOLD}" stroke-dasharray="4,4" stroke-width="1.2"/>
+    <text x="${eoqX}" y="${padT+10}" text-anchor="middle" font-size="10" fill="${GOLD}" font-family="Segoe UI, sans-serif">EOQ</text>
+    ${line(ordering, STEEL)}
+    ${line(holding, GOLD)}
+    ${line(total, NAVY)}
+    <text x="${padL}" y="${padT-2}" font-size="10" fill="${STEEL}" font-family="Segoe UI, sans-serif">&#8212; Ordering Cost</text>
+    <text x="${padL+130}" y="${padT-2}" font-size="10" fill="${GOLD}" font-family="Segoe UI, sans-serif">&#8212; Holding Cost</text>
+    <text x="${padL+250}" y="${padT-2}" font-size="10" fill="${NAVY}" font-family="Segoe UI, sans-serif">&#8212; Total Cost</text>
+  `;
+}
+
+function updateEOQ(){
+  const D=parseFloat(document.getElementById('eD').value)||0;
+  const S=parseFloat(document.getElementById('eS').value)||0;
+  const H=parseFloat(document.getElementById('eH').value)||1;
+  const Q=eoq(D,S,H);
+  const orders = D/Q;
+  const orderingCost=(D/Q)*S, holdingCost=(Q/2)*H, totalCost=orderingCost+holdingCost;
+  document.getElementById('outEOQ').textContent = Math.round(Q).toLocaleString();
+  document.getElementById('outOrders').textContent = orders.toFixed(1);
+  document.getElementById('outTotalCost').textContent = '₹' + Math.round(totalCost).toLocaleString();
+  renderEOQChart(D,S,H,Q);
+  return {D,S,H,Q};
+}
+
+function renderSSChart(z95SS, z99SS){
+  const svg = document.getElementById('ssChart');
+  const w=480,h=240,padL=42,padR=14,padT=20,padB=34;
+  const maxV = Math.max(z95SS,z99SS)*1.2;
+  const yFor = v => padT + (1-v/maxV)*(h-padT-padB);
+  const barW=90;
+  const x1 = 120, x2=300;
+  svg.innerHTML = `
+    <line x1="${padL}" y1="${h-padB}" x2="${w-padR}" y2="${h-padB}" stroke="#d8d2c2" stroke-width="1"/>
+    <rect x="${x1-barW/2}" y="${yFor(z95SS)}" width="${barW}" height="${h-padB-yFor(z95SS)}" fill="${STEEL}" rx="3"/>
+    <text x="${x1}" y="${yFor(z95SS)-8}" text-anchor="middle" font-size="13" font-weight="700" fill="${NAVY}" font-family="Segoe UI, sans-serif">${Math.round(z95SS)}</text>
+    <text x="${x1}" y="${h-padB+16}" text-anchor="middle" font-size="10" fill="${STEEL}" font-family="Segoe UI, sans-serif">95% service</text>
+    <rect x="${x2-barW/2}" y="${yFor(z99SS)}" width="${barW}" height="${h-padB-yFor(z99SS)}" fill="${GOLD}" rx="3"/>
+    <text x="${x2}" y="${yFor(z99SS)-8}" text-anchor="middle" font-size="13" font-weight="700" fill="${NAVY}" font-family="Segoe UI, sans-serif">${Math.round(z99SS)}</text>
+    <text x="${x2}" y="${h-padB+16}" text-anchor="middle" font-size="10" fill="${STEEL}" font-family="Segoe UI, sans-serif">99% service</text>
+  `;
+}
+
+function updateROP(){
+  const L=parseFloat(document.getElementById('rL').value)||0;
+  const d=parseFloat(document.getElementById('rD').value)||0;
+  const sig=parseFloat(document.getElementById('rSig').value)||0;
+  const z=parseFloat(document.getElementById('rZ').value)||1.65;
+  const SS = z*sig*Math.sqrt(L);
+  const ROP = d*L + SS;
+  document.getElementById('outSS').textContent = Math.round(SS).toLocaleString();
+  document.getElementById('outROP').textContent = Math.round(ROP).toLocaleString();
+  const ss95 = 1.65*sig*Math.sqrt(L);
+  const ss99 = 2.33*sig*Math.sqrt(L);
+  renderSSChart(ss95, ss99);
+}
+
+['eD','eS','eH'].forEach(id => document.getElementById(id).addEventListener('input', updateEOQ));
+['rL','rD','rSig','rZ'].forEach(id => document.getElementById(id).addEventListener('input', updateROP));
+
+document.getElementById('qcBtn').addEventListener('click', () => {
+  const {D,S,H,Q} = updateEOQ();
+  const Qafter = eoq(D,S,H*2);
+  document.getElementById('qcBefore').textContent = Math.round(Q).toLocaleString();
+  document.getElementById('qcAfter').textContent = Math.round(Qafter).toLocaleString();
+  document.getElementById('qcResult').classList.add('show');
+});
+
+updateEOQ();
+updateROP();
+</script>
+</body>
+</html>
