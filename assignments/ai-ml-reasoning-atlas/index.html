@@ -1,0 +1,1807 @@
+<meta charset="utf-8" />
+<title>PROJECT AI - DOIE - AI &amp; ML Reasoning Atlas</title>
+<style>
+  :root {
+    --bg: #FFF8F0;
+    --surface: #FFFFFF;
+    --surface-2: #FFEDE0;
+    --border: #FFD3AE;
+    --ink: #2B1B3D;
+    --ink-muted: #8B7398;
+    --accent: #FF5A36;
+    --accent-ink: #FFFFFF;
+    --accent-2: #00B894;
+    --gold: #E8A200;
+    --violet: #8B3DD6;
+    --danger: #E63971;
+    --lock: #D8C4CE;
+    --line: #FFD3AE;
+    --shadow: 0 8px 24px rgba(43,27,61,0.1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1A1033;
+      --surface: #2A1B4D;
+      --surface-2: #35225E;
+      --border: #4A3170;
+      --ink: #F5EEFF;
+      --ink-muted: #B8A8D9;
+      --accent: #FF7A50;
+      --accent-ink: #1A1033;
+      --accent-2: #2EFFC4;
+      --gold: #FFD23F;
+      --violet: #C77DFF;
+      --danger: #FF5C8A;
+      --lock: #503876;
+      --line: #4A3170;
+      --shadow: 0 8px 28px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1A1033;
+    --surface: #2A1B4D;
+    --surface-2: #35225E;
+    --border: #4A3170;
+    --ink: #F5EEFF;
+    --ink-muted: #B8A8D9;
+    --accent: #FF7A50;
+    --accent-ink: #1A1033;
+    --accent-2: #2EFFC4;
+    --gold: #FFD23F;
+    --violet: #C77DFF;
+    --danger: #FF5C8A;
+    --lock: #503876;
+    --line: #4A3170;
+    --shadow: 0 8px 28px rgba(0,0,0,0.45);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    text-wrap: balance;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .mono, .stat {
+    font-family: Consolas, "SF Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    font-weight: 600;
+  }
+  button { font-family: inherit; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ---------- App shell ---------- */
+  #app { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ---------- Login screen ---------- */
+  .login-screen {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .login-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 12% 22%, var(--ink-muted) 0, transparent 100%),
+      radial-gradient(1px 1px at 78% 14%, var(--ink-muted) 0, transparent 100%),
+      radial-gradient(1.8px 1.8px at 46% 68%, var(--accent) 0, transparent 100%),
+      radial-gradient(1px 1px at 88% 62%, var(--ink-muted) 0, transparent 100%),
+      radial-gradient(1.6px 1.6px at 30% 82%, var(--gold) 0, transparent 100%),
+      radial-gradient(1.8px 1.8px at 62% 38%, var(--accent-2) 0, transparent 100%),
+      radial-gradient(1.6px 1.6px at 20% 45%, var(--violet) 0, transparent 100%),
+      radial-gradient(1px 1px at 8% 58%, var(--ink-muted) 0, transparent 100%),
+      radial-gradient(1.6px 1.6px at 68% 85%, var(--violet) 0, transparent 100%);
+    opacity: 0.65;
+    pointer-events: none;
+  }
+  .login-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    padding: 40px 36px;
+    max-width: 420px;
+    width: 100%;
+  }
+  .login-card .eyebrow { margin-bottom: 10px; }
+  .login-card h1 { font-size: 2rem; margin: 0 0 8px; }
+  .login-card p.sub { color: var(--ink-muted); margin: 0 0 28px; line-height: 1.55; font-size: 0.95rem; }
+  .field-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .login-card input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--ink);
+    font-size: 1rem;
+    margin-bottom: 18px;
+  }
+  .login-card input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    padding: 13px 22px;
+    border-radius: 3px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .login-foot { margin-top: 16px; font-size: 0.78rem; color: var(--ink-muted); text-align: center; }
+
+  /* ---------- Atlas screen ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .mark { font-family: Georgia, serif; font-size: 1.3rem; letter-spacing: 0.02em; }
+  .brand .tag { font-size: 0.78rem; color: var(--ink-muted); }
+  .hud { display: flex; align-items: center; gap: 22px; }
+  .hud-stat { display: flex; flex-direction: column; align-items: flex-end; }
+  .hud-stat .num { font-size: 1.05rem; font-weight: 700; color: var(--accent); }
+  .hud-stat .lbl { font-size: 0.68rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hud-name { font-size: 0.85rem; color: var(--ink-muted); }
+  .hud-name b { color: var(--ink); }
+  .fx-toggle {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-muted);
+    width: 34px; height: 34px; border-radius: 50%; font-size: 1rem; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .fx-toggle:hover { border-color: var(--accent); transform: scale(1.06); }
+  .fx-toggle[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+
+  .atlas-wrap {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+    gap: 0;
+  }
+  .atlas-main {
+    padding: 28px 28px 60px;
+    overflow-x: auto;
+  }
+  .atlas-main h2 { font-size: 1.5rem; margin: 0 0 4px; }
+  .atlas-main .sub { color: var(--ink-muted); font-size: 0.92rem; margin: 0 0 24px; max-width: 60ch; line-height: 1.6; }
+
+  .map-svg { width: 100%; height: auto; min-width: 560px; }
+  .map-line { stroke: var(--line); stroke-width: 2; fill: none; }
+  .map-line.done { stroke: var(--accent-2); }
+  .node-group { cursor: pointer; }
+  .node-group:focus-visible circle.node-ring { outline: 2px solid var(--ink); }
+  .node-ring { fill: var(--surface); stroke: var(--lock); stroke-width: 2.5; transition: stroke 0.2s ease, fill 0.2s ease; }
+  .node-group.active .node-ring { stroke: var(--accent); animation: pulse 2.2s ease-in-out infinite; }
+  .node-group.done .node-ring { stroke: var(--accent-2); fill: var(--accent-2); }
+  .node-group.locked .node-ring { stroke: var(--lock); }
+  @keyframes pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(245,169,78,0)); }
+    50% { filter: drop-shadow(0 0 7px var(--accent)); }
+  }
+  .node-icon { font-size: 20px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .node-group.locked .node-icon { opacity: 0.45; }
+  .node-label { font-size: 12.5px; text-anchor: middle; fill: var(--ink); font-family: "Segoe UI", sans-serif; pointer-events: none; }
+  .node-num { font-size: 10px; text-anchor: middle; fill: var(--ink-muted); font-family: Consolas, monospace; pointer-events: none; }
+
+  .side-panel {
+    border-left: 1px solid var(--border);
+    background: var(--surface);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .progress-block .eyebrow { margin-bottom: 10px; }
+  .progress-bar-track {
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 5px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-count { font-size: 0.8rem; color: var(--ink-muted); }
+
+  .proofs-list { display: flex; flex-direction: column; gap: 10px; }
+  .proof-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    background: var(--surface-2);
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    opacity: 0.4;
+  }
+  .proof-row.earned { opacity: 1; }
+  .proof-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+  .proof-name { font-size: 0.82rem; }
+  .proof-name .sub { display: block; font-size: 0.7rem; color: var(--ink-muted); }
+
+  .how-block { background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 16px; }
+  .how-block h3 { font-size: 0.9rem; margin: 0 0 8px; }
+  .how-block p { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.6; margin: 0; }
+
+  /* ---------- Level modal ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10,9,20,0.55);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px; z-index: 50;
+  }
+  .modal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    max-width: 620px; width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 30px 32px 28px;
+  }
+  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+  .modal-head .eyebrow { color: var(--accent); }
+  .modal-close {
+    background: none; border: none; color: var(--ink-muted); font-size: 1.1rem;
+    cursor: pointer; line-height: 1; padding: 4px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-card h2 { font-size: 1.35rem; margin: 4px 0 16px; }
+
+  .scenario-box {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 3px 3px 0;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+
+  .step-label { font-size: 0.78rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 6px; }
+  .option-btn {
+    text-align: left;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .option-btn:hover { border-color: var(--accent); }
+  .option-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .option-btn.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--surface-2)); }
+  .option-btn.correct { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 16%, var(--surface-2)); }
+  .option-btn.wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, var(--surface-2)); }
+  .option-btn:disabled { cursor: default; }
+  .option-letter { font-family: Consolas, monospace; font-weight: 700; margin-right: 8px; color: var(--ink-muted); }
+
+  .hint-box {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: color-mix(in srgb, var(--danger) 10%, var(--surface));
+    border: 1px solid var(--danger);
+    border-radius: 3px; padding: 12px 14px; margin-top: 14px;
+    font-size: 0.85rem; line-height: 1.55;
+  }
+  .hint-box .tag { font-weight: 700; color: var(--danger); flex-shrink: 0; }
+
+  .concept-reveal {
+    margin-top: 22px;
+    background: color-mix(in srgb, var(--accent-2) 10%, var(--surface));
+    border: 1px solid var(--accent-2);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+  .concept-reveal .eyebrow { color: var(--accent-2); margin-bottom: 8px; }
+  .concept-reveal h3 { font-size: 1.05rem; margin: 0 0 10px; }
+  .concept-reveal p, .concept-reveal li { font-size: 0.87rem; line-height: 1.65; color: var(--ink); }
+  .concept-reveal ul { margin: 8px 0; padding-left: 20px; }
+  .concept-reveal .xp-line {
+    margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .xp-badge { font-size: 0.85rem; font-weight: 700; color: var(--accent-2); }
+
+  .step-nav { display: flex; justify-content: flex-end; margin-top: 18px; gap: 10px; }
+  .btn-ghost {
+    background: transparent; border: 1px solid var(--border); color: var(--ink-muted);
+    padding: 10px 16px; border-radius: 3px; font-size: 0.85rem; cursor: pointer;
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink-muted); }
+
+  /* ---------- Completion screen ---------- */
+  .complete-screen {
+    flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 20px;
+  }
+  .complete-card {
+    max-width: 560px; width: 100%; text-align: center;
+    background: var(--surface); border: 1px solid var(--accent-2);
+    border-radius: 5px; box-shadow: var(--shadow); padding: 44px 36px;
+  }
+  .complete-card .eyebrow { color: var(--accent-2); justify-content: center; display: block; margin-bottom: 10px; }
+  .complete-card h1 { font-size: 2.1rem; margin: 0 0 14px; }
+  .complete-card p.sub { color: var(--ink-muted); line-height: 1.6; margin: 0 0 26px; }
+  .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+  .badge-grid .proof-row { flex-direction: column; text-align: center; opacity: 1; padding: 12px 6px; }
+  .badge-grid .proof-icon { font-size: 1.5rem; width: auto; }
+  .badge-grid .proof-name { font-size: 0.7rem; }
+
+  @media (max-width: 860px) {
+    .atlas-wrap { grid-template-columns: 1fr; }
+    .side-panel { border-left: none; border-top: 1px solid var(--border); }
+    .badge-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ---------- Bridge / capstone CTA ---------- */
+  .cta-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+  .btn-capstone {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: var(--accent-ink); border: none; padding: 15px 22px; border-radius: 3px;
+    font-size: 0.98rem; font-weight: 700; cursor: pointer; width: 100%;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+  .btn-capstone:hover { filter: brightness(1.06); }
+  .btn-capstone:active { transform: scale(0.98); }
+
+  /* ---------- Project Studio ---------- */
+  .studio-wrap { flex: 1; padding: 30px 28px 70px; max-width: 900px; margin: 0 auto; width: 100%; }
+  .studio-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 10px; }
+  .link-btn { background: none; border: none; color: var(--ink-muted); font-size: 0.82rem; cursor: pointer; padding: 4px 0; }
+  .link-btn:hover { color: var(--accent); }
+  .brief-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 5px;
+    padding: 24px 26px; margin-bottom: 26px; box-shadow: var(--shadow);
+  }
+  .brief-card .eyebrow { color: var(--accent); margin-bottom: 8px; }
+  .brief-card h1 { font-size: 1.7rem; margin: 0 0 12px; }
+  .brief-card p { font-size: 0.92rem; line-height: 1.65; color: var(--ink); margin: 0 0 10px; }
+  .brief-card p:last-child { margin-bottom: 0; }
+
+  .milestone-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 5px;
+    padding: 20px 24px; margin-bottom: 16px;
+  }
+  .milestone-card.locked { opacity: 0.5; }
+  .milestone-card.done { border-color: var(--accent-2); }
+  .milestone-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .milestone-head .eyebrow { margin-bottom: 4px; }
+  .milestone-head h2 { font-size: 1.15rem; margin: 0; }
+  .milestone-done-badge { font-size: 0.76rem; font-weight: 700; color: var(--accent-2); white-space: nowrap; padding-top: 4px; }
+  .milestone-lock-note { font-size: 0.82rem; color: var(--ink-muted); margin-top: 4px; }
+  .milestone-goal { font-size: 0.9rem; line-height: 1.6; margin: 10px 0 10px; }
+  .milestone-why {
+    background: var(--surface-2); border-left: 3px solid var(--accent-2); border-radius: 0 3px 3px 0;
+    padding: 10px 14px; font-size: 0.84rem; line-height: 1.6; color: var(--ink); margin-bottom: 14px;
+  }
+  .milestone-why b.tag { color: var(--accent-2); }
+  .checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .check-row { display: flex; align-items: flex-start; gap: 9px; font-size: 0.87rem; line-height: 1.5; cursor: pointer; }
+  .check-row input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--accent-2); flex-shrink: 0; cursor: pointer; }
+  .check-row.checked span { color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--accent-2); }
+  .guidance-box {
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: 1px solid var(--accent);
+    border-radius: 3px; padding: 10px 14px; font-size: 0.83rem; line-height: 1.6; margin-bottom: 14px;
+  }
+  .guidance-box b.tag { color: var(--accent); }
+  .reflect-label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .reflect-box {
+    width: 100%; min-height: 90px; padding: 10px 12px; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 3px; color: var(--ink); font-size: 0.87rem;
+    font-family: inherit; line-height: 1.55; resize: vertical; margin-bottom: 6px;
+  }
+  .reflect-box:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .portfolio-tip { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 14px; }
+  .portfolio-tip b.tag { color: var(--ink); }
+  .milestone-actions { display: flex; justify-content: flex-end; }
+
+  .packet-card {
+    background: var(--surface); border: 1px solid var(--accent-2); border-radius: 5px;
+    padding: 24px 26px; margin-top: 6px;
+  }
+  .packet-card h2 { font-size: 1.2rem; margin: 0 0 8px; }
+  .packet-card .eyebrow { color: var(--accent-2); margin-bottom: 8px; }
+  .packet-preview {
+    width: 100%; min-height: 220px; background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 12px 14px; font-family: Consolas, monospace; font-size: 0.78rem;
+    line-height: 1.5; color: var(--ink); margin: 14px 0; white-space: pre-wrap;
+  }
+  .packet-status { font-size: 0.8rem; margin-top: 10px; color: var(--ink-muted); }
+  .packet-status.err { color: var(--danger); }
+  .packet-status.ok { color: var(--accent-2); }
+</style>
+
+<div id="app"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_PREFIX = "infer_atlas_state_v2_";
+
+  /* ---------- admin progress log (Google Form -> your Sheet) ---------- *
+   * Verified working: a real test POST landed correctly in "PROJECT AI - DOIE
+   * - Student Progress Log" with every field in the right column before this
+   * was wired in. Fire-and-forget from the browser - never blocks the UI, and
+   * a failed/offline submission never breaks the student's local progress.
+   */
+  var PROGRESS_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfnPmZXYD29j8F_O0PKAQcT_L1e6mCPp2ZFBm31PyMxbeE4Rw/formResponse";
+  var PROGRESS_FORM_ENTRIES = {
+    name: "entry.1842225061",
+    roll: "entry.334818429",
+    event: "entry.920747254",
+    detail: "entry.1921175822",
+    score: "entry.1825065818"
+  };
+  function logProgress(eventName, detail, score) {
+    if (!state || !state.roll) return;
+    try {
+      var body =
+        PROGRESS_FORM_ENTRIES.name + "=" + encodeURIComponent(state.name || "") +
+        "&" + PROGRESS_FORM_ENTRIES.roll + "=" + encodeURIComponent(state.roll || "") +
+        "&" + PROGRESS_FORM_ENTRIES.event + "=" + encodeURIComponent(eventName || "") +
+        "&" + PROGRESS_FORM_ENTRIES.detail + "=" + encodeURIComponent(detail || "") +
+        "&" + PROGRESS_FORM_ENTRIES.score + "=" + encodeURIComponent(score === undefined || score === null ? "" : String(score));
+      fetch(PROGRESS_FORM_ACTION, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  var LAST_ROLL_KEY = "infer_last_roll_v2";
+
+  /* ---------- class roster ---------- *
+   * IL3064 Artificial Intelligence and Machine Learning - CEG Campus, Industrial
+   * Engineering, 2026-2027 Odd Sem - M.E. Qul.Engg [F] III B1 + M.E. Indus.Engg [F] III B1.
+   * roll = register number (case-insensitive, used as the login ID and as the key
+   * their progress is saved under, so two students never share one save-slot
+   * even on the same shared/lab computer).
+   */
+  var ROSTER = [
+    { roll: "2025229001", name: "Hari Sriram J K" },
+    { roll: "2025229026", name: "Nikitha M" },
+    { roll: "2025229027", name: "Praveen Chand S" },
+    { roll: "2025229028", name: "Zabira Nusrath" },
+    { roll: "2025229030", name: "Sahaya Renisha M" },
+    { roll: "2025229031", name: "Shree Charan Ranjan Reddy D K" },
+    { roll: "2025229032", name: "Kaushik D" },
+    { roll: "2025229033", name: "Vikram P" },
+    { roll: "2025220026", name: "Amresh Pattanaik" },
+    { roll: "2025220027", name: "Naveen Balaji S" },
+    { roll: "2025220028", name: "Dinesh Kumar U" },
+    { roll: "2025220029", name: "Ashik V S" },
+    { roll: "2025220030", name: "Vibudeshwaran B S" },
+    { roll: "2025220031", name: "Praveen Kumar M" },
+    { roll: "2025220032", name: "Vigneswaran S" },
+    { roll: "26142191175", name: "Richard Jesu Daniel R" }
+  ];
+  var CLASS_CODE = "DOIE2026"; // shared code announced to the class - not real security, just keeps outsiders out
+
+  function findRosterEntry(roll) {
+    var r = (roll || "").trim().toUpperCase();
+    for (var i = 0; i < ROSTER.length; i++) {
+      if (ROSTER[i].roll.toUpperCase() === r) return ROSTER[i];
+    }
+    return null;
+  }
+
+  var LEVELS = [
+    {
+      id: 1, icon: "📊", title: "Data Foundations", module: "Module 1",
+      scenario: "Your team has 10,000 unlabeled photos of animals and a small budget. A colleague suggests spending it all on manually tagging every single photo “dog” or “not dog” before training anything. Another colleague says just feed the raw, unlabeled photos straight to the model.",
+      approach: [
+        { t: "Always fully label the data - labeled data produces the most accurate, reliable models every time, so the extra time and cost of manual tagging is worth paying regardless of the project's budget or timeline.", c: false },
+        { t: "Weigh the trade-off for this specific project: labeled data gives more accurate, reliable models but costs time and money to prepare; unlabeled data is fast and cheap but can be less reliable in real-world use.", c: true },
+        { t: "Never label data manually - unsupervised methods can always find the same patterns on their own eventually, so spending any budget at all on manual tagging is simply wasted money and time.", c: false },
+        { t: "It doesn't matter which you choose - once a model has trained on enough raw examples, labeled and unlabeled data converge to producing identical real-world performance and reliability.", c: false }
+      ],
+      justification: [
+        { t: "Because labeled data doesn't actually require any human review at all - the “labeling” step is really just automated metadata tagging that happens instantly during data collection, at no extra cost.", c: false },
+        { t: "Because the right choice depends on this project's specific constraints - accuracy/reliability (favoring labeled) versus speed/cost (favoring unlabeled) - there's no universally “better” option.", c: true },
+        { t: "Because most countries' data-protection regulations specifically prohibit training commercial models on unlabeled data, making labeling a legal requirement rather than a quality trade-off.", c: false },
+        { t: "Because AI models are mathematically incapable of learning any patterns at all from unlabeled data, so unsupervised learning is really just a theoretical idea that doesn't work in practice.", c: false }
+      ],
+      hint: "Think about what labeling actually buys you, and what it costs. Is one type of data always the right choice - or does it depend on the situation in front of you?",
+      concept: {
+        h: "Labeled vs. unlabeled data",
+        body: [
+          "<b>Labeled data</b> (e.g. 10,000 animal photos each reviewed and tagged “dog” / “not a dog”) produces more accurate, reliable models - but is time-consuming and expensive to prepare.",
+          "<b>Unlabeled data</b> (the same photos fed in as-is) is fast and cheap, with no manual review needed - but can be less reliable in real-world use.",
+          "The guiding principle behind both: <b>“Garbage in, garbage out.”</b> High-quality data input is what ensures excellent model output - regardless of which type you choose."
+        ]
+      }
+    },
+    {
+      id: 2, icon: "🧭", title: "Machine Learning Types", module: "Module 2",
+      scenario: "A real-estate agent wants an app that predicts a home's selling price from a dataset of past transactions - where size, rooms, location, and the actual sale price are all already known for every past sale.",
+      approach: [
+        { t: "Unsupervised learning - since there's a lot of historical data available, let the model explore it freely and discover its own natural groupings of homes without being told what price patterns to look for.", c: false },
+        { t: "Supervised learning, regression - train on the labeled historical data, where every past sale already pairs known features with its actual sale price, to predict a continuous price value for new homes.", c: true },
+        { t: "Supervised learning, but classification - train the model to sort each home into a fixed price category like “cheap,” “mid-range,” or “expensive,” since predicting an exact number is harder than a category.", c: false },
+        { t: "Reinforcement learning - let the app learn the optimal price through live trial-and-error experiments on real customers, rewarding it whenever a listed price leads to a fast, successful sale.", c: false }
+      ],
+      justification: [
+        { t: "Because the dataset already contains labeled input–output pairs (features + a known price), and the target is a continuous numeric value rather than a fixed category - the defining test for supervised regression.", c: true },
+        { t: "Because real-estate data happens to be structured, spreadsheet-style data, and structured data can only ever be modeled using supervised regression techniques, regardless of what the target output looks like.", c: false },
+        { t: "Because selling prices are notoriously hard for humans to estimate by eye, so an automated regression model is the only technique precise enough to replace an experienced agent's judgment.", c: false },
+        { t: "Because reinforcement learning can only ever be applied to physical robots interacting with the real world, so it's simply not an available option for a purely digital pricing application like this.", c: false }
+      ],
+      hint: "Does the historical data already contain the “right answer” for every past row? And can the output the app produces be any number - or only one of a small fixed set of labels?",
+      concept: {
+        h: "Supervised learning - and its two flavours",
+        body: [
+          "<b>Supervised learning</b> learns from labeled data: known inputs paired with known, correct outputs guide the model - like a student (the model) studying training materials supplied by a teacher (the data scientist).",
+          "Within supervised learning: <b>Classification</b> predicts a category (“dog” vs “not a dog”). <b>Regression</b> predicts a continuous numeric value - like a home's price.",
+          "The test to apply: can the answer be <i>any number</i>, or must it be one of a small fixed set of labels? Price → any number → regression."
+        ]
+      }
+    },
+    {
+      id: 3, icon: "🧠", title: "Depth & Width", module: "Module 3",
+      scenario: "You're designing a neural network to recognise handwritten digits from 28×28 pixel MNIST images. A junior engineer says: “Let's just make the network as deep as possible - more layers is always better.”",
+      approach: [
+        { t: "Agree - always maximise depth, since a deeper network can theoretically represent any pattern given enough training time, so there's never a real downside to adding as many hidden layers as possible.", c: false },
+        { t: "Set the input width to match the data (784 nodes - one per pixel), and choose depth deliberately, balancing learning capacity for complex patterns against overfitting risk and computation cost.", c: true },
+        { t: "Ignore width entirely - width only matters for the very first prototype of a model, and can safely be left unset or arbitrary once the network's depth has been properly tuned for the task.", c: false },
+        { t: "Make the network as shallow as possible to save training time, since a single well-tuned hidden layer is mathematically guaranteed to reach the same accuracy as any deeper design eventually.", c: false }
+      ],
+      justification: [
+        { t: "Because deeper networks always train faster than shallow ones, since each additional hidden layer gives the optimizer more independent paths to quickly converge toward the correct weights, so in practice you should always stack as many layers as your hardware can physically support without worrying about diminishing returns or training instability.", c: false },
+        { t: "Because width is fixed by the data itself (one input node per pixel = 784 for MNIST), while depth is a deliberate design trade-off - more layers add capacity for complex patterns, but also add parameters, computation, and overfitting risk, so depth should match the task's actual complexity rather than being maximised blindly.", c: true },
+        { t: "Because the MNIST dataset's original specification legally mandates exactly one hidden layer for any network trained on it, regardless of the task's actual complexity, meaning any deviation from this fixed architecture would make comparisons against published benchmark results technically invalid.", c: false },
+        { t: "Because width and depth are really just two different names engineers use for the same underlying property of a network, so choosing one automatically fixes the other, which is why frameworks typically let you configure only one of the two values when defining a new architecture.", c: false }
+      ],
+      hint: "Which of the two - width or depth - is something you're free to choose, and which is fixed the moment you know the size of the image? And what does piling on more depth actually cost you?",
+      concept: {
+        h: "Width and depth of a neural network",
+        body: [
+          "<b>Width</b> = the number of nodes in the input layer, one per input feature. For MNIST (28×28 pixels), width = <b>784</b> - fixed by the data, not a design choice.",
+          "<b>Depth</b> = total layers (input + hidden layers + output). Depth <i>is</i> a design choice - more hidden layers mean more learning capacity, at the cost of more parameters, computation, and overfitting risk.",
+          "Learning happens as connections' <b>weights and biases</b> are adjusted, through non-linear transformations, across <b>thousands of repetitions</b>, until the network finds a combination that reliably tells a “7” from every other digit."
+        ]
+      }
+    },
+    {
+      id: 4, icon: "🤖", title: "Robotics AI Stack", module: "Module 4",
+      scenario: "A warehouse robot must navigate aisles, avoid obstacles, and respond to staff giving it verbal instructions like “bring pallet 12 to bay 3.”",
+      approach: [
+        { t: "Just use Computer Vision for everything - modern vision models are advanced enough to also handle navigation, obstacle avoidance, and even understanding spoken instructions, all within one unified system, since a sufficiently large model trained on enough data should in principle absorb every one of these capabilities on its own.", c: false },
+        { t: "Combine four distinct AI technologies, each solving a different sub-problem: Computer Vision (seeing objects/obstacles), SLAM (mapping + localisation for navigation), Reinforcement Learning (deciding movements to avoid obstacles), and NLP (understanding verbal instructions).", c: true },
+        { t: "Only use NLP, since understanding and correctly acting on the staff's spoken instructions is clearly the hardest and most important challenge the robot will face in this warehouse environment, and once that's handled correctly the remaining physical tasks can be treated as comparatively minor engineering details.", c: false },
+        { t: "Only use SLAM, since building an accurate map and knowing its own location is clearly the hardest and most important challenge the robot will face while navigating a busy warehouse aisle, meaning localisation solved makes obstacle avoidance and instruction-following easy add-ons afterward.", c: false }
+      ],
+      justification: [
+        { t: "Because perception, navigation, physical decision-making, and language understanding are four functionally distinct problems - solving one doesn't help with the others - so a real robot needs a coordinated multidisciplinary stack, not one model doing everything.", c: true },
+        { t: "Because industrial safety regulations for warehouse robots legally require exactly four certified onboard AI components to be installed before a robot can be approved for factory-floor operation, and inspectors specifically check for Computer Vision, SLAM, Reinforcement Learning, and NLP modules during audits.", c: false },
+        { t: "Because a single Computer Vision model is computationally limited to processing roughly one image per minute, making it far too slow to also handle navigation and language understanding simultaneously, so additional dedicated hardware would always be required regardless of the rest of the design.", c: false },
+        { t: "Because Natural Language Processing models are too computationally heavy to physically run on onboard robot hardware, so voice command understanding has to happen on a separate, external server, which is exactly why the same reasoning doesn't apply to the lighter vision or mapping components.", c: false }
+      ],
+      hint: "List the robot's separate jobs out loud: seeing what's around it, knowing where it is, deciding how to move, and understanding speech. Can one single model realistically do all four well?",
+      concept: {
+        h: "The multidisciplinary AI stack in robotics",
+        body: [
+          "A robot rarely relies on one single model - it combines several AI technologies, each handling a distinct capability:",
+          "<b>Computer Vision</b> → object detection & environment understanding. <b>SLAM</b> → navigation (mapping + localisation, simultaneously). <b>Reinforcement Learning</b> → decision-making in the physical world. <b>NLP</b> → understanding & generating human language.",
+          "This sits on top of three underlying disciplines that build the robot itself: Mechanical Engineering (structure/mobility), Electronics (power/control systems), and AI (decision-making, perception, behaviour)."
+        ]
+      }
+    },
+    {
+      id: 5, icon: "👁️", title: "Vision Model Families", module: "Module 5",
+      scenario: "An e-commerce team needs to (a) sort thousands of product photos into the correct catalogue category, and (b) generate extra realistic training images for a rare product-defect type that has very few real examples.",
+      approach: [
+        { t: "Use GANs for both tasks, since GANs are widely considered the single most advanced computer-vision family available today, making them the safest default choice for any image-related project.", c: false },
+        { t: "Use CNNs for (a) classification - they excel at recognising/categorising images via spatial hierarchies - and GANs for (b) generation - purpose-built to create new, realistic synthetic images through a Generator–Discriminator contest.", c: true },
+        { t: "Use CNNs for both tasks, since CNNs are the foundational computer-vision architecture and are capable of handling essentially every kind of image-related task, from simple classification to complex generation.", c: false },
+        { t: "Use U-Net for both tasks, since U-Net is widely regarded as the most precise computer-vision family available, and its segmentation accuracy naturally extends to classification and generation as well.", c: false }
+      ],
+      justification: [
+        { t: "Because “most advanced” doesn't mean “correct for every task.” The real question is whether the task is <i>recognition</i> (classify images that already exist → CNNs) or <i>generation</i> (create images that don't exist yet → GANs) - matching the family to the actual job, not to reputation, is what determines the right choice.", c: true },
+        { t: "Because GANs are always significantly cheaper to run computationally than CNNs, making them the more cost-effective default choice whenever a company is trying to control its cloud infrastructure spending, regardless of whether the task is recognising existing images or generating entirely new ones.", c: false },
+        { t: "Because U-Net was originally designed exclusively for medical scan images and, due to that specialised architecture, is structurally incapable of being applied to any other type of image data, meaning teams outside healthcare should rule it out automatically without checking its actual capabilities.", c: false },
+        { t: "Because product catalogue photos captured for e-commerce listings are always inherently low-resolution, which happens to be exactly the kind of image data GANs are specifically optimised to handle well, unlike CNNs, which were designed with only high-resolution professional photography in mind.", c: false }
+      ],
+      hint: "One of these two tasks is about recognising something that already exists in a photo. The other is about creating something realistic that doesn't exist yet. Which family was built for which job?",
+      concept: {
+        h: "Four families of computer vision models",
+        body: [
+          "<b>CNNs</b> - foundational, excel at high-dimensional image data by capturing spatial hierarchies: initial layers learn edges, intermediate layers combine them into shapes, deeper layers recognise complete objects.",
+          "<b>GANs</b> - a Generator and a Discriminator compete, producing life-like, entirely new images - exactly what's needed to synthesise rare examples.",
+          "<b>Transformers</b> (language-born, now applied to vision) relate every part of an image to every other part at once. <b>Specialised nets</b> like U-Net excel at precise segmentation (e.g. medical scans)."
+        ]
+      }
+    },
+    {
+      id: 6, icon: "✍️", title: "Text Preprocessing", module: "Module 8 / NLP",
+      scenario: "You're given the raw review “The Room Was NOT Clean!!! Staff Was Rude” and need to prepare it for a sentiment-analysis model. A teammate suggests just running the default stopword list - which includes the word “not” - before removing punctuation.",
+      approach: [
+        { t: "Follow the teammate's suggestion: lowercase, remove all default stopwords (including “not”), then remove punctuation. Result: “room clean staff rude.”", c: false },
+        { t: "Lowercase the text, remove stopwords but deliberately keep “not” in the text, then remove punctuation via a regular expression. Result: “room not clean staff rude.”", c: true },
+        { t: "Remove the punctuation first, skip the lowercasing step entirely since capitalisation rarely matters, then remove every stopword from the default list including “not” for a thorough cleanup.", c: false },
+        { t: "Skip preprocessing entirely and feed the raw, untouched text straight to the model, since modern sentiment models are sophisticated enough to handle capitalisation, punctuation, and stopwords on their own.", c: false }
+      ],
+      justification: [
+        { t: "Because “not” is a negation word that flips the sentiment of the words around it (“clean” vs. “not clean”) - blindly removing it as a generic stopword would make a negative review read as positive, so it must be deliberately excluded from the stopword list before filtering.", c: true },
+        { t: "Because stopwords must always be removed in absolutely every NLP pipeline with no exceptions ever, since their whole purpose is to strip out words that carry no meaningful signal for any downstream task, including sentiment analysis where meaning-flipping words are assumed to behave just like any other filler word.", c: false },
+        { t: "Because punctuation like exclamation marks carries more emotional meaning than any single word in the sentence, so preserving it matters far more than preserving a small negation word like “not,” meaning a pipeline under time pressure should prioritise punctuation over individual words.", c: false },
+        { t: "Because raw, fully unprocessed text - capitalisation, punctuation, and all - always performs best in sentiment models, since any cleanup step risks accidentally destroying useful signal the model could use, making every preprocessing decision a pure gamble with no reliable way to predict its effect.", c: false }
+      ],
+      hint: "Try mentally deleting just the word “not” from “not clean.” Does the sentence still mean the same thing? What happens to a sentiment model if “not” quietly vanishes during cleanup?",
+      concept: {
+        h: "The preprocessing pipeline - and why “not” is special",
+        body: [
+          "The taught pipeline: <b>1)</b> lowercase → <b>2)</b> remove stopwords, but keep “not” → <b>3)</b> remove punctuation via <code>re.sub(r\"([^\\w\\s])\", \"\", text)</code>.",
+          "Applied here: “The Room Was NOT Clean!!! Staff Was Rude” → “the room was not clean!!! staff was rude” → “room not clean!!! staff rude” → <b>“room not clean staff rude.”</b>",
+          "A pipeline that removed “not” along with the other stopwords would have produced “room clean staff rude” - the exact opposite meaning of the original review."
+        ]
+      }
+    },
+    {
+      id: 7, icon: "🕸️", title: "Vector Embeddings", module: "Module 9",
+      scenario: "A site's search feature only returns results that share the exact same words as the query. A user searches “joyful vacation” and gets zero results - even though the site has an article titled “A Happy Trip Abroad,” which is a near-perfect match in meaning.",
+      approach: [
+        { t: "Fix it by manually adding synonym pairs to a dictionary, one at a time, forever, since a sufficiently large hand-built list can eventually cover every possible meaning-based match a user might type.", c: false },
+        { t: "Replace exact keyword-matching with vector embeddings, so search is based on semantic similarity - words/phrases that mean similar things (like “joyful” and “happy”) sit close together in a learned vector space, regardless of shared letters.", c: true },
+        { t: "Make the search case-insensitive - that will fix the meaning-matching problem, since most failed searches happen because users type queries in different capitalisation than the site's own content.", c: false },
+        { t: "Nothing can be done - search engines can only ever match identical strings of text, so there's no realistic technique available today that could connect a query like “joyful” to a differently-worded article.", c: false }
+      ],
+      justification: [
+        { t: "Because case-insensitive search only affects capitalisation, not meaning - “joyful” and “happy” would still be treated as completely unrelated strings even after correcting for uppercase and lowercase, so the underlying zero-results problem would persist completely unchanged.", c: false },
+        { t: "Because embeddings encode meaning as position/direction in a high-dimensional space - semantically related words cluster together automatically from patterns learned across large volumes of text, without anyone hand-programming every synonym pair, unlike exact word-matching which requires identical strings.", c: true },
+        { t: "Because vector embeddings are a purely mathematical technique that only works on numeric data, and therefore have no way of representing words or text-based search queries at all, which is why real semantic search systems still have to fall back on manual synonym lists to bridge the gap.", c: false },
+        { t: "Because manually maintained synonym dictionaries scale perfectly to every possible phrase in a language, since language itself only contains a small, finite, well-documented set of synonym relationships that a dedicated team could realistically finish cataloguing once and for all.", c: false }
+      ],
+      hint: "Do “joyful” and “happy” share any letters at all? So what kind of matching could ever connect the two - matching on spelling, or matching on meaning?",
+      concept: {
+        h: "Semantic similarity, not word-matching",
+        body: [
+          "A <b>vector embedding</b> represents a word as a numerical array in a high-dimensional space, where the numbers are learned so they encode meaning and relationships - not just spelling.",
+          "Embeddings retrieve by <b>semantic similarity</b>: related concepts cluster together with no explicit rule ever programmed to group them - the classic illustration is country–capital pairs, where the vector “France → Paris” points in a similar direction to “Japan → Tokyo,” because both encode the same “capital-of” relationship.",
+          "This is what lets modern NLP detect sentiment, sarcasm, and irony - nuances that exact word-matching (and even 1990s statistical NLP) simply had no mechanism to represent."
+        ]
+      }
+    },
+    {
+      id: 8, icon: "⚠️", title: "AI Reliability", module: "Module 15 - Capstone", boss: true,
+      scenario: "Users of your AI product report two separate problems. Problem 1: when they ask for 5 academic references on a topic, 2 of the 5 turn out to be completely fabricated papers that don't exist. Problem 2: the exact same question, asked on Monday, gives a great answer - asked again on Wednesday, it gives a noticeably worse one.",
+      approach: [
+        { t: "Treat both problems as the same underlying bug, and apply one single fix to both - since they're both examples of the AI giving a “bad” answer, one well-designed patch should resolve them together, saving the team from maintaining two separate reliability workflows for what looks like the same user complaint.", c: false },
+        { t: "Recognise these as two distinct failure modes: Problem 1 is hallucination (confidently fabricated output) - fix by instructing the model to only answer when it knows, and by verifying citations. Problem 2 is inconsistency (quality drifting from sampling randomness/serving conditions) - fix by re-running prompts to compare, and pinning tasks down with explicit prompts.", c: true },
+        { t: "Ignore Problem 2 entirely - only fabricated citations count as a “real” reliability issue, since day-to-day variation in answer quality is simply an unavoidable, normal part of how any AI system behaves, so logging it as a bug would just misread what users should reasonably expect.", c: false },
+        { t: "Apply the same fix to both: simply make the underlying model bigger, since more capable, larger models should generally reduce both fabrication and day-to-day quality drift at the same time, making a scale-up the single most efficient investment instead of two separate targeted fixes.", c: false }
+      ],
+      justification: [
+        { t: "Because hallucination (false output delivered confidently) and inconsistency (output quality drifting over time) have genuinely different root causes - prediction-without-knowledge and unverified training data, versus sampling randomness and serving/hardware variance - so a robust strategy needs at least one tactic aimed at each; no single fix addresses both.", c: true },
+        { t: "Because hallucinations specifically only ever occur on Mondays, following a well-documented weekly pattern tied to how AI training servers are scheduled to refresh their data caches, a pattern operations teams are advised to build into their weekly monitoring schedules.", c: false },
+        { t: "Because a bigger model automatically eliminates both problems on its own, since scaling up the number of parameters directly and reliably fixes any weakness a smaller version of the model might have had, so every complaint should simply be routed toward procuring more compute.", c: false },
+        { t: "Because both problems are entirely caused by users phrasing their questions incorrectly, and a well-trained model should never fabricate information or vary in quality if given a clear, well-formed prompt, meaning reliability effort belongs entirely in better prompt-writing guidance.", c: false }
+      ],
+      hint: "Are these two symptoms actually the same kind of failure - or do they call for genuinely different explanations? What's the real difference between “a wrong answer delivered with total confidence” and “a good answer one day, a worse one the next”?",
+      concept: {
+        h: "Hallucination vs. inconsistency - two different diseases, two different cures",
+        body: [
+          "<b>Hallucination</b>: the AI provides false output while producing something - fabricated facts, citations, numbers - delivered fluently and confidently. Caused by prediction-not-knowledge (the model completes a plausible pattern even without genuine knowledge) plus garbage-in-garbage-out training data.",
+          "<b>Inconsistency</b>: the model gives very different responses to the same question over time. Caused by sampling randomness (generation is probabilistic by design) plus variation in hosting/serving conditions.",
+          "Tactics: instruct honesty (“only answer if you know”) and verify sources for hallucination; re-run and compare, and pin down tasks with explicit prompts, for inconsistency. A robust product needs <b>at least one tactic aimed at each</b> - this is the reasoning move the whole Atlas has been building toward."
+        ]
+      }
+    }
+  ];
+
+  var CAPSTONE_BASE = {
+    milestones: [
+      {
+        id: 1, title: "Frame the problem", tie: "Ties to Signal 1 - Data Foundations",
+        goal: "Before writing code, decide precisely what your tool will do and for whom. “Sentiment analysis” is vague - “flag the reviews an operations manager should read first” is a product decision.",
+        why: "Signal 1 was about the trade-off in how data gets prepared - that trade-off only makes sense once you know what the model actually needs to be good at. Skipping this step is the #1 reason project builds wander.",
+        checklist: [
+          "Written one sentence stating exactly what your tool outputs (e.g. “given a review, output positive/negative plus the single most likely complaint category”)",
+          "Identified who would actually use this and why they'd care",
+          "Read 10 real reviews from the dataset and noted what “positive” vs “negative” actually looks like in this specific data"
+        ],
+        guidance: "Find one genuinely ambiguous review - say, a 3-star review with mixed praise and complaint. How would your tool decide? Write your rule down before you code it.",
+        tip: "This becomes your README's “Problem” section, close to word for word.",
+        reflectPrompt: "Write your problem statement, intended user, and what you noticed reading real reviews."
+      },
+      {
+        id: 2, title: "Clean & prepare the data", tie: "Ties to Signal 6 - Text Preprocessing",
+        goal: "Apply the exact preprocessing pipeline from Signal 6 - lowercase, stopword removal (mind the “not”), punctuation stripping, tokenization - to the full review dataset, not just one example sentence.",
+        why: "Signal 6 showed you why removing “not” as a generic stopword flips meaning. At full-dataset scale, a bug like that doesn't show up as one wrong answer - it shows up as a model that's confidently wrong across an entire category of reviews.",
+        checklist: [
+          "Loaded the full dataset and confirmed row count and column names",
+          "Applied lowercase → stopword removal (keeping “not”) → punctuation removal, exactly as in Signal 6",
+          "Spot-checked 5 cleaned reviews by eye to confirm negation wasn't lost",
+          "Tokenized the cleaned text"
+        ],
+        guidance: "What would you actually see in your output if “not” had been silently stripped from 500 reviews? Write down how you'd catch that bug before you trusted your results.",
+        tip: "A short “before/after” example (raw review → cleaned review) is one of the highest-value things you can put in a README - concrete proof you understand your own pipeline.",
+        reflectPrompt: "Paste one before/after cleaning example, and note anything your spot-check caught."
+      },
+      {
+        id: 3, title: "Turn text into signal", tie: "Ties to Signal 7 - Vector Embeddings",
+        goal: "Convert your cleaned text into a numeric representation (word/n-gram counts, TF-IDF, or embeddings if you're ready) and train a simple classifier on it.",
+        why: "Signal 7 was about meaning as geometry - words that mean similar things sitting close together. Whatever representation you pick here, you're making a real version of that trade-off: simple counts are easy to reason about, embeddings capture more meaning but are harder to inspect.",
+        checklist: [
+          "Chosen and justified a text representation (counts, TF-IDF, or embeddings)",
+          "Split the data into train/test sets",
+          "Trained a classifier (any reasonable model - logistic regression is a fine choice)",
+          "Generated predictions on the test set"
+        ],
+        guidance: "Before you look at accuracy, guess what score a model that always predicts “positive” would get on this dataset. Now you have a baseline to actually judge your real model against.",
+        tip: "State your baseline in the README next to your real result - “beats a naive always-positive baseline of X% by Y points” reads far more credibly than a bare accuracy number.",
+        reflectPrompt: "State your chosen representation, your model, and your result vs. the naive baseline."
+      },
+      {
+        id: 4, title: "Evaluate honestly", tie: "Ties to Signal 8 - AI Reliability",
+        goal: "Look past the headline accuracy number. Read several of your model's actual mistakes. Identify at least one real limitation.",
+        why: "Signal 8 was about the discipline of not trusting fluent, confident output at face value - including your own model's output. A project that only reports “94% accuracy” reads as less credible than one that also says what breaks it.",
+        checklist: [
+          "Computed accuracy (or a more appropriate metric) on the test set",
+          "Read at least 5 misclassified reviews and written down a pattern in what the model gets wrong",
+          "Written one honest limitation of the current approach"
+        ],
+        guidance: "Is your tool actually picking up on the pattern it's supposed to find, or just pattern-matching a handful of obvious surface words? Try it on an example that avoids those obvious words entirely - does it still work?",
+        tip: "A short “Known limitations” section is not a weakness in a portfolio piece - reviewers specifically look for it as a sign of real understanding, not a copy-pasted tutorial.",
+        reflectPrompt: "Describe the pattern in your model's mistakes, and your one honest limitation."
+      },
+      {
+        id: 5, title: "Package it for a portfolio", tie: "Brings every Signal together",
+        goal: "Turn Milestones 1–4 into an actual, presentable project - a clean notebook, a README, and a one-line reflection on what you'd do differently at scale.",
+        why: "A project only becomes portfolio-worthy once someone other than you can understand it in under two minutes.",
+        checklist: [
+          "Notebook runs top-to-bottom without errors",
+          "README drafted with: Problem, Approach, Result, Known limitations, What I'd do differently at scale",
+          "Pushed to a GitHub repo (or equivalent) with a clear name"
+        ],
+        guidance: "Hand your README to a classmate who hasn't seen your project. Can they explain back to you, in one sentence, what it does and how well it works?",
+        tip: "Generate your packet below once every checklist item is done - it drafts your README structure directly from what you wrote in each milestone.",
+        reflectPrompt: "What would you do differently if this had to work at 100× the scale?"
+      }
+    ]
+  };
+
+  var CAPSTONE_SHARED_BRIEF_LINE2 =
+    "Each milestone below ties back to a Signal you've already cleared. Work through them in order, in your own Jupyter environment - this tool gives you the brief, the checkpoints, and the guidance; the actual building happens in your notebook.";
+
+  /* ---------- capstone project angles ---------- *
+   * Every student works from the same dataset and the same 5-step structure
+   * (frame -> clean -> build -> evaluate -> package), but Milestones 1 and 3
+   * differ by angle, so classmates don't end up with identical portfolio
+   * projects. Assigned deterministically from the student's roll number, so
+   * it never changes across sessions/devices for the same student.
+   */
+  var PROJECT_ANGLES = [
+    {
+      title: "Build It: A Hotel-Review Sentiment Triage Tool",
+      brief0: "Real hotel-review text is already sitting in your NLP prep work, and you've already built a cleaning pipeline for it in class. This capstone asks you to take that pipeline the rest of the way: turn cleaned reviews into a working sentiment classifier that flags which reviews an operations manager should read first, be honest about how well it actually works, and package the whole thing the way a real portfolio project is packaged - a README a stranger could read and understand, not just a notebook only you can follow.",
+      m1: {
+        goal: "Before writing code, decide precisely what your tool will do and for whom. “Sentiment analysis” is vague - “flag the reviews an operations manager should read first” is a product decision.",
+        checklist: [
+          "Written one sentence stating exactly what your tool outputs (e.g. “given a review, output positive/negative plus the single most likely complaint category”)",
+          "Identified who would actually use this and why they'd care",
+          "Read 10 real reviews from the dataset and noted what “positive” vs “negative” actually looks like in this specific data"
+        ],
+        guidance: "Find one genuinely ambiguous review - say, a 3-star review with mixed praise and complaint. How would your tool decide? Write your rule down before you code it.",
+        tip: "This becomes your README's “Problem” section, close to word for word.",
+        reflectPrompt: "Write your problem statement, intended user, and what you noticed reading real reviews."
+      },
+      m3: {
+        goal: "Convert your cleaned text into a numeric representation (word/n-gram counts, TF-IDF, or embeddings if you're ready) and train a simple classifier on it.",
+        checklist: [
+          "Chosen and justified a text representation (counts, TF-IDF, or embeddings)",
+          "Split the data into train/test sets",
+          "Trained a classifier (any reasonable model - logistic regression is a fine choice)",
+          "Generated predictions on the test set"
+        ],
+        guidance: "Before you look at accuracy, guess what score a model that always predicts “positive” would get on this dataset. Now you have a baseline to actually judge your real model against.",
+        tip: "State your baseline in the README next to your real result - “beats a naive always-positive baseline of X% by Y points” reads far more credibly than a bare accuracy number.",
+        reflectPrompt: "State your chosen representation, your model, and your result vs. the naive baseline."
+      }
+    },
+    {
+      title: "Build It: A Hotel Complaint-Theme Extractor",
+      brief0: "Real hotel-review text is already sitting in your NLP prep work, and you've already built a cleaning pipeline for it in class. This capstone asks you to go further than “positive or negative” - build a tool that sorts negative reviews into complaint themes (cleanliness, staff, noise, value, location...) so management knows exactly what to fix, not just that something's wrong. Package the whole thing the way a real portfolio project is packaged - a README a stranger could read and understand, not just a notebook only you can follow.",
+      m1: {
+        goal: "Before writing code, decide which complaint themes actually show up in this dataset - don't guess from a generic list, read real negative reviews and let the themes emerge.",
+        checklist: [
+          "Read 15 real negative reviews and written down 4-6 recurring complaint themes you actually saw (e.g. cleanliness, staff, noise, value, location)",
+          "Written one sentence defining what counts as evidence for each theme (a word or phrase you'd look for)",
+          "Identified who would use this tool and what decision it helps them make"
+        ],
+        guidance: "Find one review that could plausibly belong to two themes at once (e.g. a complaint about “rude staff refusing a refund” - staff or value?). Write down which theme you'd assign it and why, before you code the rule.",
+        tip: "Your theme list plus their definitions becomes your README's “Problem” section almost word for word.",
+        reflectPrompt: "Write your theme list, how you defined each one, and your intended user."
+      },
+      m3: {
+        goal: "Build a way to tag each negative review with its most likely complaint theme, and report which theme is most common across the dataset.",
+        checklist: [
+          "Chosen and justified a tagging method (keyword rules per theme, or a simple classifier per theme)",
+          "Applied it across all negative reviews in the dataset",
+          "Counted how often each theme appears and identified the most common one",
+          "Compared your result against a naive baseline (e.g. just counting raw keyword mentions with no cleaning)"
+        ],
+        guidance: "Before you tag anything, guess which theme you expect to be most common, based on what you noticed reading reviews. Does your actual result match your guess - and if not, what does that tell you?",
+        tip: "State your baseline comparison in the README - “found double the cleanliness complaints a raw keyword search would catch” is a much stronger sentence than a bare count.",
+        reflectPrompt: "State your tagging method, the most common theme you found, and how it compares to your naive baseline."
+      }
+    },
+    {
+      title: "Build It: A Hotel Review Ambiguity Detector",
+      brief0: "Real hotel-review text is already sitting in your NLP prep work, and you've already built a cleaning pipeline for it in class. Most sentiment tools nail the easy reviews and quietly get the hard ones wrong. This capstone asks you to build a tool that does the opposite of guessing on hard cases - it specifically finds mixed-sentiment or sarcastic reviews and flags them for a human to read, instead of confidently mislabeling them. Package the whole thing the way a real portfolio project is packaged - a README a stranger could read and understand, not just a notebook only you can follow.",
+      m1: {
+        goal: "Before writing code, decide precisely what makes a review “ambiguous” in this dataset. “Hard to classify” is vague - a specific, checkable rule is a product decision.",
+        checklist: [
+          "Read 15 real reviews and found at least 5 you'd call genuinely ambiguous (mixed praise+complaint, or sarcastic)",
+          "Written one sentence defining, precisely, what you mean by “ambiguous” for this tool",
+          "Identified who would use a list of flagged ambiguous reviews and why"
+        ],
+        guidance: "Take one ambiguous review you found and try to explain, out loud, why it's hard to classify. If your explanation only makes sense to you, your definition probably isn't specific enough yet.",
+        tip: "This becomes your README's “Problem” section, close to word for word.",
+        reflectPrompt: "Write your definition of “ambiguous,” one real example, and your intended user."
+      },
+      m3: {
+        goal: "Build a way to score how ambiguous each review is (e.g. presence of both strongly positive and strongly negative words, or low confidence from a simple classifier), and flag the most ambiguous ones.",
+        checklist: [
+          "Chosen and justified an ambiguity score (mixed-keyword presence, or classifier confidence)",
+          "Applied it across the dataset and ranked reviews by ambiguity",
+          "Flagged the top N most ambiguous reviews",
+          "Compared against a naive baseline (e.g. flagging every 3-star review, regardless of content)"
+        ],
+        guidance: "Before you look at your flagged list, guess how many of the top N will actually be ambiguous on a human read. Were you right? What does that tell you about your scoring method?",
+        tip: "State your baseline comparison in the README - “found genuinely mixed reviews a star-rating filter alone would miss” reads far more credibly than a bare list.",
+        reflectPrompt: "State your ambiguity score, how many reviews you flagged, and how it compares to the naive star-rating baseline."
+      }
+    },
+    {
+      title: "Build It: A Hotel Review Response Ranker",
+      brief0: "Real hotel-review text is already sitting in your NLP prep work, and you've already built a cleaning pipeline for it in class. Not every negative review is equally urgent - an angry review demanding a refund needs a faster response than a mild 3-star note. This capstone asks you to build a ranker, not a classifier: order reviews by how urgently they need a response. Package the whole thing the way a real portfolio project is packaged - a README a stranger could read and understand, not just a notebook only you can follow.",
+      m1: {
+        goal: "Before writing code, decide precisely what “urgent” means for this hotel's reviews. Not every complaint deserves the same priority - a product decision, not a vague feeling.",
+        checklist: [
+          "Read 15 real negative reviews and found the ones that feel most urgent, noting what specifically signals urgency (words, threats to leave a bad public review, requests for a refund, safety concerns)",
+          "Written one sentence defining what “urgent” means for your ranker",
+          "Identified who would use this ranked list and how it changes what they do first"
+        ],
+        guidance: "Find one review that's angry in tone but not actually urgent (e.g. venting about slow check-in), and one that's calm but genuinely urgent (e.g. a quiet safety concern). Write down how your rule tells them apart.",
+        tip: "This becomes your README's “Problem” section, close to word for word.",
+        reflectPrompt: "Write your definition of urgency, one contrasting example pair, and your intended user."
+      },
+      m3: {
+        goal: "Build a scoring/ranking function that orders reviews by urgency, using the signals you identified in Milestone 1.",
+        checklist: [
+          "Chosen and justified an urgency score (keyword weighting, presence of specific urgent phrases, or a trained model)",
+          "Applied it across all negative reviews and produced a ranked list",
+          "Compared your top-ranked reviews against simply sorting by star rating alone",
+          "Written down at least one review where your ranking and a star-rating sort disagree, and which one you trust more"
+        ],
+        guidance: "Before comparing, guess whether your ranking and a plain star-rating sort will actually agree most of the time, or diverge a lot. Which did you find - and why does that make sense given what urgency actually means?",
+        tip: "State the comparison in the README - “surfaces urgent reviews a star-rating sort alone would bury” is a much stronger sentence than a bare ranked list.",
+        reflectPrompt: "State your urgency score, and one example where your ranking disagreed with a plain star-rating sort."
+      }
+    },
+    {
+      title: "Build It: A Hotel Complaint Trend Watchdog",
+      brief0: "Real hotel-review text is already sitting in your NLP prep work, and you've already built a cleaning pipeline for it in class. A one-off classifier tells you about a single review; a watchdog tool tells you when a new complaint pattern is emerging across many reviews - like a sudden spike in “wifi” or “noise” complaints - so management catches problems early instead of reading it in a one-star spiral three months later. Package the whole thing the way a real portfolio project is packaged - a README a stranger could read and understand, not just a notebook only you can follow.",
+      m1: {
+        goal: "Before writing code, decide precisely what would count as a “trend” worth flagging in this dataset - a single complaint isn't a trend, but how many is?",
+        checklist: [
+          "Read 15 real negative reviews and noted any complaint phrases that seemed to repeat across multiple reviews",
+          "Written one sentence defining what count/frequency would count as a trend worth flagging",
+          "Identified who would use trend alerts and what they'd do differently because of one"
+        ],
+        guidance: "Pick one phrase you noticed repeating. Would you flag it if it appeared twice? Five times? Write down your threshold and why you picked it, before you code the rule.",
+        tip: "This becomes your README's “Problem” section, close to word for word.",
+        reflectPrompt: "Write your trend definition/threshold, one repeating phrase you noticed, and your intended user."
+      },
+      m3: {
+        goal: "Use n-grams to find the most frequent complaint phrases among negative reviews, and report which ones look like emerging trends by your Milestone 1 threshold.",
+        checklist: [
+          "Generated n-grams (bigrams/trigrams) from the cleaned negative reviews",
+          "Counted frequency of each n-gram and ranked the top complaint phrases",
+          "Applied your trend threshold from Milestone 1 to decide which phrases count as a trend",
+          "Compared against a naive baseline (e.g. just reading the 10 most recent reviews by eye)"
+        ],
+        guidance: "Before running the numbers, guess which complaint phrase you expect to top the list. Were you right? What does it tell you if your gut instinct and the data disagree?",
+        tip: "State the comparison in the README - “surfaces a real emerging pattern a quick eyeball read of recent reviews would miss” reads far more credibly than a bare n-gram list.",
+        reflectPrompt: "State your top trending complaint phrase, your threshold, and how this compares to just eyeballing recent reviews."
+      }
+    },
+    {
+      title: "Build It: A Hotel Review Authenticity Flagger",
+      brief0: "Real hotel-review text is already sitting in your NLP prep work, and you've already built a cleaning pipeline for it in class. Not every review is equally useful - some read as generic and templated, others are packed with specific, checkable detail about this exact hotel. This capstone asks you to build a tool that flags which reviews are actually specific and useful versus generic filler, so management (or future guests) can weight them accordingly. Package the whole thing the way a real portfolio project is packaged - a README a stranger could read and understand, not just a notebook only you can follow.",
+      m1: {
+        goal: "Before writing code, decide precisely what makes a review feel “specific” versus “generic” in this dataset - a product decision, not a vague feeling.",
+        checklist: [
+          "Read 15 real reviews and found examples of both a specific, detailed review and a generic, templated-feeling one",
+          "Written one sentence defining what signals specificity (named features, room numbers, concrete events) versus genericness (short length, vague praise/complaint, no detail)",
+          "Identified who would use a specificity score and how it'd change what they trust"
+        ],
+        guidance: "Find one SHORT review that still feels genuinely specific, and one LONG review that still feels generic. Write down what actually distinguishes them - it's probably not just length.",
+        tip: "This becomes your README's “Problem” section, close to word for word.",
+        reflectPrompt: "Write your definition of specific vs. generic, your two contrasting examples, and your intended user."
+      },
+      m3: {
+        goal: "Build a way to score each review as specific or generic, using the signals you identified in Milestone 1 (not just review length).",
+        checklist: [
+          "Chosen and justified a specificity score (e.g. presence of concrete nouns/features, overlap with common templated phrases across many reviews, or more than just word count)",
+          "Applied it across the dataset and flagged the most generic-scoring reviews",
+          "Compared against a naive baseline (e.g. flagging only very short reviews by length alone)",
+          "Read 5 reviews your score flagged as generic and confirmed by eye whether you agree"
+        ],
+        guidance: "Before you look at your flagged list, guess how different it'll be from a plain “flag short reviews” baseline. If they're nearly identical, what does that say about whether your extra work actually added value?",
+        tip: "State the comparison in the README - “flags templated-feeling reviews a length-only filter would miss” reads far more credibly than a bare count.",
+        reflectPrompt: "State your specificity score, how many reviews it flagged, and how it compares to a length-only baseline."
+      }
+    }
+  ];
+
+  function stableHash(str) {
+    var h = 0;
+    for (var i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) >>> 0; }
+    return h;
+  }
+  function angleForRoll(roll) {
+    var idx = stableHash((roll || "").toUpperCase()) % PROJECT_ANGLES.length;
+    return PROJECT_ANGLES[idx];
+  }
+  function getStudentCapstone(roll) {
+    var angle = angleForRoll(roll);
+    var base = CAPSTONE_BASE.milestones;
+    var m1 = Object.assign({}, base[0], angle.m1, { id: base[0].id, title: base[0].title, tie: base[0].tie });
+    var m3 = Object.assign({}, base[2], angle.m3, { id: base[2].id, title: base[2].title, tie: base[2].tie });
+    return {
+      title: angle.title,
+      brief: [angle.brief0, CAPSTONE_SHARED_BRIEF_LINE2],
+      milestones: [m1, base[1], m3, base[3], base[4]]
+    };
+  }
+
+  var XP_PER_LEVEL = 100;
+  var XP_PENALTY_PER_WRONG = 15;
+  var XP_MIN = 40;
+
+  /* ---------- state (keyed per student, by roll number) ---------- */
+  function loadState(roll) {
+    try {
+      var raw = localStorage.getItem(STORAGE_PREFIX + roll.toUpperCase());
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return null;
+  }
+  function saveState(s) {
+    if (!s || !s.roll) return;
+    try { localStorage.setItem(STORAGE_PREFIX + s.roll.toUpperCase(), JSON.stringify(s)); } catch (e) {}
+  }
+  function freshCapstoneState(roll) {
+    var ms = {};
+    getStudentCapstone(roll).milestones.forEach(function (m) {
+      ms[m.id] = { checks: m.checklist.map(function () { return false; }), reflection: "", done: false };
+    });
+    return { lastView: "bridge", milestones: ms, packetDownloaded: false, celebrated: false };
+  }
+  function freshState(name, roll) {
+    return { name: name, roll: roll, cleared: {}, xp: 0, createdAt: Date.now(), effectsOn: true, atlasCelebrated: false, capstone: freshCapstoneState(roll) };
+  }
+  function ensureCapstone() {
+    if (!state.capstone) { state.capstone = freshCapstoneState(state.roll); saveState(state); }
+  }
+
+  var state = null;
+  var activeLevelId = null;
+  var stepIndex = 0; // 0 = approach, 1 = justification, 2 = concept reveal
+  var chosenApproach = null;
+  var chosenJustification = null;
+  var showHint = false;
+  var wrongAttempts = 0;
+
+  var app = document.getElementById("app");
+
+  function esc(s) {
+    var d = document.createElement("div");
+    d.innerText = s;
+    return d.innerHTML;
+  }
+
+  /* ---------- celebration effects: sound + confetti ---------- */
+  var audioCtx = null;
+  function getAudioCtx() {
+    if (audioCtx) return audioCtx;
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx) audioCtx = new Ctx();
+    } catch (e) {}
+    return audioCtx;
+  }
+  function effectsEnabled() { return !state || state.effectsOn !== false; }
+
+  function playBellStrike(ctx, freq, startTime, sizeScale) {
+    // Real bells ring via a handful of slightly INHARMONIC partials (not a clean
+    // integer-ratio overtone series like a plucked string) - that's what gives a
+    // bell its "clang" rather than a plain beep. Each higher partial also decays
+    // faster than the fundamental, the way a real bell's shimmer fades before its hum.
+    var partials = [
+      { ratio: 1.00, gain: 0.32, decay: 1.5 * sizeScale },
+      { ratio: 2.00, gain: 0.20, decay: 1.2 * sizeScale },
+      { ratio: 2.76, gain: 0.14, decay: 0.9 * sizeScale },
+      { ratio: 4.07, gain: 0.09, decay: 0.6 * sizeScale },
+      { ratio: 5.40, gain: 0.05, decay: 0.42 * sizeScale }
+    ];
+    partials.forEach(function (p) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq * p.ratio;
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.linearRampToValueAtTime(p.gain, startTime + 0.006); // near-instant strike
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + p.decay);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + p.decay + 0.05);
+    });
+  }
+
+  function playChime(big) {
+    if (!effectsEnabled()) return;
+    var ctx = getAudioCtx();
+    if (!ctx) return;
+    if (ctx.state === "suspended") { ctx.resume().catch(function () {}); }
+    var now = ctx.currentTime;
+    if (big) {
+      // a short celebratory peal - three ascending strikes
+      [783.99, 987.77, 1318.51].forEach(function (freq, i) {
+        playBellStrike(ctx, freq, now + i * 0.22, 1.15);
+      });
+    } else {
+      // a single clean strike for everyday correct answers
+      playBellStrike(ctx, 987.77, now, 0.75);
+    }
+  }
+
+  var CONFETTI_COLORS = ["#FF5A36", "#00D9A3", "#FFB800", "#A855F7", "#FF3D77", "#3DDC97"];
+  function fireConfetti(big) {
+    if (!effectsEnabled()) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var canvas = document.createElement("canvas");
+    canvas.style.position = "fixed";
+    canvas.style.inset = "0";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "999";
+    document.body.appendChild(canvas);
+
+    var dpr = window.devicePixelRatio || 1;
+    function resize() {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+    }
+    resize();
+    var ctx2d = canvas.getContext("2d");
+    ctx2d.scale(dpr, dpr);
+    window.addEventListener("resize", resize);
+
+    var count = big ? 150 : 80;
+    var particles = [];
+    for (var i = 0; i < count; i++) {
+      var fromLeft = i % 2 === 0;
+      var ox = fromLeft ? window.innerWidth * 0.06 : window.innerWidth * 0.94;
+      var oy = window.innerHeight * 0.94;
+      var angle = (fromLeft ? -1.0 : -2.1) + (Math.random() - 0.5) * 0.7;
+      var speed = (big ? 12 : 8.5) + Math.random() * 6;
+      particles.push({
+        x: ox, y: oy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: 4 + Math.random() * 5,
+        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+        rot: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 0.35,
+        shape: Math.random() < 0.55 ? "rect" : "circle"
+      });
+    }
+
+    var gravity = 0.32;
+    var start = performance.now();
+    var duration = big ? 2600 : 1700;
+
+    function frame(t) {
+      var elapsed = t - start;
+      ctx2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      var alive = false;
+      particles.forEach(function (p) {
+        p.vy += gravity * 0.06;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        var fade = Math.max(0, 1 - elapsed / duration);
+        if (fade > 0) {
+          alive = true;
+          ctx2d.save();
+          ctx2d.globalAlpha = fade;
+          ctx2d.translate(p.x, p.y);
+          ctx2d.rotate(p.rot);
+          ctx2d.fillStyle = p.color;
+          if (p.shape === "rect") {
+            ctx2d.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.66);
+          } else {
+            ctx2d.beginPath();
+            ctx2d.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+            ctx2d.fill();
+          }
+          ctx2d.restore();
+        }
+      });
+      if (alive && elapsed < duration) {
+        requestAnimationFrame(frame);
+      } else {
+        window.removeEventListener("resize", resize);
+        canvas.remove();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function celebrate(big) {
+    playChime(big);
+    fireConfetti(big);
+  }
+
+  function fxToggleHtml() {
+    var on = effectsEnabled();
+    return '<button class="fx-toggle" id="fxToggleBtn" aria-pressed="' + on + '" ' +
+      'aria-label="' + (on ? "Sound and confetti on - click to mute" : "Sound and confetti off - click to unmute") + '" title="Sound & confetti">' +
+      (on ? "🔊" : "🔇") + '</button>';
+  }
+  function bindFxToggle() {
+    var btn = document.getElementById("fxToggleBtn");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      state.effectsOn = !effectsEnabled();
+      saveState(state);
+      render();
+    });
+  }
+
+  function switchStudentHtml() {
+    return '<button class="link-btn" id="switchStudentBtn" style="white-space:nowrap;">Not you? Switch student</button>';
+  }
+  function bindSwitchStudent() {
+    var btn = document.getElementById("switchStudentBtn");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      state = null;
+      render();
+    });
+  }
+
+  /* ---------- render router ---------- */
+  function render() {
+    if (!state) { renderLogin(); return; }
+    ensureCapstone();
+    var clearedCount = Object.keys(state.cleared).length;
+    if (clearedCount >= LEVELS.length) {
+      if (state.capstone.lastView === "studio") renderCapstone();
+      else renderBridge();
+      return;
+    }
+    renderAtlas();
+    if (activeLevelId !== null) renderModal();
+  }
+
+  /* ---------- login ---------- */
+  function renderLogin() {
+    var lastRoll = "";
+    try { lastRoll = localStorage.getItem(LAST_ROLL_KEY) || ""; } catch (e) {}
+
+    app.innerHTML =
+      '<div class="login-screen">' +
+        '<div class="login-card">' +
+          '<div class="eyebrow">AI &amp; Machine Learning · IL3064</div>' +
+          '<h1 class="display">PROJECT AI - DOIE</h1>' +
+          '<p class="sub">A reasoning atlas, not a quiz bank. Every Signal asks you to choose an approach <i>and</i> justify it - the concept is only explained after you’ve reasoned your way there. Clear all 8, then build a real capstone project you can put in your portfolio.</p>' +
+          '<label class="field-label" for="rollInput">Your roll number</label>' +
+          '<input id="rollInput" type="text" placeholder="e.g. 21IE045" autocomplete="off" value="' + esc(lastRoll) + '" />' +
+          '<label class="field-label" for="codeInput">Class access code</label>' +
+          '<input id="codeInput" type="text" placeholder="Given by your instructor" autocomplete="off" />' +
+          '<button class="btn-primary" id="beginBtn">Check in →</button>' +
+          '<div id="loginError" style="display:none;color:var(--danger);font-size:0.8rem;margin-top:10px;"></div>' +
+          '<div class="login-foot">You must be on the class roster to check in. Progress saves to this device only - use the same device each time to keep your streak.</div>' +
+        '</div>' +
+      '</div>';
+
+    var rollInput = document.getElementById("rollInput");
+    var codeInput = document.getElementById("codeInput");
+    var btn = document.getElementById("beginBtn");
+    var errBox = document.getElementById("loginError");
+
+    function showError(msg) {
+      errBox.textContent = msg;
+      errBox.style.display = "block";
+      rollInput.style.borderColor = "var(--danger)";
+    }
+
+    function tryBegin() {
+      var roll = (rollInput.value || "").trim();
+      var code = (codeInput.value || "").trim();
+      errBox.style.display = "none";
+      rollInput.style.borderColor = "";
+
+      if (!roll || !code) { showError("Enter both your roll number and the class access code."); return; }
+      if (code !== CLASS_CODE) { showError("That access code doesn't match - check with your instructor."); return; }
+      var entry = findRosterEntry(roll);
+      if (!entry) { showError("That roll number isn't on the class roster. Check the spelling, or ask your instructor to add you."); return; }
+
+      try { localStorage.setItem(LAST_ROLL_KEY, entry.roll); } catch (e) {}
+      var existing = loadState(entry.roll);
+      state = existing || freshState(entry.name, entry.roll);
+      state.name = entry.name; // roster is the source of truth for display name
+      saveState(state);
+      render();
+    }
+    btn.addEventListener("click", tryBegin);
+    codeInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryBegin(); });
+    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
+    setTimeout(function () { (lastRoll ? codeInput : rollInput).focus(); }, 50);
+  }
+
+  /* ---------- atlas ---------- */
+  function levelStatus(id) {
+    if (state.cleared[id]) return "done";
+    var prev = id - 1;
+    if (prev === 0 || state.cleared[prev]) return "active";
+    return "locked";
+  }
+
+  function buildMapSvg() {
+    var n = LEVELS.length;
+    var w = 720, h = 460;
+    var pts = [];
+    // organic zig-zag path across the "sky"
+    var xs = [70, 190, 330, 470, 610, 480, 320, 170];
+    var ys = [70, 150, 90, 160, 260, 340, 300, 400];
+    for (var i = 0; i < n; i++) pts.push({ x: xs[i], y: ys[i] });
+
+    var svg = '<svg class="map-svg" viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Level map">';
+
+    for (var i = 0; i < n - 1; i++) {
+      var a = pts[i], b = pts[i + 1];
+      var doneLine = state.cleared[LEVELS[i].id] ? " done" : "";
+      svg += '<path class="map-line' + doneLine + '" d="M' + a.x + ',' + a.y + ' L' + b.x + ',' + b.y + '"></path>';
+    }
+
+    for (var j = 0; j < n; j++) {
+      var lvl = LEVELS[j];
+      var st = levelStatus(lvl.id);
+      var p = pts[j];
+      var r = lvl.boss ? 30 : 26;
+      svg += '<g class="node-group ' + st + '" tabindex="0" role="button" ' +
+        'aria-label="Signal ' + lvl.id + ': ' + esc(lvl.title) + ' (' + st + ')" ' +
+        'data-id="' + lvl.id + '">' +
+          '<circle class="node-ring" cx="' + p.x + '" cy="' + p.y + '" r="' + r + '"></circle>' +
+          '<text class="node-icon" x="' + p.x + '" y="' + (p.y - 2) + '">' + (st === "locked" ? "🔒" : (st === "done" ? "✓" : lvl.icon)) + '</text>' +
+          '<text class="node-num" x="' + p.x + '" y="' + (p.y + r + 14) + '">SIGNAL ' + lvl.id + '</text>' +
+          '<text class="node-label" x="' + p.x + '" y="' + (p.y + r + 30) + '">' + esc(lvl.title) + '</text>' +
+        '</g>';
+    }
+    svg += '</svg>';
+    return svg;
+  }
+
+  function renderAtlas() {
+    var clearedCount = Object.keys(state.cleared).length;
+    var pct = Math.round((clearedCount / LEVELS.length) * 100);
+
+    var proofsHtml = LEVELS.map(function (lvl) {
+      var earned = !!state.cleared[lvl.id];
+      return '<div class="proof-row' + (earned ? ' earned' : '') + '">' +
+        '<div class="proof-icon">' + (earned ? "✅" : lvl.icon) + '</div>' +
+        '<div class="proof-name">' + esc(lvl.title) + '<span class="sub">' + esc(lvl.module) + '</span></div>' +
+      '</div>';
+    }).join("");
+
+    app.innerHTML =
+      '<div class="topbar">' +
+        '<div class="brand"><span class="mark display">PROJECT AI - DOIE</span><span class="tag">AI &amp; ML Reasoning Atlas</span></div>' +
+        '<div class="hud">' +
+          '<div class="hud-name">Reasoner: <b>' + esc(state.name) + '</b></div>' +
+          '<div class="hud-stat"><span class="num stat">' + state.xp + '</span><span class="lbl">Insight Pts</span></div>' +
+          '<div class="hud-stat"><span class="num stat">' + clearedCount + '/' + LEVELS.length + '</span><span class="lbl">Signals Charted</span></div>' +
+          switchStudentHtml() +
+          fxToggleHtml() +
+        '</div>' +
+      '</div>' +
+      '<div class="atlas-wrap">' +
+        '<div class="atlas-main">' +
+          '<h2 class="display">The Atlas</h2>' +
+          '<p class="sub">Eight Signals, charted in order. Each one opens with a scenario - choose your approach, then justify it. Get both right to earn the Proof and unlock the next Signal.</p>' +
+          buildMapSvg() +
+        '</div>' +
+        '<div class="side-panel">' +
+          '<div class="progress-block">' +
+            '<div class="eyebrow">Course Progress</div>' +
+            '<div class="progress-bar-track"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="progress-count stat">' + pct + '% · ' + clearedCount + ' of ' + LEVELS.length + ' Signals charted</div>' +
+          '</div>' +
+          '<div class="proofs-block">' +
+            '<div class="eyebrow">Proofs Earned</div>' +
+            '<div class="proofs-list" style="margin-top:10px;">' + proofsHtml + '</div>' +
+          '</div>' +
+          '<div class="how-block">' +
+            '<h3 class="display">How Signals work</h3>' +
+            '<p>1. Read the scenario.<br>2. Choose your approach.<br>3. Choose your justification.<br>4. Miss either, and a hint nudges your thinking - it never hands you the answer.<br>5. Clear both, and the concept is revealed - you’ve just reasoned your way to it.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    var nodes = app.querySelectorAll(".node-group");
+    nodes.forEach(function (node) {
+      var id = parseInt(node.getAttribute("data-id"), 10);
+      var status = levelStatus(id);
+      function open() {
+        if (status === "locked") return;
+        openLevel(id);
+      }
+      node.addEventListener("click", open);
+      node.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    });
+    bindFxToggle();
+    bindSwitchStudent();
+  }
+
+  /* ---------- level modal ---------- */
+  function openLevel(id) {
+    activeLevelId = id;
+    stepIndex = 0;
+    chosenApproach = null;
+    chosenJustification = null;
+    showHint = false;
+    wrongAttempts = 0;
+    render();
+  }
+  function closeLevel() {
+    activeLevelId = null;
+    render();
+  }
+
+  function getLevel(id) {
+    for (var i = 0; i < LEVELS.length; i++) if (LEVELS[i].id === id) return LEVELS[i];
+    return null;
+  }
+
+  function renderOptionList(options, chosenIdx, onPick, disabled) {
+    var letters = ["A", "B", "C", "D"];
+    return '<div class="options">' + options.map(function (opt, idx) {
+      var cls = "option-btn";
+      if (chosenIdx !== null) {
+        if (idx === chosenIdx) cls += opt.c ? " correct" : " wrong";
+        else if (opt.c && chosenIdx !== null && !options[chosenIdx].c) cls += ""; // don't reveal correct answer on miss
+      }
+      return '<button class="' + cls + '" data-idx="' + idx + '"' + (disabled ? " disabled" : "") + '>' +
+        '<span class="option-letter">' + letters[idx] + '</span>' + esc(opt.t) +
+      '</button>';
+    }).join("") + '</div>';
+  }
+
+  function renderModal() {
+    var lvl = getLevel(activeLevelId);
+    if (!lvl) return;
+
+    var body = "";
+    var overlay = document.createElement("div");
+    overlay.className = "modal-overlay";
+
+    if (stepIndex === 0) {
+      body =
+        '<div class="scenario-box">' + esc(lvl.scenario) + '</div>' +
+        '<div class="step-label">Step 1 of 2 - What approach would you take?</div>' +
+        renderOptionList(lvl.approach, chosenApproach, null, chosenApproach !== null && !lvl.approach[chosenApproach].c ? false : chosenApproach !== null) +
+        (showHint ? '<div class="hint-box"><span class="tag">Think again -</span><span>' + esc(lvl.hint) + ' <b>Pick another option below to try again.</b></span></div>' : '') +
+        '<div class="step-nav">' +
+          (chosenApproach !== null && lvl.approach[chosenApproach].c ? '<button class="btn-primary" id="nextStepBtn" style="width:auto;">Continue to justification →</button>' : '') +
+        '</div>';
+    } else if (stepIndex === 1) {
+      body =
+        '<div class="scenario-box">' + esc(lvl.scenario) + '</div>' +
+        '<div class="step-label">Step 2 of 2 - Why is that the right approach?</div>' +
+        renderOptionList(lvl.justification, chosenJustification, null, chosenJustification !== null && !lvl.justification[chosenJustification].c ? false : chosenJustification !== null) +
+        (showHint ? '<div class="hint-box"><span class="tag">Not quite -</span><span>Reasoning matters as much as the answer. Re-read the approach you just picked - what made it correct? <b>Pick another option below to try again.</b></span></div>' : '') +
+        '<div class="step-nav">' +
+          (chosenJustification !== null && lvl.justification[chosenJustification].c ? '<button class="btn-primary" id="nextStepBtn" style="width:auto;">Reveal the concept →</button>' : '') +
+        '</div>';
+    } else {
+      var alreadyCleared = !!state.cleared[lvl.id];
+      var xpEarnedThisVisit = alreadyCleared ? 0 : Math.max(XP_MIN, XP_PER_LEVEL - wrongAttempts * XP_PENALTY_PER_WRONG);
+      if (!alreadyCleared) {
+        state.cleared[lvl.id] = true;
+        state.xp += xpEarnedThisVisit;
+        saveState(state);
+        celebrate(!!lvl.boss);
+        logProgress("Signal Cleared", lvl.title, xpEarnedThisVisit);
+      }
+      var xpNote = (!alreadyCleared && wrongAttempts > 0)
+        ? '<div style="font-size:0.76rem;color:var(--ink-muted);margin-top:4px;">Full marks are ' + XP_PER_LEVEL + ' - ' + wrongAttempts + ' wrong pick' + (wrongAttempts === 1 ? "" : "s") + ' cost you ' + (XP_PER_LEVEL - xpEarnedThisVisit) + '.</div>'
+        : '';
+      body =
+        '<div class="concept-reveal">' +
+          '<div class="eyebrow">You reasoned your way here - now the concept</div>' +
+          '<h3 class="display">' + esc(lvl.concept.h) + '</h3>' +
+          lvl.concept.body.map(function (p) { return '<p>' + p + '</p>'; }).join("") +
+          '<div class="xp-line">' +
+            '<div><span class="xp-badge">✓ Proof earned: ' + esc(lvl.title) + '</span>' + xpNote + '</div>' +
+            '<span class="mono" style="color:var(--accent-2);font-weight:700;">+' + (alreadyCleared ? 0 : xpEarnedThisVisit) + ' Insight Pts</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="step-nav">' +
+          '<button class="btn-primary" id="backToAtlasBtn" style="width:auto;">Back to the Atlas →</button>' +
+        '</div>';
+    }
+
+    overlay.innerHTML =
+      '<div class="modal-card">' +
+        '<div class="modal-head">' +
+          '<div><div class="eyebrow">Signal ' + lvl.id + (lvl.boss ? " · Capstone" : "") + ' · ' + esc(lvl.module) + '</div>' +
+          '<h2 class="display">' + lvl.icon + '&nbsp; ' + esc(lvl.title) + '</h2></div>' +
+          '<button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>' +
+        '</div>' +
+        body +
+      '</div>';
+
+    document.body.appendChild(overlay);
+
+    overlay.querySelector("#modalCloseBtn").addEventListener("click", closeLevel);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) closeLevel(); });
+
+    if (stepIndex === 0) {
+      var aOpts = overlay.querySelectorAll(".options")[0].querySelectorAll(".option-btn");
+      aOpts.forEach(function (btn, idx) {
+        btn.addEventListener("click", function () {
+          if (chosenApproach !== null && lvl.approach[chosenApproach].c) return;
+          chosenApproach = idx;
+          showHint = !lvl.approach[idx].c;
+          if (showHint) wrongAttempts++;
+          rerenderModalOnly(lvl);
+        });
+      });
+      var next = overlay.querySelector("#nextStepBtn");
+      if (next) next.addEventListener("click", function () { stepIndex = 1; showHint = false; rerenderModalOnly(lvl); });
+    } else if (stepIndex === 1) {
+      var jOpts = overlay.querySelectorAll(".options")[0].querySelectorAll(".option-btn");
+      jOpts.forEach(function (btn, idx) {
+        btn.addEventListener("click", function () {
+          if (chosenJustification !== null && lvl.justification[chosenJustification].c) return;
+          chosenJustification = idx;
+          showHint = !lvl.justification[idx].c;
+          if (showHint) wrongAttempts++;
+          rerenderModalOnly(lvl);
+        });
+      });
+      var next2 = overlay.querySelector("#nextStepBtn");
+      if (next2) next2.addEventListener("click", function () { stepIndex = 2; rerenderModalOnly(lvl); });
+    } else {
+      overlay.querySelector("#backToAtlasBtn").addEventListener("click", function () {
+        overlay.remove();
+        closeLevel();
+      });
+    }
+
+    window._inferOverlay = overlay;
+  }
+
+  function rerenderModalOnly(lvl) {
+    if (window._inferOverlay) window._inferOverlay.remove();
+    renderModal();
+  }
+
+  /* ---------- bridge (atlas complete → capstone CTA) ---------- */
+  function renderBridge() {
+    var badgeHtml = LEVELS.map(function (lvl) {
+      return '<div class="proof-row earned"><div class="proof-icon">✅</div><div class="proof-name">' + esc(lvl.title) + '</div></div>';
+    }).join("");
+
+    app.innerHTML =
+      '<div class="topbar">' +
+        '<div class="brand"><span class="mark display">PROJECT AI - DOIE</span><span class="tag">AI &amp; ML Reasoning Atlas</span></div>' +
+        '<div class="hud"><div class="hud-name">Reasoner: <b>' + esc(state.name) + '</b></div>' +
+        '<div class="hud-stat"><span class="num stat">' + state.xp + '</span><span class="lbl">Insight Pts</span></div>' + switchStudentHtml() + fxToggleHtml() + '</div>' +
+      '</div>' +
+      '<div class="complete-screen">' +
+        '<div class="complete-card">' +
+          '<span class="eyebrow">Atlas fully charted</span>' +
+          '<h1 class="display">Certified Reasoner</h1>' +
+          '<p class="sub">' + esc(state.name) + ', you’ve cleared all 8 Signals - from raw data through to diagnosing AI reliability failures - by reasoning through each one before the concept was ever shown to you. Now put that reasoning to work: build something real.</p>' +
+          '<div class="cta-row"><button class="btn-capstone" id="beginCapstoneBtn">Begin the Capstone Project →</button></div>' +
+          '<div class="badge-grid">' + badgeHtml + '</div>' +
+          '<button class="btn-ghost" id="resetBtn">Reset progress &amp; start over</button>' +
+        '</div>' +
+      '</div>';
+
+    document.getElementById("beginCapstoneBtn").addEventListener("click", function () {
+      state.capstone.lastView = "studio";
+      saveState(state);
+      render();
+    });
+    document.getElementById("resetBtn").addEventListener("click", function () {
+      if (confirm("Reset all progress for " + state.name + "? This can't be undone.")) {
+        localStorage.removeItem(STORAGE_PREFIX + state.roll.toUpperCase());
+        state = null;
+        render();
+      }
+    });
+    bindFxToggle();
+    bindSwitchStudent();
+
+    if (!state.atlasCelebrated) {
+      state.atlasCelebrated = true;
+      saveState(state);
+      celebrate(true);
+      logProgress("Atlas Complete", "", state.xp);
+    }
+  }
+
+  /* ---------- capstone project studio ---------- */
+  function milestoneStatus(id) {
+    var st = state.capstone.milestones[id];
+    if (st.done) return "done";
+    var prev = id - 1;
+    if (prev === 0 || state.capstone.milestones[prev].done) return "active";
+    return "locked";
+  }
+
+  function buildMilestoneCard(m) {
+    var status = milestoneStatus(m.id);
+    var ms = state.capstone.milestones[m.id];
+
+    if (status === "locked") {
+      return '<div class="milestone-card locked">' +
+        '<div class="milestone-head"><div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div>' +
+        '<h2 class="display">' + esc(m.title) + '</h2></div></div>' +
+        '<div class="milestone-lock-note">🔒 Complete Milestone ' + (m.id - 1) + ' first.</div>' +
+      '</div>';
+    }
+
+    var checklistHtml = m.checklist.map(function (item, cidx) {
+      var checked = ms.checks[cidx];
+      return '<label class="check-row' + (checked ? ' checked' : '') + '">' +
+        '<input type="checkbox" data-milestone="' + m.id + '" data-check="' + cidx + '"' + (checked ? " checked" : "") + ' />' +
+        '<span>' + esc(item) + '</span>' +
+      '</label>';
+    }).join("");
+
+    var allChecked = ms.checks.every(function (c) { return c; });
+
+    return '<div class="milestone-card' + (status === "done" ? " done" : "") + '" data-mcard="' + m.id + '">' +
+      '<div class="milestone-head">' +
+        '<div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div>' +
+        '<h2 class="display">' + esc(m.title) + '</h2></div>' +
+        (status === "done" ? '<div class="milestone-done-badge">✓ Complete</div>' : '') +
+      '</div>' +
+      '<p class="milestone-goal">' + esc(m.goal) + '</p>' +
+      '<div class="milestone-why"><b class="tag">Why it matters -</b> ' + esc(m.why) + '</div>' +
+      '<div class="checklist">' + checklistHtml + '</div>' +
+      '<div class="guidance-box"><b class="tag">Think about -</b> ' + esc(m.guidance) + '</div>' +
+      '<label class="reflect-label" for="reflect-' + m.id + '">' + esc(m.reflectPrompt) + '</label>' +
+      '<textarea class="reflect-box" id="reflect-' + m.id + '" data-milestone="' + m.id + '" placeholder="Write a few sentences - this feeds your portfolio packet.">' + esc(ms.reflection) + '</textarea>' +
+      '<div class="portfolio-tip"><b class="tag">Portfolio tip:</b> ' + esc(m.tip) + '</div>' +
+      (status !== "done" ?
+        '<div class="milestone-actions"><button class="btn-primary" style="width:auto;" id="complete-' + m.id + '"' + (allChecked ? "" : " disabled") + '>Mark milestone complete →</button></div>'
+        : '') +
+    '</div>';
+  }
+
+  function buildReadmeMarkdown() {
+    var ms = state.capstone.milestones;
+    var lines = [];
+    lines.push("# " + getStudentCapstone(state.roll).title);
+    lines.push("");
+    lines.push("**Author:** " + state.name);
+    lines.push("**Course:** IL3064 - AI & Machine Learning · drafted with the PROJECT AI - DOIE Capstone Project Studio");
+    lines.push("");
+    lines.push("## Problem");
+    lines.push(ms[1].reflection || "_(not filled in)_");
+    lines.push("");
+    lines.push("## Data & Preprocessing");
+    lines.push(ms[2].reflection || "_(not filled in)_");
+    lines.push("");
+    lines.push("## Approach & Modeling");
+    lines.push(ms[3].reflection || "_(not filled in)_");
+    lines.push("");
+    lines.push("## Results & Honest Evaluation");
+    lines.push(ms[4].reflection || "_(not filled in)_");
+    lines.push("");
+    lines.push("## What I'd Do Differently At Scale");
+    lines.push(ms[5].reflection || "_(not filled in)_");
+    lines.push("");
+    lines.push("## Skills Demonstrated");
+    lines.push("- Weighing data trade-offs before building (Signal 1 - Data Foundations)");
+    lines.push("- Preprocessing pipeline design, including negation-preserving stopword handling (Signal 6 - Text Preprocessing)");
+    lines.push("- Text representation and classification (Signal 7 - Vector Embeddings)");
+    lines.push("- Honest model evaluation beyond a headline accuracy number (Signal 8 - AI Reliability)");
+    lines.push("");
+    lines.push("---");
+    lines.push("_Drafted via PROJECT AI - DOIE - AI & ML Reasoning Atlas, IL3064._");
+    return lines.join("\n");
+  }
+
+  function setPacketStatus(container, msg, kind) {
+    var el = container.querySelector("#packetStatus");
+    if (!el) return;
+    el.textContent = msg;
+    el.className = "packet-status" + (kind ? " " + kind : "");
+  }
+
+  function handleDownloadPacket(container) {
+    var md = buildReadmeMarkdown();
+    if (window.claude && window.claude.downloads) {
+      window.claude.downloads.save({ filename: "PORTFOLIO-README.md", data: md }).then(function () {
+        state.capstone.packetDownloaded = true;
+        saveState(state);
+        logProgress("Capstone Packet Downloaded", "", state.xp);
+        setPacketStatus(container, "Saved - check your downloads, then drop it straight into your GitHub repo.", "ok");
+      }).catch(function (err) {
+        var code = err && err.code ? err.code : "unavailable";
+        var msg = code === "declined"
+          ? "No problem - you can copy the text below instead whenever you're ready."
+          : "Couldn't save automatically (" + code + ") - copy the text below instead.";
+        setPacketStatus(container, msg, "err");
+      });
+    } else {
+      setPacketStatus(container, "Downloads aren't available in this preview - copy the text below instead.", "err");
+    }
+  }
+
+  function renderCapstone() {
+    var clearedCount = Object.keys(state.cleared).length;
+    var myCapstone = getStudentCapstone(state.roll);
+    var allMilestonesDone = myCapstone.milestones.every(function (m) { return state.capstone.milestones[m.id].done; });
+
+    var milestonesHtml = myCapstone.milestones.map(buildMilestoneCard).join("");
+
+    var packetHtml = "";
+    if (allMilestonesDone) {
+      packetHtml =
+        '<div class="packet-card">' +
+          '<div class="eyebrow">All 5 milestones complete</div>' +
+          '<h2 class="display">Generate Your Portfolio Packet</h2>' +
+          '<p style="font-size:0.88rem;line-height:1.6;color:var(--ink-muted);margin:0;">Drafted from what you wrote in each milestone above. Download it as your README, or copy it straight into your repo.</p>' +
+          '<div class="milestone-actions" style="margin-top:14px;"><button class="btn-primary" style="width:auto;" id="downloadPacketBtn">Download README.md →</button></div>' +
+          '<div id="packetStatus" class="packet-status"></div>' +
+          '<textarea class="packet-preview" id="packetPreview" readonly></textarea>' +
+        '</div>';
+    }
+
+    app.innerHTML =
+      '<div class="topbar">' +
+        '<div class="brand"><span class="mark display">PROJECT AI - DOIE</span><span class="tag">Capstone Project Studio</span></div>' +
+        '<div class="hud">' +
+          '<div class="hud-name">Reasoner: <b>' + esc(state.name) + '</b></div>' +
+          '<div class="hud-stat"><span class="num stat">' + state.xp + '</span><span class="lbl">Insight Pts</span></div>' +
+          '<div class="hud-stat"><span class="num stat">' + clearedCount + '/' + LEVELS.length + '</span><span class="lbl">Signals Charted</span></div>' +
+          switchStudentHtml() +
+          fxToggleHtml() +
+        '</div>' +
+      '</div>' +
+      '<div class="studio-wrap">' +
+        '<div class="studio-nav"><button class="link-btn" id="backToAtlasNav">← Back to the Atlas</button></div>' +
+        '<div class="brief-card">' +
+          '<div class="eyebrow">Capstone Project</div>' +
+          '<h1 class="display">' + esc(myCapstone.title) + '</h1>' +
+          myCapstone.brief.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join("") +
+        '</div>' +
+        milestonesHtml +
+        packetHtml +
+      '</div>';
+
+    document.getElementById("backToAtlasNav").addEventListener("click", function () {
+      state.capstone.lastView = "bridge";
+      saveState(state);
+      render();
+    });
+
+    app.querySelectorAll('input[type="checkbox"][data-milestone]').forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        var mid = parseInt(cb.getAttribute("data-milestone"), 10);
+        var cidx = parseInt(cb.getAttribute("data-check"), 10);
+        state.capstone.milestones[mid].checks[cidx] = cb.checked;
+        saveState(state);
+        render();
+      });
+    });
+
+    app.querySelectorAll("textarea.reflect-box[data-milestone]").forEach(function (ta) {
+      ta.addEventListener("input", function () {
+        var mid = parseInt(ta.getAttribute("data-milestone"), 10);
+        state.capstone.milestones[mid].reflection = ta.value;
+        saveState(state);
+      });
+    });
+
+    myCapstone.milestones.forEach(function (m) {
+      var btn = document.getElementById("complete-" + m.id);
+      if (btn) {
+        btn.addEventListener("click", function () {
+          state.capstone.milestones[m.id].done = true;
+          saveState(state);
+          celebrate(false);
+          logProgress("Milestone Complete", m.title, "");
+          render();
+        });
+      }
+    });
+
+    if (allMilestonesDone) {
+      var preview = document.getElementById("packetPreview");
+      if (preview) preview.value = buildReadmeMarkdown();
+      var dlBtn = document.getElementById("downloadPacketBtn");
+      if (dlBtn) dlBtn.addEventListener("click", function () { handleDownloadPacket(app); });
+      if (!state.capstone.celebrated) {
+        state.capstone.celebrated = true;
+        saveState(state);
+        celebrate(true);
+        logProgress("Capstone Complete", "", state.xp);
+      }
+    }
+    bindFxToggle();
+    bindSwitchStudent();
+  }
+
+  render();
+})();
+</script>

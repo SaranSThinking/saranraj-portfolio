@@ -1,0 +1,1381 @@
+<meta charset="utf-8" />
+<title>PROJECT CQSA-I - DOIE · Auditor Certification Journey</title>
+<style>
+  :root {
+    --bg: #FAF6EC;
+    --surface: #FFFFFF;
+    --surface-2: #F2EAD4;
+    --border: #DCCEA0;
+    --ink: #1E2A3A;
+    --ink-muted: #7A7160;
+    --accent: #14497A;
+    --accent-ink: #FFFFFF;
+    --accent-2: #2E7D5B;
+    --gold: #B8860B;
+    --gold-ink: #2A1F00;
+    --danger: #A63D4F;
+    --lock: #D7CDB3;
+    --line: #DCCEA0;
+    --shadow: 0 8px 24px rgba(30,42,58,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10192A;
+      --surface: #182640;
+      --surface-2: #1F3050;
+      --border: #33456A;
+      --ink: #EFE9D8;
+      --ink-muted: #9AAAC4;
+      --accent: #6FA8DC;
+      --accent-ink: #0B1420;
+      --accent-2: #4FCB94;
+      --gold: #E3B23C;
+      --gold-ink: #241A00;
+      --danger: #E77E90;
+      --lock: #35456A;
+      --line: #33456A;
+      --shadow: 0 8px 28px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10192A;
+    --surface: #182640;
+    --surface-2: #1F3050;
+    --border: #33456A;
+    --ink: #EFE9D8;
+    --ink-muted: #9AAAC4;
+    --accent: #6FA8DC;
+    --accent-ink: #0B1420;
+    --accent-2: #4FCB94;
+    --gold: #E3B23C;
+    --gold-ink: #241A00;
+    --danger: #E77E90;
+    --lock: #35456A;
+    --line: #33456A;
+    --shadow: 0 8px 28px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    text-wrap: balance;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .mono { font-family: Consolas, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+  .eyebrow {
+    text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.7rem;
+    color: var(--ink-muted); font-weight: 700;
+  }
+  button, input, textarea, select { font-family: inherit; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  #app { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ---------- Login ---------- */
+  .login-screen { flex:1; display:flex; align-items:center; justify-content:center; padding:32px 20px; position:relative; overflow:hidden; }
+  .login-screen::before {
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(1px 1px at 14% 20%, var(--gold) 0, transparent 100%),
+      radial-gradient(1px 1px at 82% 16%, var(--ink-muted) 0, transparent 100%),
+      radial-gradient(1.6px 1.6px at 46% 70%, var(--accent) 0, transparent 100%),
+      radial-gradient(1px 1px at 88% 60%, var(--ink-muted) 0, transparent 100%),
+      radial-gradient(1.5px 1.5px at 28% 84%, var(--gold) 0, transparent 100%),
+      radial-gradient(1.6px 1.6px at 64% 40%, var(--accent-2) 0, transparent 100%);
+    opacity:0.55; pointer-events:none;
+  }
+  .login-card { position:relative; background:var(--surface); border:1px solid var(--border); border-radius:4px; box-shadow:var(--shadow); padding:40px 36px; max-width:440px; width:100%; }
+  .login-card .eyebrow { margin-bottom:10px; }
+  .login-card h1 { font-size:1.9rem; margin:0 0 8px; }
+  .login-card p.sub { color:var(--ink-muted); margin:0 0 26px; line-height:1.55; font-size:0.95rem; }
+  .field-label { display:block; font-size:0.78rem; color:var(--ink-muted); margin-bottom:6px; font-weight:600; }
+  .login-card input { width:100%; padding:12px 14px; background:var(--surface-2); border:1px solid var(--border); border-radius:3px; color:var(--ink); font-size:1rem; margin-bottom:18px; }
+  .login-card input:focus { outline:2px solid var(--accent); outline-offset:1px; }
+  .btn-primary {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--accent); color:var(--accent-ink); border:none; padding:13px 22px; border-radius:3px;
+    font-size:0.95rem; font-weight:700; cursor:pointer; width:100%; transition:filter .15s, transform .15s;
+  }
+  .btn-primary:hover { filter:brightness(1.1); }
+  .btn-primary:active { transform:scale(0.98); }
+  .login-foot { margin-top:16px; font-size:0.78rem; color:var(--ink-muted); text-align:center; }
+
+  /* ---------- Topbar / HUD ---------- */
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:14px 26px; border-bottom:1px solid var(--border); background:var(--surface); gap:14px; flex-wrap:wrap; }
+  .brand { display:flex; align-items:baseline; gap:10px; }
+  .brand .mark { font-family:Georgia,serif; font-size:1.22rem; }
+  .brand .tag { font-size:0.76rem; color:var(--ink-muted); }
+  .topnav { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .btn-tab {
+    background:var(--surface-2); border:1px solid var(--border); color:var(--ink);
+    padding:8px 14px; border-radius:20px; font-size:0.8rem; cursor:pointer; font-weight:600;
+  }
+  .btn-tab:hover { border-color:var(--accent); }
+  .hud { display:flex; align-items:center; gap:18px; }
+  .hud-stat { display:flex; flex-direction:column; align-items:flex-end; }
+  .hud-stat .num { font-size:1rem; font-weight:700; color:var(--accent); }
+  .hud-stat .lbl { font-size:0.65rem; color:var(--ink-muted); text-transform:uppercase; letter-spacing:0.07em; }
+  .hud-name { font-size:0.83rem; color:var(--ink-muted); }
+  .hud-name b { color:var(--ink); }
+
+  /* ---------- Journey ---------- */
+  .journey-wrap { flex:1; padding:26px 26px 70px; max-width:920px; margin:0 auto; width:100%; }
+  .journey-wrap > .intro h2 { font-size:1.5rem; margin:0 0 4px; }
+  .journey-wrap > .intro p { color:var(--ink-muted); font-size:0.92rem; margin:0 0 26px; line-height:1.6; max-width:66ch; }
+  .progress-track { height:10px; background:var(--surface-2); border-radius:6px; overflow:hidden; margin-bottom:6px; border:1px solid var(--border); }
+  .progress-fill { height:100%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:6px; transition:width .5s cubic-bezier(.4,0,.2,1); }
+  .progress-count { font-size:0.8rem; color:var(--ink-muted); margin-bottom:28px; }
+
+  .phase-block { margin-bottom:22px; }
+  .phase-head { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; padding-bottom:6px; border-bottom:1px dashed var(--border); }
+  .phase-head .eyebrow { color:var(--accent); }
+  .phase-head .ptitle { font-size:0.86rem; color:var(--ink-muted); }
+
+  .week-card {
+    display:flex; align-items:center; gap:16px; padding:14px 16px; border-radius:4px;
+    border:1px solid var(--border); background:var(--surface); margin-bottom:8px; cursor:pointer;
+    transition:border-color .15s, transform .1s;
+  }
+  .week-card:hover { border-color:var(--accent); }
+  .week-card:active { transform:scale(0.995); }
+  .week-card.locked { cursor:default; opacity:0.55; }
+  .week-card.locked:hover { border-color:var(--border); }
+  .week-card.gate { border-left:4px solid var(--gold); }
+  .week-num {
+    width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:Consolas,monospace; font-weight:700; font-size:0.92rem; flex-shrink:0;
+    background:var(--surface-2); border:2px solid var(--lock); color:var(--ink-muted);
+  }
+  .week-card.current .week-num { border-color:var(--accent); color:var(--accent); animation:pulse 2.2s ease-in-out infinite; }
+  .week-card.done .week-num { border-color:var(--accent-2); background:var(--accent-2); color:#fff; }
+  @keyframes pulse { 0%,100%{filter:drop-shadow(0 0 0 rgba(20,73,122,0));} 50%{filter:drop-shadow(0 0 6px var(--accent));} }
+  .week-body { flex:1; min-width:0; }
+  .week-title { font-size:0.95rem; font-weight:600; margin:0 0 2px; }
+  .week-sub { font-size:0.78rem; color:var(--ink-muted); }
+  .week-status { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; flex-shrink:0; }
+  .week-status.done { color:var(--accent-2); }
+  .week-status.current { color:var(--accent); }
+  .week-status.locked { color:var(--ink-muted); }
+  .gate-pill {
+    display:inline-flex; align-items:center; gap:4px; background:color-mix(in srgb, var(--gold) 18%, var(--surface-2));
+    border:1px solid var(--gold); color:var(--gold-ink); font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:10px; margin-left:8px;
+  }
+  :root[data-theme="dark"] .gate-pill, @media (prefers-color-scheme: dark) { }
+  .gate-pill.cleared { background:color-mix(in srgb, var(--accent-2) 20%, var(--surface-2)); border-color:var(--accent-2); color:var(--accent-2); }
+
+  .cert-banner {
+    margin-top:24px; background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 14%, var(--surface)), var(--surface));
+    border:1px solid var(--gold); border-radius:5px; padding:20px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  }
+  .cert-banner h3 { margin:0 0 4px; font-size:1.1rem; }
+  .cert-banner p { margin:0; font-size:0.85rem; color:var(--ink-muted); }
+  .btn-gold {
+    background:var(--gold); color:var(--gold-ink); border:none; padding:12px 20px; border-radius:3px;
+    font-size:0.9rem; font-weight:700; cursor:pointer; white-space:nowrap;
+  }
+  .btn-gold:hover { filter:brightness(1.08); }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay { position:fixed; inset:0; background:rgba(10,14,20,0.55); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; }
+  .modal-card { background:var(--surface); border:1px solid var(--border); border-radius:5px; box-shadow:var(--shadow); max-width:720px; width:100%; max-height:90vh; overflow-y:auto; padding:28px 30px 26px; }
+  .modal-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:4px; }
+  .modal-head .eyebrow { color:var(--accent); }
+  .modal-close { background:none; border:none; color:var(--ink-muted); font-size:1.1rem; cursor:pointer; padding:4px; }
+  .modal-close:hover { color:var(--ink); }
+  .modal-card h2 { font-size:1.3rem; margin:4px 0 4px; }
+  .modal-card .weeksub { font-size:0.82rem; color:var(--ink-muted); margin-bottom:16px; }
+
+  .period-tabs { display:flex; gap:8px; margin-bottom:18px; border-bottom:1px solid var(--border); }
+  .period-tab { background:none; border:none; padding:9px 4px; margin-right:14px; font-size:0.85rem; font-weight:700; color:var(--ink-muted); cursor:pointer; border-bottom:2px solid transparent; }
+  .period-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .period-tab.done::after { content:" ✓"; color:var(--accent-2); }
+  .period-tab:disabled { opacity:0.4; cursor:not-allowed; }
+
+  .block { margin-bottom:20px; }
+  .block h4 { font-size:0.88rem; margin:0 0 8px; color:var(--ink); }
+  .block .info-box { background:var(--surface-2); border-left:3px solid var(--accent); border-radius:0 3px 3px 0; padding:12px 14px; font-size:0.86rem; line-height:1.6; margin-bottom:6px; }
+  .block .info-box p { margin:0 0 8px; }
+  .block .info-box p:last-child { margin-bottom:0; }
+
+  .field-row { margin-bottom:12px; }
+  .field-row label { display:block; font-size:0.78rem; font-weight:600; color:var(--ink-muted); margin-bottom:5px; }
+  .field-row input[type="text"], .field-row textarea, .field-row select {
+    width:100%; padding:9px 11px; background:var(--surface-2); border:1px solid var(--border); border-radius:3px;
+    color:var(--ink); font-size:0.86rem; font-family:inherit; line-height:1.5;
+  }
+  .field-row textarea { min-height:56px; resize:vertical; }
+  .field-row input:focus, .field-row textarea:focus, .field-row select:focus { outline:2px solid var(--accent); outline-offset:1px; }
+
+  .tbl-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:3px; margin-bottom:6px; }
+  table.fillable { border-collapse:collapse; width:100%; min-width:520px; }
+  table.fillable th { background:var(--surface-2); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-muted); padding:8px 10px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; }
+  table.fillable td { padding:6px; border-bottom:1px solid var(--border); vertical-align:top; }
+  table.fillable td.rowlabel { font-size:0.8rem; font-weight:600; padding:8px 10px; white-space:nowrap; color:var(--ink); }
+  table.fillable textarea, table.fillable input, table.fillable select {
+    width:100%; min-width:110px; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:3px; font-size:0.8rem; color:var(--ink); font-family:inherit;
+  }
+  table.fillable textarea { min-height:40px; resize:vertical; }
+
+  .chk-row { display:flex; align-items:flex-start; gap:9px; font-size:0.85rem; line-height:1.5; margin-bottom:8px; cursor:pointer; }
+  .chk-row input[type="checkbox"] { margin-top:3px; width:16px; height:16px; accent-color:var(--accent-2); flex-shrink:0; cursor:pointer; }
+
+  .gate-note { background:color-mix(in srgb, var(--gold) 12%, var(--surface)); border:1px solid var(--gold); border-radius:3px; padding:12px 14px; font-size:0.83rem; line-height:1.6; margin-bottom:16px; }
+  .gate-note b.tag { color:var(--gold-ink); }
+
+  .modal-nav { display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+  .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--ink-muted); padding:10px 16px; border-radius:3px; font-size:0.85rem; cursor:pointer; }
+  .btn-ghost:hover { color:var(--ink); border-color:var(--ink-muted); }
+  .btn-accent { background:var(--accent); color:var(--accent-ink); border:none; padding:10px 18px; border-radius:3px; font-size:0.85rem; font-weight:700; cursor:pointer; }
+  .btn-accent:hover { filter:brightness(1.08); }
+  .btn-accent:disabled { opacity:0.5; cursor:not-allowed; }
+
+  /* ---------- Reference modal (dossier / toolkit) ---------- */
+  .ref-modal .modal-card { max-width:780px; }
+  .ref-section { margin-bottom:18px; }
+  .ref-section h3 { font-size:1rem; margin:0 0 8px; color:var(--accent); }
+  .ref-section .mini { font-size:0.82rem; line-height:1.65; color:var(--ink); }
+  .ref-section table { width:100%; border-collapse:collapse; font-size:0.78rem; margin-bottom:8px; }
+  .ref-section th, .ref-section td { border:1px solid var(--border); padding:6px 8px; text-align:left; }
+  .ref-section th { background:var(--surface-2); }
+  .ref-tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+
+  /* ---------- Certificate ---------- */
+  .cert-screen { flex:1; display:flex; align-items:center; justify-content:center; padding:32px 20px; }
+  .cert-sheet {
+    max-width:720px; width:100%; background:var(--surface); border:3px double var(--gold); border-radius:2px;
+    box-shadow:var(--shadow); padding:52px 48px; text-align:center; position:relative;
+  }
+  .cert-sheet::before {
+    content:""; position:absolute; inset:10px; border:1px solid var(--gold); border-radius:1px; pointer-events:none; opacity:0.6;
+  }
+  .cert-eyebrow { font-size:0.78rem; letter-spacing:0.22em; color:var(--gold-ink); text-transform:uppercase; font-weight:700; }
+  .cert-sheet h1 { font-size:1.9rem; margin:10px 0 4px; }
+  .cert-sheet .cert-sub { font-size:0.86rem; color:var(--ink-muted); margin-bottom:26px; }
+  .cert-name { font-family:Georgia,serif; font-size:1.7rem; margin:6px 0; color:var(--accent); border-bottom:1px solid var(--border); display:inline-block; padding:0 20px 6px; }
+  .cert-roll { font-size:0.82rem; color:var(--ink-muted); margin-bottom:20px; }
+  .cert-body { font-size:0.92rem; line-height:1.75; max-width:52ch; margin:0 auto 22px; }
+  .cert-gates { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:26px; }
+  .cert-gate-chip { background:var(--surface-2); border:1px solid var(--gold); border-radius:14px; padding:5px 12px; font-size:0.74rem; font-weight:700; color:var(--gold-ink); }
+  .cert-foot { display:flex; justify-content:space-between; align-items:flex-end; margin-top:30px; gap:20px; flex-wrap:wrap; }
+  .cert-sig { text-align:left; font-size:0.8rem; }
+  .cert-sig .line { border-top:1px solid var(--ink-muted); padding-top:6px; margin-top:26px; }
+  .cert-date { text-align:right; font-size:0.8rem; color:var(--ink-muted); }
+  .cert-actions { margin-top:30px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .cert-status { font-size:0.8rem; margin-top:10px; color:var(--ink-muted); }
+  .cert-status.ok { color:var(--accent-2); }
+  .cert-status.err { color:var(--danger); }
+
+  @media (max-width:700px) {
+    .cert-sheet { padding:34px 22px; }
+    .cert-foot { flex-direction:column; align-items:center; text-align:center; }
+    .cert-date { text-align:center; }
+  }
+</style>
+
+<div id="app"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_PREFIX = "cqsa_journey_state_v1_";
+  var LAST_ROLL_KEY = "cqsa_last_roll_v1";
+
+  /* ---------- class roster ---------- *
+   * QE3001 Quality Management Systems & Auditing - CEG Campus, Industrial Engineering,
+   * 2026-2027 Odd Sem. Reused from the same M.E. QEM/Indus.Engg III B1 cohort as
+   * IL3064 (roll = register number, case-insensitive login + save-slot key).
+   * NOTE: if QE3001 is taken by a narrower subset than IL3064 (e.g. only the
+   * Quality Engg specialisation students), trim this list accordingly.
+   */
+  var ROSTER = [
+    { roll: "2025229001", name: "Hari Sriram J K" },
+    { roll: "2025229026", name: "Nikitha M" },
+    { roll: "2025229027", name: "Praveen Chand S" },
+    { roll: "2025229028", name: "Zabira Nusrath" },
+    { roll: "2025229030", name: "Sahaya Renisha M" },
+    { roll: "2025229031", name: "Shree Charan Ranjan Reddy D K" },
+    { roll: "2025229032", name: "Kaushik D" },
+    { roll: "2025229033", name: "Vikram P" },
+    { roll: "2025220026", name: "Amresh Pattanaik" },
+    { roll: "2025220027", name: "Naveen Balaji S" },
+    { roll: "2025220028", name: "Dinesh Kumar U" },
+    { roll: "2025220029", name: "Ashik V S" },
+    { roll: "2025220030", name: "Vibudeshwaran B S" },
+    { roll: "2025220031", name: "Praveen Kumar M" },
+    { roll: "2025220032", name: "Vigneswaran S" },
+    { roll: "26142191175", name: "Richard Jesu Daniel R" }
+  ];
+  var CLASS_CODE = "CQSA2026";
+
+  function findRosterEntry(roll) {
+    var r = (roll || "").trim().toUpperCase();
+    for (var i = 0; i < ROSTER.length; i++) if (ROSTER[i].roll.toUpperCase() === r) return ROSTER[i];
+    return null;
+  }
+
+  /* ============================================================
+     REFERENCE MATERIAL - the real PAC dossier + Toolkit T-1..T-13
+     ============================================================ */
+  var DOSSIER = {
+    profile: "Precision Auto-Components Pvt. Ltd. (PAC), Ambattur Industrial Estate, Chennai. Est. 2009. 142 employees, two shifts. Manufactures machined & welded transmission components (shafts, flanges, yokes) for two Tier-1 automotive customers and the industrial pump aftermarket. ISO 9001:2015 certified since 2017 (recertified 2023). Key processes: Sales & order review · Design change control · Purchasing & stores · CNC turning · Welding · Heat treatment (outsourced) · Final inspection & dispatch · Maintenance · HR & training · Quality assurance.",
+    policy: "“PAC is committed to manufacturing transmission components that meet customer and applicable statutory & regulatory requirements, delivered on time, through a robust QMS compliant with ISO 9001:2015 - achieved through teamwork, training, and a safe workplace.” - Managing Director, Jan 2024",
+    objectives: [
+      ["QO-1","Reduce customer PPM","< 350 PPM","QA Manager"],
+      ["QO-2","On-time delivery","≥ 96% OTD","Plant Head"],
+      ["QO-3","Improve customer satisfaction","(no measure/target entered)","Sales Manager"],
+      ["QO-4","Reduce internal rejection","< 1.8%","Production Mgr"]
+    ],
+    docIndex: [
+      ["PAC-QM-01","Quality Manual","5","5"],
+      ["PAC-QP-01","Control of Documented Information","4","4"],
+      ["PAC-QP-02","Document & Data Control","3","2 (mismatch)"],
+      ["PAC-QP-05","Purchasing & Supplier Control","6","6"],
+      ["PAC-QP-07","Calibration Control","3","3"],
+      ["PAC-QP-09","Training & Competence","2","2"],
+      ["PAC-QP-11","Corrective Action & Customer Complaints","4","4"],
+      ["PAC-QP-12","Internal Audit","3","3"]
+    ],
+    procedures: [
+      "PAC-QP-02 §4.2/4.3/4.5 - MR maintains master list of current revisions; obsolete docs stamped OBSOLETE; external documents listed & controlled.",
+      "PAC-QP-05 §5.1–5.4 - Purchases only from Approved Supplier List (ASL); new suppliers evaluated before first PO; performance reviewed quarterly; outsourced heat treatment needs customer process approval where required.",
+      "PAC-QP-07 §6.2/6.4 - Acceptance equipment must carry a valid calibration label; out-of-calibration equipment is quarantined and the validity of results since last valid calibration assessed.",
+      "PAC-QP-09 §3.3/3.5/3.6 - Skill matrix defines minimum competence; welders re-qualified every 2 years; only qualified operators sign quality records for that operation.",
+      "PAC-QP-11 §5.2/5.6 - Root cause via 5-Why/fishbone on CAPA form; QA verifies implementation AND effectiveness (90-day recurrence check) before closure.",
+      "PAC-QP-12 §4.1/4.4 - Annual audit programme covers all QMS processes at least once/year, frequency increased for poor-performing/complained-about/NC processes; auditors never audit their own work."
+    ],
+    asl: [
+      ["Meenakshi Steels, Chennai","EN8/EN19 bar stock","91","2015"],
+      ["Kova Forge, Coimbatore","Forged blanks","88","2019"],
+      ["ThermoTreat Industries, Ambattur","Heat treatment (outsourced)","86","2018"],
+      ["Sundaram Abrasives","Grinding consumables","93","2016"],
+      ["Padma Packaging","Packaging materials","90","2021"]
+    ],
+    poRegister: [
+      ["Meenakshi Steels","41 POs","38%"],
+      ["Sri Balaji Metals, Chennai","29 POs","34% - NOT on ASL"],
+      ["Kova Forge","18 POs","17%"],
+      ["ThermoTreat Industries","12 POs","8%"],
+      ["Others","9 POs","3%"]
+    ],
+    fir: "Final Inspection Record FIR-1142, dated 18-Jun-2026. Output shaft OS-311, Lot 26F-088, Qty 400. Checked with steel rule SR-02, vernier caliper VC-07, dial stand DS-03. Result: ACCEPTED 400/400, dispatched 19-Jun-2026.",
+    calibration: [
+      ["VC-07","Vernier caliper 0–150mm","02-Oct-2025","02-Apr-2026"],
+      ["SR-02","Steel rule 300mm","15-Jan-2026","15-Jan-2027"],
+      ["DS-03","Dial stand + indicator","20-Mar-2026","20-Sep-2026"],
+      ["MM-11","Outside micrometer 25–50mm","11-May-2026","11-Nov-2026"]
+    ],
+    welding: "Weld Quality Record WQR-0677 (21-Jun-2026), Yoke assembly YA-19, PASS. Skill matrix SM-WELD Rev.4: M. Ilango (MIG/TIG, due Jan-2027), A. Faizal (MIG/TIG, due Aug-2026), P. Selvam (MIG only, due Mar-2027), D. Ravi (MIG/TIG, due Nov-2026).",
+    capa: [
+      ["C-2298","Customer complaint","Ø28 journal oversize, 6 pcs","Worn insert not replaced at interval; interval undefined in WI","WI-22 rev7 adds interval; training done","Open - verification pending"],
+      ["C-2311","Customer complaint","Yoke weld porosity, 2 pcs","Operator carelessness","Operator warned","Closed 30-May-26"],
+      ["C-2319","Internal NC","Bar stock mix-up in stores","Ambiguous rack labels after change","Re-labelled, WI updated, verified 12-Jun-26","Closed"]
+    ],
+    mgmtReview: "Management Review 20-Apr-2026: budget approved for 2nd CMM; OTD target retained; marketing to enter pump-OEM segment. Next review Oct-2026.",
+    auditProgramme: "Internal audit programme (§11): Sales & order review - audited Apr'24, Apr'25, Apr'26(done). CNC turning - Jun'24, May'25, Jun'26(done). Welding - Jun'24, May'25, Jun'26(done). Purchasing & stores - NOT audited 2024 or 2025, Dec'26(planned). Calibration/QA - Sep'24, Aug'25, Sep'26(planned). Maintenance - Nov'24, Sep'25, Oct'26(planned). Context: supplier-related complaints rose 2 (2024) → 7 (2025) → 5 (H1-2026).",
+    fmea: [
+      ["Journal oversize","Assembly failure at customer","8","Insert wear","5","First-off + hourly SPC","3","120","Insert change interval in WI (done)"],
+      ["Journal undersize","Scrap","6","Wrong offset entry","4","Offset double-check","2","48","-"],
+      ["Length short","Scrap","5","Wrong program version","4","Program check at setup","2","40","-"],
+      ["Surface finish poor","Customer rejection","6","Coolant conc. drift","8","Weekly coolant check","5","240","- (highest RPN, no action)"],
+      ["Chamfer missed","Line stoppage","7","Tool breakage undetected","3","Visual only at final","2","42","-"]
+    ],
+    oee: [
+      ["02-Jun","16","1.5","14.5","90.6%"],
+      ["09-Jun","16","2.0","26.0","92.4% - check the arithmetic"],
+      ["16-Jun","16","0.5","15.5","96.9%"],
+      ["23-Jun","16","3.0","26.5","89.1% - check the arithmetic"],
+      ["30-Jun","16","1.0","15.0","93.8%"]
+    ]
+  };
+
+  var TOOLKIT = [
+    ["T-1","Engagement Brief & Data Pack Index","Opens any audit engagement: scope, team, data pack, confidentiality sign-off.","Week 1"],
+    ["T-2","Process Map / Turtle Diagram","Maps a process: inputs, outputs, resources, controls, measures, risks.","Week 1"],
+    ["T-3","Annual Audit Programme","Risk-based schedule of which processes get audited, how often.","Week 8"],
+    ["T-4","Audit Plan","Full plan: objectives, scope, criteria, schedule, logistics.","Week 10"],
+    ["T-5","Process-Based Checklist","Clause-and-risk-traced audit questions.","Week 7"],
+    ["T-6","Evidence Log","Records what was seen/heard/verified, with citations - used every week from here on.","Week 1"],
+    ["T-7","Nonconformity Report","Formal NC: criterion, evidence, statement, grade.","Week 7 (formal: Week 12)"],
+    ["T-8","Opening Meeting Agenda","Structure for starting an audit professionally.","Week 11"],
+    ["T-9","Audit Report Skeleton","Structure for the final formal report.","Week 13"],
+    ["T-10","CAPA Adequacy & Verification Sheet","Judging root-cause adequacy and verifying closure.","Week 13"],
+    ["T-11","Interview & Meeting Observation Sheet","Peer/self-scoring of interview technique.","Week 11"],
+    ["T-12","Audit File Closure Checklist","Confirms an audit file is complete before archiving.","Week 14"],
+    ["T-13","Auditor Code of Conduct","Personal ethics commitment, signed once.","Week 5"]
+  ];
+
+  var FIELD_GUIDE = [
+    "Ask to be shown, not told.",
+    "Trace one order/lot across processes - systems fail at handoffs.",
+    "Write evidence you can re-find: doc ID, revision, date, quantity, role.",
+    "Read the auditee's own procedure before the standard.",
+    "Check arithmetic and dates - impossible numbers hide in plausible tables.",
+    "When you sense a finding, slow down and widen the sample first.",
+    "Never argue in the room - park disputes, resolve at the debrief.",
+    "Grade with a reason you could defend to a certification body.",
+    "A CAPA that fixes only the instance found is a correction, not a corrective action.",
+    "Close the loop - an audit without verified corrective action is theatre."
+  ];
+
+  /* ============================================================
+     THE 15-WEEK JOURNEY - real Practice/Performance content,
+     digitised in place of the paper Toolkit templates.
+     ============================================================ */
+  function tbl(id, h, cols, rowLabels) {
+    return { k: "table", id: id, h: h, cols: cols, rowLabels: rowLabels || null, rows: rowLabels ? rowLabels.length : 3 };
+  }
+  function fields(h, items) { return { k: "fields", h: h, items: items }; }
+  function info(h, paras) { return { k: "info", h: h || null, p: paras }; }
+  function chk(id, h, items) { return { k: "checklist", id: id, h: h, items: items }; }
+
+  var WEEKS = [
+    { id:1, phase:"I", unit:"Unit I", concept:"QM evolution · ISO 9000 family · 7 QMPs",
+      practice: { title:"Meet Your Client - PAC", gate:null, blocks:[
+        info(null, ["You are now the internal audit function of Precision Auto-Components Pvt. Ltd. (PAC). Everything in the Case File is real audit input - not guaranteed correct, complete or consistent. That's exactly why auditors exist."]),
+        tbl("scavenger","Worksheet A - Dossier Scavenger Hunt (find the fact + cite the section)",["Find…","Your answer","§"],[
+          "Year PAC first certified to ISO 9001","Number of employees & shifts","Who owns the CAPA & complaints procedure (doc ID)",
+          "The process PAC outsources, and to which supplier","PAC's on-time delivery target","Revision number of the Quality Manual",
+          "Who may sign welding quality records, per which procedure","Equipment ID + due date of the outside micrometer",
+          "How often supplier performance must be reviewed","The two customer sectors PAC serves"]),
+        fields("Worksheet B - Team Charter",[
+          {id:"teamName",label:"Team name",type:"text"},
+          {id:"members",label:"Members and one strength each brings",type:"textarea"},
+          {id:"leadPlan",label:"Lead Auditor rotation plan (Gate 2 lead / Gate 3 lead / Mock audit lead)",type:"textarea"},
+          {id:"claimedProcess",label:"Claimed process for the Week 1 turtle diagram",type:"text"},
+          {id:"groundRules",label:"Team ground rules",type:"textarea"}
+        ])
+      ]},
+      performance: { title:"The Turtle-Diagram Walkthrough", gate:null, blocks:[
+        info(null, ["Present your claimed PAC process as a Turtle Diagram (Toolkit T-2), built only from the Case File - every entry needs a § citation. This is a rehearsal, not a certification gate."]),
+        fields("T-2 - Process Map / Turtle Diagram",[
+          {id:"processOwner",label:"Process name & owner",type:"text"},
+          {id:"inputs",label:"Inputs (from which process? cite §)",type:"textarea"},
+          {id:"outputs",label:"Outputs (to which process/customer? cite §)",type:"textarea"},
+          {id:"withWhat",label:"With what? (equipment, materials, environment)",type:"textarea"},
+          {id:"withWhom",label:"With whom? (competence, staffing)",type:"textarea"},
+          {id:"how",label:"How? (procedures, WIs, criteria)",type:"textarea"},
+          {id:"measures",label:"Measures? (KPIs, objectives linked)",type:"textarea"},
+          {id:"risks",label:"Risks identified for this process",type:"textarea"}
+        ]),
+        fields("Presentation notes",[
+          {id:"gapsFound",label:"Any turtle leg the dossier is silent on? Say so - don't paper over it.",type:"textarea"},
+          {id:"planQuestions",label:"Your 3 questions for the Plant Head (choose carefully)",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:2, phase:"I", unit:"Unit I", concept:"ISO 9001 clause-by-clause · risk-based thinking",
+      practice: { title:"Clause Treasure-Hunt", gate:null, blocks:[
+        info(null, ["Find real PAC evidence mapping onto ISO 9001:2015 clauses, using nothing but the Case File. “Ambiguous” is a legitimate answer - it means the dossier doesn't give you enough to decide."]),
+        tbl("clauseMatrix","Clause-Mapping Matrix",["Clause","What it requires (your words)","Dossier evidence (§)","Conforms / Possible gap / Ambiguous"],[
+          "4.2 - Needs of interested parties","4.4 - Processes and their interactions","5.2 - Quality policy","6.1 - Risks and opportunities",
+          "6.2 - Quality objectives","7.1.5 - Monitoring & measuring resources","7.5 - Documented information",
+          "8.4 - Control of externally provided processes","9.2 - Internal audit","10.2 - Nonconformity and corrective action"])
+      ]},
+      performance: { title:"Matrix Submission + Debrief", gate:null, blocks:[
+        info(null, ["Graded on reasoning quality, not on reaching the “right” classification - several PAC clauses are genuinely ambiguous from paper evidence alone."]),
+        fields("Your hardest clause call",[
+          {id:"hardestClause",label:"Which clause / row was hardest?",type:"text"},
+          {id:"whatRequires",label:"What the clause requires",type:"textarea"},
+          {id:"whatShows",label:"What the dossier shows",type:"textarea"},
+          {id:"whyHard",label:"Why it was hard to classify",type:"textarea"},
+          {id:"whatWouldResolve",label:"What one thing, checked on-site, would resolve it",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:3, phase:"I", unit:"Unit I", concept:"ISO 9000 vs Baldrige · awards · EMS · BPR",
+      practice: { title:"Baldrige Scoring Workshop", gate:null, blocks:[
+        info(null, ["ISO 9001 certifies a conforming QMS - a floor. Baldrige scores organisational excellence - a ceiling, out of 1,000 across 7 categories. Attempt a rough desk-only scoring of PAC and notice how little the dossier can actually support."]),
+        tbl("baldrige","Baldrige Scoring Sheet (PAC, desk estimate)",["Category (max pts)","Best dossier evidence (§)","Strong / Developing / Not evidenced","Reasoning"],[
+          "1. Leadership (120)","2. Strategy (85)","3. Customers (85)","4. Measurement, Analysis & Knowledge Mgmt (90)",
+          "5. Workforce (85)","6. Operations (85)","7. Results (450)"])
+      ]},
+      performance: { title:"Position Memo", gate:null, blocks:[
+        fields("Memo to PAC's Managing Director",[
+          {id:"recommendation",label:"Recommendation (one sentence, no hedging): should PAC pursue a Baldrige-style assessment?",type:"text"},
+          {id:"basis",label:"Basis - ISO 9001 vs Baldrige, in PAC's specific case",type:"textarea"},
+          {id:"gap",label:"Biggest evidence gap found (which category, and why it matters)",type:"textarea"},
+          {id:"risk",label:"Risk if PAC does nothing further after recertification",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:4, phase:"II", unit:"Unit II", concept:"TPM · FMEA · OEE", gate:{num:1,name:"Gate 1"},
+      practice: { title:"FMEA Lab + OEE Calculation", gate:null, blocks:[
+        info("Part 1 - FMEA Lab (PAC-FMEA-CNC-04)", ["Recompute every RPN (S×O×D) from the Case File's FMEA table and flag any mismatch against the printed value. Rank failure modes by RPN."]),
+        tbl("fmeaCheck","FMEA recheck",["Failure mode","Your recomputed RPN","Matches dossier?","Rank"],[
+          "Journal oversize","Journal undersize","Length short","Surface finish poor","Chamfer missed"]),
+        fields("FMEA reasoning",[
+          {id:"highestRpnNoAction",label:"Which failure mode has the highest RPN, and does it have an assigned action? What does that tell you?",type:"textarea"},
+          {id:"proposedAction",label:"Propose a recommended action for the highest-RPN mode lacking one - target Occurrence or Detection, and say which",type:"textarea"}
+        ]),
+        info("Part 2 - OEE / Availability (Machine M-4)", ["Independently calculate Operating time = Planned − Downtime for each date, compare to the dossier's printed value, and flag mismatches."]),
+        tbl("oeeCheck","OEE recheck",["Date","Your Operating time","Matches dossier?","Availability should be"],["02-Jun","09-Jun","16-Jun","23-Jun","30-Jun"]),
+        fields("OEE reasoning",[
+          {id:"oeeJudgement",label:"If auditing Maintenance: is this discrepancy alone enough to raise an NC, or do you need more evidence first? Justify.",type:"textarea"}
+        ])
+      ]},
+      performance: { title:"GATE 1 - Clause-Mastery Exam + Documentation Review Memo", gate:{num:1,name:"Gate 1"}, blocks:[
+        { k:"gatenote", p:"Component 1 - Clause-mastery exam: a secure, instructor-run written assessment on ISO 9001:2015 Clauses 4–10, not reproduced here. Revise your Week 2 matrix and the Unit 1 exam-prep notes, then confirm below." },
+        chk("gate1Ready","Readiness declaration",[
+          "I have revised ISO 9001:2015 Clauses 4–10 (definitions, PDCA mapping, risk-based thinking, 7 QMPs)",
+          "I have reviewed my Week 2 Clause-Mapping Matrix",
+          "I am ready to sit the clause-mastery exam"
+        ]),
+        info("Component 2 - Documentation review memo (this one is digitised)", ["Revisit every row you marked “Possible gap” or “Ambiguous” in Week 2. For each, write a formal documentation-review finding. Individually authored - this gate is assessed per student."]),
+        tbl("docReviewMemo","Documentation review memo",["Clause","Week 2 classification","Dossier evidence (§)","Review conclusion: genuine gap or on-site-verification question?","If a genuine gap - what's missing?"],["Row 1","Row 2","Row 3"])
+      ]}
+    },
+    { id:5, phase:"II", unit:"Unit III", concept:"History of auditing · audit principles · ethics",
+      practice: { title:"Ethics Clinic", gate:null, blocks:[
+        info(null, ["Before signing the Auditor Code of Conduct, wrestle with situations where it's hard to follow. For each card: what you'd do, which Code line applies, what you'd say out loud."]),
+        tbl("ethicsCards","Scenario cards",["Card","What you would do","Code of Conduct line that applies","What you'd say in the room"],[
+          "1 - The friendly gift (Purchase Manager offers sweets + mentions his daughter's college application)",
+          "2 - The softened finding (co-auditor wants to water down an NC statement)",
+          "3 - Auditing your own work (you helped draft the procedure you're now assigned to audit)",
+          "4 - The pressure to pass (Plant Head asks to downgrade a Major to a Minor)",
+          "5 - The confidential leak (a friend asks what you found at PAC “just between us”)"])
+      ]},
+      performance: { title:"Code Signing + Scenario Rulings", gate:null, blocks:[
+        chk("codeSigned","T-13 - Auditor Code of Conduct",[
+          "I will base every finding on objective evidence I can produce",
+          "I will protect the confidentiality of auditee information",
+          "I will disclose any conflict of interest before auditing",
+          "I will report honestly even when unwelcome",
+          "I will distinguish fact from opinion in all records",
+          "I will treat auditees with courtesy - the audit examines the system, never the person",
+          "I will refuse to fabricate, backdate, or soften evidence"
+        ]),
+        fields("Your live scenario ruling",[
+          {id:"assignedCard",label:"Your assigned scenario card",type:"text"},
+          {id:"whatYouDo",label:"What you would do",type:"textarea"},
+          {id:"codeLine",label:"Which specific Code line applies (quote it)",type:"textarea"},
+          {id:"howPhrased",label:"How you'd actually phrase it in the room",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:6, phase:"II", unit:"Unit III", concept:"Audit taxonomy: 1st/2nd/3rd party · product/process/system",
+      practice: { title:"Same PO, Three Audit Types", gate:null, blocks:[
+        info(null, ["Thread: Bar stock/forged blank (Meenakshi Steels / Kova Forge) → CNC turning (PAC-WI-22) → Final QC (FIR-1142) → dispatch. Re-audit this ONE thread through three party-type lenses, then three scope-type lenses."]),
+        tbl("partyTypes","By party-type",["Audit type","Who's auditing & why","What you'd specifically check on this thread","A likely finding type this lens is best at catching"],[
+          "1st-party (internal) - PAC's own QA","2nd-party - PAC auditing its own supplier","3rd-party (certification) - accredited external body"]),
+        tbl("scopeTypes","By scope-type",["Audit scope type","What the thread looks like through this lens"],[
+          "Product audit (the shaft itself)","Process audit (the CNC turning process)","System audit (did the QMS as a whole control this?)"])
+      ]},
+      performance: { title:"Comparison Matrix + Selection Guide", gate:null, blocks:[
+        fields("Audit-type selection guide",[
+          {id:"selection",label:"Given everything your team knows about PAC (incl. Gate 2 findings if reached), which audit type would you recommend commissioning next - and why? Name the specific risk it addresses.",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:7, phase:"II", unit:"Unit III", concept:"Checklist engineering · tracing · sampling", gate:{num:2,name:"Gate 2"},
+      practice: { title:"Checklist Build Lab", gate:null, blocks:[
+        info(null, ["Build a properly engineered T-5 checklist for one process/theme. Every row needs a clause AND a reason this process could fail - delete any row that's just the standard rephrased as a question."]),
+        fields("Checklist setup",[
+          {id:"chosenProcess",label:"Process or documented-information theme chosen",type:"text"}
+        ]),
+        tbl("checklistBuild","T-5 - Process-Based Audit Checklist (build at least 8 rows across ≥3 procedures)",["What to verify (question/trail)","Criterion (clause/doc §)","Method (interview/observe/records)","Evidence recorded","C / NC / OFI"],
+          ["Row 1","Row 2","Row 3","Row 4","Row 5","Row 6","Row 7","Row 8"])
+      ]},
+      performance: { title:"GATE 2 - Desk Audit Findings Memo", gate:{num:2,name:"Gate 2"}, blocks:[
+        { k:"gatenote", p:"Lead Auditor this gate: Student A, per your Week 1 rotation plan. This is a DESK audit - dossier only, no interviews or site visit." },
+        tbl("gate2Checklist","T-5 - Final checklist (≥8 rows, ≥3 procedures)",["What to verify","Criterion","Method","Evidence recorded","C / NC / OFI"],
+          ["Row 1","Row 2","Row 3","Row 4","Row 5","Row 6","Row 7","Row 8"]),
+        tbl("gate2Evidence","T-6 - Evidence Log",["Ref","Source (record ID / §)","What the evidence shows","Links to checklist row"],["E-01","E-02","E-03","E-04","E-05"]),
+        tbl("gate2NC1","T-7 - Nonconformity Report #1",["Field","Entry"],
+          ["NC number","Process / area","Criterion (clause/procedure §)","Evidence (objective, re-findable)","Nonconformity statement (factual, blame-free)","Grade (Major/Minor/OFI) + rationale"]),
+        tbl("gate2NC2","T-7 - Nonconformity Report #2",["Field","Entry"],
+          ["NC number","Process / area","Criterion (clause/procedure §)","Evidence (objective, re-findable)","Nonconformity statement (factual, blame-free)","Grade (Major/Minor/OFI) + rationale"]),
+        tbl("gate2NC3","T-7 - Nonconformity Report #3",["Field","Entry"],
+          ["NC number","Process / area","Criterion (clause/procedure §)","Evidence (objective, re-findable)","Nonconformity statement (factual, blame-free)","Grade (Major/Minor/OFI) + rationale"]),
+        fields("Findings memo to the Plant Head (one page, plain professional language)",[
+          {id:"findingsMemo",label:"Memo body",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:8, phase:"III", unit:"Unit IV", concept:"The audit programme · “second rule of auditing”",
+      practice: { title:"Draft PAC's Audit Programme", gate:null, blocks:[
+        info(null, ["PAC's existing programme (Case File) may not follow its own rule (frequency increases for risky processes). Draft a replacement using T-3, fixing what you found. Every auditor assignment must respect independence - no one audits a process they helped design."]),
+        tbl("t3","T-3 - Annual Audit Programme",["Process","Risk drivers (cite §)","Frequency & months","Auditor(s) - independence checked","Status"],
+          ["Sales & order review","Design change control","Purchasing & stores","CNC turning","Welding","Heat treatment (outsourced)","Final inspection & dispatch","Maintenance","HR & training","Quality assurance"])
+      ]},
+      performance: { title:"Programme Submission + Justification Memo", gate:null, blocks:[
+        fields("Risk-based justification memo",[
+          {id:"biggestChanges",label:"The 2–3 biggest changes your programme makes relative to PAC's original 2026 plan, and the specific evidence behind each",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:9, phase:"III", unit:"Unit IV", concept:"Audit phases · team roles/competence",
+      practice: { title:"Team Formation + Document Evaluation Drill", gate:null, blocks:[
+        fields("Part 1 - Team formation",[
+          {id:"strengths",label:"Each member's strongest audit skill so far, based on Gate 1/2 performance",type:"textarea"},
+          {id:"mockRoles",label:"Mock Audit role assignments (opening-meeting lead, process owners, NC-writer, evidence-logger)",type:"textarea"},
+          {id:"weakness",label:"Team's weakest collective skill + one concrete step to strengthen it",type:"textarea"}
+        ]),
+        tbl("docEval","Part 2 - Document Evaluation Drill (per §4 index document)",["Document","Rev. per index","Rev. of copy provided","Match?"],
+          ["PAC-QM-01","PAC-QP-01","PAC-QP-02","PAC-QP-05","PAC-QP-07","PAC-QP-09","PAC-QP-11","PAC-QP-12"]),
+        fields("PAC-QP-02 hypothesis",[
+          {id:"qp02Hypothesis",label:"2–3 most likely reasons the provided copy lags the index revision - which would you investigate on-site to distinguish between them?",type:"textarea"}
+        ])
+      ]},
+      performance: { title:"Team Rationale + Document Evaluation Worksheet", gate:null, blocks:[
+        fields("Team-composition rationale",[
+          {id:"roleRationale",label:"Role assignments for Mock Audit + Gate 3, each with a one-line reason tied to a demonstrated strength",type:"textarea"}
+        ]),
+        tbl("docEvalFinal","Document Evaluation Worksheet (final)",["Document","Revision-match check","(PAC-QP-02) reasoned hypothesis + on-site check that would confirm it"],
+          ["PAC-QM-01","PAC-QP-01","PAC-QP-02","PAC-QP-05","PAC-QP-07","PAC-QP-09","PAC-QP-11","PAC-QP-12"])
+      ]}
+    },
+    { id:10, phase:"III", unit:"Unit IV", concept:"The audit plan · handling objections", gate:{num:3,name:"Gate 3"},
+      practice: { title:"Build Audit Plan + Checklist", gate:null, blocks:[
+        info(null, ["Choose 2–3 processes for an on-site audit - a good choice draws on what your Gate 2 desk audit already flagged as risky. Build T-4 in full, plus the T-5 checklist for that scope."]),
+        tbl("t4draft","T-4 - Audit Plan (draft)",["Element","Content"],
+          ["Audit objectives (as questions)","Scope (processes, locations, period)","Criteria (clauses + PAC procedure IDs/revisions)","Audit team & role split","Schedule (session/time/process/auditor)","Working documents","Logistics, confidentiality & escorts","Opening & exit meeting time/attendees","Report issue date & distribution"]),
+        tbl("t5forGate3","T-5 - Checklist for this scope",["What to verify","Criterion","Method","Evidence recorded","C / NC / OFI"],["Row 1","Row 2","Row 3","Row 4","Row 5"]),
+        fields("Anticipate objections (viva rehearsal)",[
+          {id:"objections",label:"For each major choice (scope, schedule, criteria): the toughest question a sceptical auditee might ask, and your answer",type:"textarea"}
+        ])
+      ]},
+      performance: { title:"GATE 3 - Plan-Defence Viva", gate:{num:3,name:"Gate 3"}, blocks:[
+        { k:"gatenote", p:"Lead Auditor this gate: Student B. The instructor plays PAC's Plant Head / lead assessor and questions your plan live - any team member may be asked to answer." },
+        tbl("t4final","T-4 - Audit Plan (final, submitted before the viva)",["Element","Content"],
+          ["Audit objectives","Scope","Criteria","Audit team & role split","Schedule","Working documents","Logistics, confidentiality & escorts","Opening & exit meeting","Report issue date & distribution"]),
+        fields("Scope rationale (the first question asked)",[
+          {id:"scopeRationale",label:"Why this scope - one paragraph, not on the T-4 template",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:11, phase:"IV", unit:"Unit V", concept:"Opening meeting · interviews · perceptions",
+      practice: { title:"Interview Practicum", gate:null, blocks:[
+        info(null, ["Practise Habit #1 (“ask to be shown, not told”) in pairs before the Mock Audit begins for real. Open with “walk me through the last one you did.”"]),
+        fields("T-11 - Interview & Meeting Observation (peer-score your partner)",[
+          {id:"roleAudited","label":"Role your partner played (Calibration In-charge / QC Inspector / Purchase Buyer / Welding Supervisor)",type:"text"},
+          {id:"showNotTold",label:"Did they open with “walk me through”, not “do you follow the procedure?”",type:"textarea"},
+          {id:"askedForRecord",label:"Did they ask for a record to be shown, not just described?",type:"textarea"},
+          {id:"tracedFollowup",label:"Did they trace backward/forward with a follow-up question?",type:"textarea"}
+        ])
+      ]},
+      performance: { title:"Mock Audit Day 1 - Opening Meeting + Trails", gate:null, blocks:[
+        { k:"gatenote", p:"Lead this session: Student C, per your Week 1 rotation plan." },
+        chk("t8agenda","T-8 - Opening Meeting Agenda (confirm each item covered)",[
+          "Introductions and attendance record",
+          "Audit objectives, scope, criteria and plan confirmed",
+          "Method explained: sampling basis, evidence recording, grading definitions",
+          "Confidentiality and how findings will be communicated",
+          "Logistics: escorts, PPE, timings, daily debriefs",
+          "Appeals/disputes route named",
+          "Auditee questions taken"
+        ]),
+        tbl("day1Evidence","T-6 - Evidence log entries for today's trails",["Ref","Source","What the evidence shows","Links to checklist row"],["E-01","E-02","E-03"])
+      ]}
+    },
+    { id:12, phase:"IV", unit:"Unit V", concept:"Findings · NC grading · finding sheet",
+      practice: { title:"Mock Audit Day 2 - Trails + NC Drafts", gate:null, blocks:[
+        info(null, ["First formal use of T-7. For every gap found, draft a full NC form as you go - not at the end of the day. Peer-review before the exit meeting."]),
+        tbl("draftNCs","T-7 - Draft Nonconformity Reports",["Criterion","Evidence","Statement","Proposed grade"],["Draft NC 1","Draft NC 2","Draft NC 3"])
+      ]},
+      performance: { title:"Mock Audit Day 3 - Exit Meeting, NCs Issued", gate:null, blocks:[
+        info(null, ["Agree your final NC set and grades BEFORE the meeting - never negotiate grades live in front of the auditee. Present positive observations too, not just problems."]),
+        tbl("finalNCs","Final NC set (acknowledged)",["NC #","Process/area","Grade","Presented by"],["NC-1","NC-2","NC-3"]),
+        fields("Exit meeting reflection",[
+          {id:"positiveObs","label":"Positive observations / confirmed conformities presented",type:"textarea"},
+          {id:"pushback",label:"How you handled any pushback on a finding (Habit #7)",type:"textarea"}
+        ])
+      ]}
+    },
+    { id:13, phase:"IV", unit:"Unit V", concept:"Formal report · CAPA adequacy · closure · ISO 9001:2026 briefing",
+      practice: { title:"Report-Writing Studio", gate:null, blocks:[
+        tbl("t9draft","T-9 - Audit Report Skeleton (draft; write the executive summary LAST)",["Section","Content"],
+          ["Executive summary (≤5 sentences - can management rely on this?)","Audit details, method & sampling basis/limitations","Positive observations (≥2 specific, evidenced conformities)","Findings summary table (NCs by grade, OFIs)","Conclusions against each Gate-3 audit objective","Follow-up arrangements and CAPA due dates"]),
+        info("Part 2 - Practice CAPA evaluations (T-10)", [
+          "Practice CAPA A (unapproved-supplier NC): “Correction: the Sri Balaji Metals POs already placed will be honoured. Corrective action: Purchase team reminded to check the ASL.”",
+          "Practice CAPA B (overdue-calibration NC): “Correction: VC-07 withdrawn & recalibrated. Root cause: tracking spreadsheet not checked due to high volume. Corrective action: monthly calendar reminder + QM monthly review. Effectiveness: 3 consecutive on-time months, checked at next audit.”",
+          "Practice CAPA C (audit-frequency NC): “Correction: none needed, audit wasn't due yet. Corrective action: none.”"
+        ]),
+        tbl("capaPractice","T-10 - Evaluate Practice CAPAs A / B / C",["CAPA","Correction adequate?","Root cause real or symptom?","Action attacks the cause?","Accept / Return - why"],["Practice CAPA A","Practice CAPA B","Practice CAPA C"])
+      ]},
+      performance: { title:"Audit Report + CAPA Adequacy Evaluations", gate:null, blocks:[
+        tbl("t9final","T-9 - Final Mock Audit Report",["Section","Content"],
+          ["Executive summary","Audit details, method, sampling basis","Positive observations","Findings summary table","NC reports attached (list NC #s)","Conclusions against each objective","Follow-up arrangements & CAPA due dates","Distribution, confidentiality note, Lead Auditor signature"]),
+        tbl("capaReal","T-10 - CAPA Adequacy Sheet (one per real NC issued at Mock Audit)",["NC reference","Correction adequate?","Root cause - real or symptom?","Verification of implementation","Effectiveness check (recurrence window)","Accept / Return - decision"],["NC-1","NC-2","NC-3"])
+      ]}
+    },
+    { id:14, phase:"IV", unit:"Unit V", concept:"Programme mgmt review · auditing as a career", gate:{num:"4a",name:"Gate 4a"},
+      practice: { title:"Follow-Up Audit + Portfolio Clinic", gate:null, blocks:[
+        fields("Part 1 - Follow-up audit",[
+          {id:"followupEvidence",label:"For each CAPA you marked “Accept” (Week 13): what fresh evidence would a follow-up audit need - not just a re-read of the same CAPA form?",type:"textarea"}
+        ]),
+        chk("t12closure","Part 2 - T-12 Audit File Closure Checklist (your OWN semester file)",[
+          "Plan, checklists and working papers filed",
+          "Every evidence log entry traceable to a finding or conformity note",
+          "Every NC: CAPA received → adequacy decided → implementation verified → closed/escalated",
+          "Report issued and acknowledgements on file",
+          "Lessons for the audit programme recorded",
+          "File confidentiality check and archive"
+        ]),
+        chk("portfolioAssembly","Part 3 - Portfolio assembly (confirm every artefact present)",[
+          "T-1 Engagement Brief (Week 1)","T-2 Turtle Diagram (Week 1)","T-6 Evidence Log (ongoing)","T-3 Audit Programme (Week 8)",
+          "T-4/T-5 Audit Plan + Checklist (Week 10)","T-8 Opening Meeting Agenda (Week 11)","T-7 Nonconformity Reports (Week 12)",
+          "T-9 Audit Report (Week 13)","T-10 CAPA Adequacy Sheets (Week 13)","T-12 Closure Checklist (this week)",
+          "T-13 Code of Conduct, signed (Week 5)","T-11 Interview Observation Sheets (as used)"
+        ])
+      ]},
+      performance: { title:"GATE 4a - Comprehensive Written Exam", gate:{num:"4a",name:"Gate 4a"}, blocks:[
+        { k:"gatenote", p:"A secure, instructor-authored written exam - not reproduced here. It draws on the full semester: ISO 9001:2015, audit principles & taxonomy, programme/plan design, execution/reporting/CAPA." },
+        chk("gate4aReady","Readiness declaration",[
+          "I have revised the Unit 1 theory notes (Quick Revision Sheet, Glossary, Question Bank)",
+          "I have re-read my own Gate 2 findings, Gate 3 plan, and Mock Audit report as worked examples",
+          "I have studied the Week 7 and Week 10 model-answer files for their reasoning, not just conclusions",
+          "I am ready to sit the comprehensive written exam"
+        ])
+      ]}
+    },
+    { id:15, phase:"IV", unit:"-", concept:"Certification & placement week", gate:{num:"4b",name:"Gate 4b"},
+      practice: null,
+      performance: { title:"GATE 4b - Certification Viva + Moderation + Mock Placement Interviews", gate:{num:"4b",name:"Gate 4b"}, blocks:[
+        { k:"gatenote", p:"The certification viva and moderation panel are live, instructor/panel-run events - not reproduced here. They draw on your complete semester portfolio and your performance across Gates 1–4a. Week 15 has no separate practice period." },
+        chk("gate4bReady","Readiness declaration",[
+          "My complete portfolio (T-1 through T-13) is assembled and checked against the Week 14 closure checklist",
+          "I am ready to present and defend my portfolio at the certification viva"
+        ]),
+        info("Mock placement interview - preparation guide", ["For each question, write your specific answer citing your own portfolio artefacts by name (e.g. “NC-01 in my Gate 2 memo”) - a rehearsed, specific answer reads as competence."]),
+        fields("Portfolio-grounded interview answers",[
+          {id:"q1",label:"“Tell me about a time you found something others missed.”",type:"textarea"},
+          {id:"q2",label:"“How do you handle an auditee who pushes back on a finding?”",type:"textarea"},
+          {id:"q3",label:"“Walk me through how you'd plan an audit of a process you've never seen.”",type:"textarea"},
+          {id:"q4",label:"“What's the difference between a correction and a corrective action?”",type:"textarea"},
+          {id:"q5",label:"“Describe a time you had to make an ethical judgement call.”",type:"textarea"},
+          {id:"q6",label:"“Why should we trust a fresh graduate to do this job?”",type:"textarea"}
+        ])
+      ]}
+    }
+  ];
+
+  var PHASE_LABEL = { I:"Phase I · Foundations", II:"Phase II · Principles & Ethics", III:"Phase III · Programme & Planning", IV:"Phase IV · Execution & Certification" };
+  var GATES_ORDER = [1,2,3,"4a","4b"];
+
+  /* ============================================================
+     STATE
+     ============================================================ */
+  var state = null;
+
+  function emptyWeekState() { return { practiceDone:false, practiceData:{}, performanceDone:false, performanceData:{} }; }
+  function newState(roll, name) {
+    var weeks = {};
+    for (var i = 0; i < WEEKS.length; i++) weeks[WEEKS[i].id] = emptyWeekState();
+    return { roll:roll, name:name, weeks:weeks, certIssued:false, certDate:null };
+  }
+  function loadState(roll) {
+    try {
+      var raw = localStorage.getItem(STORAGE_PREFIX + roll.toUpperCase());
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      for (var i = 0; i < WEEKS.length; i++) if (!s.weeks[WEEKS[i].id]) s.weeks[WEEKS[i].id] = emptyWeekState();
+      return s;
+    } catch (e) { return null; }
+  }
+  function saveState() {
+    if (!state) return;
+    try { localStorage.setItem(STORAGE_PREFIX + state.roll.toUpperCase(), JSON.stringify(state)); } catch (e) {}
+  }
+
+  function weekUnlocked(weekId) {
+    if (weekId === 1) return true;
+    var prev = state.weeks[weekId - 1];
+    return !!(prev && prev.performanceDone);
+  }
+  function weekDone(weekId) {
+    var w = state.weeks[weekId];
+    return !!(w && w.performanceDone);
+  }
+  function allGatesCleared() {
+    return weekDone(15);
+  }
+  function gatesClearedCount() {
+    var n = 0;
+    for (var i = 0; i < WEEKS.length; i++) if (WEEKS[i].gate && weekDone(WEEKS[i].id)) n++;
+    return n;
+  }
+  function weeksDoneCount() {
+    var n = 0;
+    for (var i = 0; i < WEEKS.length; i++) if (weekDone(WEEKS[i].id)) n++;
+    return n;
+  }
+
+  /* ============================================================
+     RENDERING
+     ============================================================ */
+  var root = document.getElementById("app");
+  var view = "login"; // login | journey | week | cert
+  var activeWeekId = null;
+  var activePeriod = "practice"; // practice | performance
+  var refModal = null; // null | "dossier" | "toolkit"
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    attrs = attrs || {};
+    for (var k in attrs) {
+      if (attrs[k] === null || attrs[k] === undefined) continue;
+      if (k === "class") e.className = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else if (k.indexOf("on") === 0) e.addEventListener(k.slice(2), attrs[k]);
+      else e.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+  function txt(s) { return document.createTextNode(s); }
+
+  function render() {
+    root.innerHTML = "";
+    if (view === "login") root.appendChild(renderLogin());
+    else if (view === "journey") root.appendChild(renderJourney());
+    else if (view === "cert") root.appendChild(renderCertificate());
+    if (view === "journey" && activeWeekId !== null) root.appendChild(renderWeekModal());
+    if (refModal) root.appendChild(renderRefModal());
+  }
+
+  /* ---------- Login ---------- */
+  function renderLogin() {
+    var screen = el("div", { class:"login-screen" });
+    var rollInput = el("input", { type:"text", placeholder:"e.g. 2025229026" });
+    var codeInput = el("input", { type:"text", placeholder:"Given by your instructor" });
+    var err = el("p", { class:"login-foot", style:"color:var(--danger);display:none;" });
+
+    var savedRoll = "";
+    try { savedRoll = localStorage.getItem(LAST_ROLL_KEY) || ""; } catch (e) {}
+    if (savedRoll) rollInput.value = savedRoll;
+
+    function doLogin() {
+      var roll = rollInput.value.trim();
+      var code = codeInput.value.trim();
+      var entry = findRosterEntry(roll);
+      if (!entry) { err.textContent = "Roll number not found on the roster. Check with your instructor."; err.style.display = "block"; return; }
+      if (code !== CLASS_CODE) { err.textContent = "Class code doesn't match."; err.style.display = "block"; return; }
+      try { localStorage.setItem(LAST_ROLL_KEY, entry.roll); } catch (e) {}
+      state = loadState(entry.roll) || newState(entry.roll, entry.name);
+      state.name = entry.name;
+      saveState();
+      view = "journey";
+      render();
+    }
+    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
+    codeInput.addEventListener("keydown", function (e) { if (e.key === "Enter") doLogin(); });
+
+    var card = el("div", { class:"login-card" }, [
+      el("div", { class:"eyebrow" }, [txt("QE3001 · CQSA-I PROGRAMME")]),
+      el("h1", {}, [txt("Auditor Certification Journey")]),
+      el("p", { class:"sub" }, [txt("15 weeks. 5 Gates. Every worksheet, template and finding lives here - no hardcopy. Clear all 5 Gates and earn your CQSA-I certificate.")]),
+      el("label", { class:"field-label" }, [txt("Register number")]), rollInput,
+      el("label", { class:"field-label" }, [txt("Class code")]), codeInput,
+      el("button", { class:"btn-primary", onclick:doLogin }, [txt("Check in →")]),
+      err,
+      el("p", { class:"login-foot" }, [txt("Your work is saved on this device only, under your roll number.")])
+    ]);
+    screen.appendChild(card);
+    return screen;
+  }
+
+  /* ---------- Journey ---------- */
+  function weekStatus(w) {
+    if (weekDone(w.id)) return "done";
+    if (weekUnlocked(w.id)) return "current";
+    return "locked";
+  }
+
+  function renderJourney() {
+    var wrap = el("div", { style:"display:flex;flex-direction:column;flex:1;" });
+
+    var topbar = el("div", { class:"topbar" }, [
+      el("div", { class:"brand" }, [
+        el("span", { class:"mark" }, [txt("🎓 CQSA-I")]),
+        el("span", { class:"tag" }, [txt("Certification Journey · QE3001")])
+      ]),
+      el("div", { class:"topnav" }, [
+        el("button", { class:"btn-tab", onclick:function () { refModal = "dossier"; render(); } }, [txt("📁 Case File")]),
+        el("button", { class:"btn-tab", onclick:function () { refModal = "toolkit"; render(); } }, [txt("📑 Toolkit T-1–T-13")]),
+        el("button", { class:"btn-tab", onclick:exportPortfolio }, [txt("⬇ Export Portfolio")])
+      ]),
+      el("div", { class:"hud" }, [
+        el("div", { class:"hud-stat" }, [el("span", { class:"num mono" }, [txt(weeksDoneCount() + "/15")]), el("span", { class:"lbl" }, [txt("Weeks")])]),
+        el("div", { class:"hud-stat" }, [el("span", { class:"num mono" }, [txt(gatesClearedCount() + "/5")]), el("span", { class:"lbl" }, [txt("Gates")])]),
+        el("div", { class:"hud-name" }, [txt(state.roll + " · "), el("b", {}, [txt(state.name)])])
+      ])
+    ]);
+    wrap.appendChild(topbar);
+
+    var jwrap = el("div", { class:"journey-wrap" });
+    jwrap.appendChild(el("div", { class:"intro" }, [
+      el("h2", {}, [txt("Your Audit Trail")]),
+      el("p", {}, [txt("Every week has a Practice Period and a Performance Period. Complete Practice to unlock Performance; complete Performance to unlock next week. Gate weeks are marked in gold.")])
+    ]));
+
+    var pct = Math.round((weeksDoneCount() / WEEKS.length) * 100);
+    jwrap.appendChild(el("div", { class:"progress-track" }, [el("div", { class:"progress-fill", style:"width:" + pct + "%" })]));
+    jwrap.appendChild(el("div", { class:"progress-count" }, [txt(weeksDoneCount() + " of 15 weeks complete · " + gatesClearedCount() + " of 5 gates cleared")]));
+
+    var phases = ["I", "II", "III", "IV"];
+    phases.forEach(function (ph) {
+      var weeksInPhase = WEEKS.filter(function (w) { return w.phase === ph; });
+      var block = el("div", { class:"phase-block" });
+      block.appendChild(el("div", { class:"phase-head" }, [
+        el("span", { class:"eyebrow" }, [txt(PHASE_LABEL[ph].split(" · ")[0])]),
+        el("span", { class:"ptitle" }, [txt(PHASE_LABEL[ph].split(" · ")[1])])
+      ]));
+      weeksInPhase.forEach(function (w) {
+        var status = weekStatus(w);
+        var card = el("div", { class:"week-card " + status + (w.gate ? " gate" : ""), onclick:function () {
+          if (status === "locked") return;
+          activeWeekId = w.id;
+          activePeriod = (state.weeks[w.id].practiceDone || !w.practice) ? "performance" : "practice";
+          render();
+        }});
+        var numLabel = status === "done" ? "✓" : String(w.id);
+        card.appendChild(el("div", { class:"week-num" }, [txt(numLabel)]));
+        var body = el("div", { class:"week-body" });
+        var titleRow = el("div", { class:"week-title" }, [txt("Week " + w.id + " - " + w.concept)]);
+        if (w.gate) {
+          var cleared = weekDone(w.id);
+          titleRow.appendChild(el("span", { class:"gate-pill" + (cleared ? " cleared" : "") }, [txt((cleared ? "✓ " : "🔒 ") + w.gate.name)]));
+        }
+        body.appendChild(titleRow);
+        body.appendChild(el("div", { class:"week-sub" }, [txt(w.unit + " · " + (w.performance ? w.performance.title : ""))]));
+        card.appendChild(body);
+        card.appendChild(el("div", { class:"week-status " + status }, [txt(status === "done" ? "Done" : status === "current" ? "Open" : "Locked")]));
+        block.appendChild(card);
+      });
+      jwrap.appendChild(block);
+    });
+
+    if (allGatesCleared()) {
+      jwrap.appendChild(el("div", { class:"cert-banner" }, [
+        el("div", {}, [
+          el("h3", {}, [txt("🎓 All 5 Gates cleared")]),
+          el("p", {}, [txt("Your CQSA-I certificate is ready.")])
+        ]),
+        el("button", { class:"btn-gold", onclick:function () { view = "cert"; render(); } }, [txt("View Certificate →")])
+      ]));
+    }
+
+    wrap.appendChild(jwrap);
+    return wrap;
+  }
+
+  /* ---------- generic block renderer ---------- */
+  function renderBlock(block, dataStore, disabled) {
+    if (block.k === "info") {
+      var box = el("div", { class:"block" });
+      if (block.h) box.appendChild(el("h4", {}, [txt(block.h)]));
+      var ibox = el("div", { class:"info-box" });
+      block.p.forEach(function (para) { ibox.appendChild(el("p", {}, [txt(para)])); });
+      box.appendChild(ibox);
+      return box;
+    }
+    if (block.k === "gatenote") {
+      return el("div", { class:"gate-note" }, [el("b", { class:"tag" }, [txt("Secure assessment: ")]), txt(block.p)]);
+    }
+    if (block.k === "fields") {
+      var fbox = el("div", { class:"block" });
+      fbox.appendChild(el("h4", {}, [txt(block.h)]));
+      block.items.forEach(function (item) {
+        var row = el("div", { class:"field-row" });
+        row.appendChild(el("label", {}, [txt(item.label)]));
+        var input = item.type === "textarea" ? el("textarea", { disabled: disabled ? "disabled" : null }) : el("input", { type:"text", disabled: disabled ? "disabled" : null });
+        input.value = dataStore[item.id] || "";
+        input.addEventListener("input", function () { dataStore[item.id] = input.value; });
+        row.appendChild(input);
+        fbox.appendChild(row);
+      });
+      return fbox;
+    }
+    if (block.k === "checklist") {
+      var cbox = el("div", { class:"block" });
+      cbox.appendChild(el("h4", {}, [txt(block.h)]));
+      var arr = dataStore[block.id] || (dataStore[block.id] = []);
+      block.items.forEach(function (label, idx) {
+        var cb = el("input", { type:"checkbox" });
+        cb.checked = !!arr[idx];
+        if (disabled) cb.disabled = true;
+        cb.addEventListener("change", function () { arr[idx] = cb.checked; });
+        var lab = el("label", { class:"chk-row" }, [cb, el("span", {}, [txt(label)])]);
+        cbox.appendChild(lab);
+      });
+      return cbox;
+    }
+    if (block.k === "table") {
+      var tbox = el("div", { class:"block" });
+      tbox.appendChild(el("h4", {}, [txt(block.h)]));
+      var tableData = dataStore[block.id] || (dataStore[block.id] = []);
+      var wrapDiv = el("div", { class:"tbl-wrap" });
+      var table = el("table", { class:"fillable" });
+      var thead = el("thead", {}, [el("tr", {}, block.cols.map(function (c) { return el("th", {}, [txt(c)]); }))]);
+      table.appendChild(thead);
+      var tbody = el("tbody");
+      var nRows = block.rows;
+      for (var r = 0; r < nRows; r++) {
+        if (!tableData[r]) tableData[r] = [];
+        var tr = el("tr");
+        var colStart = 0;
+        if (block.rowLabels) {
+          tr.appendChild(el("td", { class:"rowlabel" }, [txt(block.rowLabels[r])]));
+          colStart = 1;
+        }
+        for (var c = colStart; c < block.cols.length; c++) {
+          (function (r, c) {
+            var td = el("td");
+            var ta = el("textarea", { disabled: disabled ? "disabled" : null });
+            ta.value = tableData[r][c] || "";
+            ta.addEventListener("input", function () { tableData[r][c] = ta.value; });
+            td.appendChild(ta);
+            tr.appendChild(td);
+          })(r, c);
+        }
+        tbody.appendChild(tr);
+      }
+      table.appendChild(tbody);
+      wrapDiv.appendChild(table);
+      tbox.appendChild(wrapDiv);
+      return tbox;
+    }
+    return el("div");
+  }
+
+  /* ---------- Week modal ---------- */
+  function renderWeekModal() {
+    var w = WEEKS.filter(function (x) { return x.id === activeWeekId; })[0];
+    var wstate = state.weeks[w.id];
+    var overlay = el("div", { class:"modal-overlay" });
+    var card = el("div", { class:"modal-card" });
+
+    function closeModal() { overlay.remove(); activeWeekId = null; render(); }
+
+    card.appendChild(el("div", { class:"modal-head" }, [
+      el("div", {}, [
+        el("div", { class:"eyebrow" }, [txt("Week " + w.id + " · " + w.unit)]),
+      ]),
+      el("button", { class:"modal-close", id:"modalCloseBtn" }, [txt("✕")])
+    ]));
+    card.appendChild(el("h2", {}, [txt(w.concept)]));
+
+    var hasPractice = !!w.practice;
+    var tabs = el("div", { class:"period-tabs" });
+    if (hasPractice) {
+      var pTab = el("button", { class:"period-tab" + (activePeriod === "practice" ? " active" : "") + (wstate.practiceDone ? " done" : ""), onclick:function () { activePeriod = "practice"; render(); } }, [txt("Practice Period")]);
+      tabs.appendChild(pTab);
+    }
+    var perfDisabled = hasPractice && !wstate.practiceDone;
+    var fTab = el("button", { class:"period-tab" + (activePeriod === "performance" ? " active" : "") + (wstate.performanceDone ? " done" : ""), disabled: perfDisabled ? "disabled" : null, onclick:function () { if (!perfDisabled) { activePeriod = "performance"; render(); } } }, [txt("Performance Period" + (w.gate ? " - " + w.gate.name : ""))]);
+    tabs.appendChild(fTab);
+    card.appendChild(tabs);
+
+    var period = (activePeriod === "practice" && hasPractice) ? w.practice : w.performance;
+    var isPractice = (activePeriod === "practice" && hasPractice);
+    var doneFlag = isPractice ? wstate.practiceDone : wstate.performanceDone;
+    var dataStore = isPractice ? wstate.practiceData : wstate.performanceData;
+
+    card.appendChild(el("div", { class:"weeksub" }, [txt(period.title + (doneFlag ? " - submitted" : ""))]));
+
+    period.blocks.forEach(function (b) { card.appendChild(renderBlock(b, dataStore, doneFlag)); });
+
+    var nav = el("div", { class:"modal-nav" });
+    nav.appendChild(el("button", { class:"btn-ghost", onclick:closeModal }, [txt("Close")]));
+    if (!doneFlag) {
+      var submitBtn = el("button", { class:"btn-accent", onclick:function () {
+        if (isPractice) { wstate.practiceDone = true; }
+        else {
+          wstate.performanceDone = true;
+          if (w.id === 15) { state.certIssued = true; state.certDate = new Date().toISOString().slice(0,10); }
+        }
+        saveState();
+        celebrate(!!w.gate && !isPractice);
+        if (isPractice) { activePeriod = "performance"; render(); }
+        else { closeModal(); }
+      }}, [txt(isPractice ? "Submit Practice Period →" : (w.gate ? "Submit - Clear " + w.gate.name + " →" : "Submit Performance Period →"))]);
+      nav.appendChild(submitBtn);
+    } else if (!isPractice && w.id === 15) {
+      nav.appendChild(el("button", { class:"btn-gold", onclick:function () { view = "cert"; render(); } }, [txt("View Certificate →")]));
+    }
+    card.appendChild(nav);
+
+    overlay.appendChild(card);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+    setTimeout(function () {
+      var btn = overlay.querySelector("#modalCloseBtn");
+      if (btn) btn.addEventListener("click", closeModal);
+    }, 0);
+    return overlay;
+  }
+
+  /* ---------- Reference modal ---------- */
+  function renderRefModal() {
+    var overlay = el("div", { class:"modal-overlay ref-modal" });
+    var card = el("div", { class:"modal-card" });
+    function closeModal() { overlay.remove(); refModal = null; render(); }
+
+    card.appendChild(el("div", { class:"modal-head" }, [
+      el("div", { class:"eyebrow" }, [txt(refModal === "dossier" ? "CASE FILE · CONFIDENTIAL CLIENT INFORMATION" : "STUDENT AUDITOR TOOLKIT")]),
+      el("button", { class:"modal-close", id:"refCloseBtn" }, [txt("✕")])
+    ]));
+
+    if (refModal === "dossier") {
+      card.appendChild(el("h2", {}, [txt("Precision Auto-Components Pvt. Ltd. (PAC)")]));
+      var s1 = el("div", { class:"ref-section" });
+      s1.appendChild(el("h3", {}, [txt("§1 Company Profile")]));
+      s1.appendChild(el("p", { class:"mini" }, [txt(DOSSIER.profile)]));
+      s1.appendChild(el("h3", {}, [txt("§2 Quality Policy")]));
+      s1.appendChild(el("p", { class:"mini" }, [txt(DOSSIER.policy)]));
+      card.appendChild(s1);
+
+      function mkTable(title, head, rows) {
+        var sec = el("div", { class:"ref-section" });
+        sec.appendChild(el("h3", {}, [txt(title)]));
+        var t = el("table");
+        t.appendChild(el("tr", {}, head.map(function (h) { return el("th", {}, [txt(h)]); })));
+        rows.forEach(function (r) { t.appendChild(el("tr", {}, r.map(function (c) { return el("td", {}, [txt(c)]); }))); });
+        sec.appendChild(t);
+        return sec;
+      }
+      card.appendChild(mkTable("§3 Quality Objectives 2026", ["#","Objective","Target","Owner"], DOSSIER.objectives));
+      card.appendChild(mkTable("§4 Documented Information Index", ["Doc ID","Title","Rev. per index","Rev. of copy provided"], DOSSIER.docIndex));
+      var s5 = el("div", { class:"ref-section" });
+      s5.appendChild(el("h3", {}, [txt("§5 Procedure Extracts")]));
+      DOSSIER.procedures.forEach(function (p) { s5.appendChild(el("p", { class:"mini" }, [txt(p)])); });
+      card.appendChild(s5);
+      card.appendChild(mkTable("§6 Approved Supplier List (ASL-2026 Rev.1)", ["Supplier","Item","Rating Q1-26","Approved since"], DOSSIER.asl));
+      card.appendChild(mkTable("§6 PO Register Q1–Q2 2026", ["Supplier","POs","% of purchase value"], DOSSIER.poRegister));
+      var s7 = el("div", { class:"ref-section" });
+      s7.appendChild(el("h3", {}, [txt("§7 Final Inspection")]));
+      s7.appendChild(el("p", { class:"mini" }, [txt(DOSSIER.fir)]));
+      card.appendChild(s7);
+      card.appendChild(mkTable("§7 Calibration Register", ["Equipment ID","Description","Last calibrated","Due"], DOSSIER.calibration));
+      var s8 = el("div", { class:"ref-section" });
+      s8.appendChild(el("h3", {}, [txt("§8 Welding Section")]));
+      s8.appendChild(el("p", { class:"mini" }, [txt(DOSSIER.welding)]));
+      card.appendChild(s8);
+      card.appendChild(mkTable("§9 CAPA Log 2026", ["CAPA #","Source","Description","Root cause","Action","Status"], DOSSIER.capa));
+      var s10 = el("div", { class:"ref-section" });
+      s10.appendChild(el("h3", {}, [txt("§10 Management Review + §11 Audit Programme")]));
+      s10.appendChild(el("p", { class:"mini" }, [txt(DOSSIER.mgmtReview)]));
+      s10.appendChild(el("p", { class:"mini" }, [txt(DOSSIER.auditProgramme)]));
+      card.appendChild(s10);
+      card.appendChild(mkTable("§12 Process FMEA - CNC Turning OS-311", ["Failure mode","Effect","S","Cause","O","Controls","D","RPN","Recommended action"], DOSSIER.fmea));
+      card.appendChild(mkTable("§13 Maintenance / OEE - Machine M-4 (June 2026)", ["Date","Planned (hr)","Downtime (hr)","Operating (hr)","Availability"], DOSSIER.oee));
+    } else {
+      card.appendChild(el("h2", {}, [txt("Templates T-1 to T-13 + Field Guide")]));
+      var tsec = el("div", { class:"ref-section" });
+      var tt = el("table");
+      tt.appendChild(el("tr", {}, ["Template","Purpose","First used"].map(function (h) { return el("th", {}, [txt(h)]); })));
+      TOOLKIT.forEach(function (row) {
+        tt.appendChild(el("tr", {}, [el("td", {}, [txt(row[0])]), el("td", {}, [txt(row[1] + " " + row[2])]), el("td", {}, [txt(row[3])])]));
+      });
+      tsec.appendChild(tt);
+      card.appendChild(tsec);
+      var fsec = el("div", { class:"ref-section" });
+      fsec.appendChild(el("h3", {}, [txt("Field Guide - Ten Habits of Auditors Who Get Hired")]));
+      var ol = el("ol", { class:"mini" });
+      FIELD_GUIDE.forEach(function (h) { ol.appendChild(el("li", {}, [txt(h)])); });
+      fsec.appendChild(ol);
+      card.appendChild(fsec);
+    }
+
+    var nav = el("div", { class:"modal-nav" });
+    nav.appendChild(el("button", { class:"btn-ghost", onclick:closeModal }, [txt("Close")]));
+    card.appendChild(nav);
+
+    overlay.appendChild(card);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+    setTimeout(function () {
+      var btn = overlay.querySelector("#refCloseBtn");
+      if (btn) btn.addEventListener("click", closeModal);
+    }, 0);
+    return overlay;
+  }
+
+  /* ---------- Certificate ---------- */
+  function buildCertificateText() {
+    var lines = [];
+    lines.push("CERTIFICATE OF COMPLETION");
+    lines.push("Certified Quality Systems Auditor - I (CQSA-I)");
+    lines.push("");
+    lines.push("This certifies that");
+    lines.push(state.name + " (" + state.roll + ")");
+    lines.push("has successfully completed all 15 weeks and cleared Gates 1, 2, 3, 4a and 4b");
+    lines.push("of the QE3001 Quality Management Systems & Auditing practicum,");
+    lines.push("conducted on the case company Precision Auto-Components Pvt. Ltd. (PAC).");
+    lines.push("");
+    lines.push("Date of completion: " + (state.certDate || ""));
+    lines.push("Programme Instructor: R. Saranraj");
+    lines.push("");
+    lines.push("Gates cleared: Gate 1 – Clause Mastery & Documentation Review · Gate 2 – Desk Audit Findings · Gate 3 – Plan-Defence Viva · Gate 4a – Comprehensive Written Exam · Gate 4b – Certification Viva");
+    return lines.join("\n");
+  }
+
+  function renderCertificate() {
+    var wrap = el("div", { style:"display:flex;flex-direction:column;flex:1;" });
+    wrap.appendChild(el("div", { class:"topbar" }, [
+      el("div", { class:"brand" }, [el("span", { class:"mark" }, [txt("🎓 CQSA-I")]), el("span", { class:"tag" }, [txt("Certificate")])]),
+      el("button", { class:"btn-tab", onclick:function () { view = "journey"; render(); } }, [txt("← Back to Journey")])
+    ]));
+
+    var screen = el("div", { class:"cert-screen" });
+    var sheet = el("div", { class:"cert-sheet" });
+    sheet.appendChild(el("div", { class:"cert-eyebrow" }, [txt("QE3001 · CQSA-I Programme")]));
+    sheet.appendChild(el("h1", {}, [txt("Certificate of Completion")]));
+    sheet.appendChild(el("div", { class:"cert-sub" }, [txt("Certified Quality Systems Auditor - I")]));
+    sheet.appendChild(el("div", {}, [txt("This certifies that")]));
+    sheet.appendChild(el("div", { class:"cert-name" }, [txt(state.name)]));
+    sheet.appendChild(el("div", { class:"cert-roll mono" }, [txt(state.roll)]));
+    sheet.appendChild(el("div", { class:"cert-body" }, [txt("has successfully completed all 15 weeks and cleared every certification Gate of the audit practicum conducted on the case company Precision Auto-Components Pvt. Ltd., demonstrating competence in desk auditing, audit planning, on-site execution, findings reporting and CAPA verification.")]));
+
+    var gatesRow = el("div", { class:"cert-gates" });
+    ["Gate 1", "Gate 2", "Gate 3", "Gate 4a", "Gate 4b"].forEach(function (g) { gatesRow.appendChild(el("span", { class:"cert-gate-chip" }, [txt("✓ " + g)])); });
+    sheet.appendChild(gatesRow);
+
+    sheet.appendChild(el("div", { class:"cert-foot" }, [
+      el("div", { class:"cert-sig" }, [el("div", { class:"line" }, [txt("R. Saranraj, Programme Instructor")])]),
+      el("div", { class:"cert-date" }, [txt("Date of completion"), el("div", { class:"mono" }, [txt(state.certDate || "")])])
+    ]));
+
+    var status = el("div", { class:"cert-status" });
+    var actions = el("div", { class:"cert-actions" }, [
+      el("button", { class:"btn-gold", onclick:function () { downloadCertificate(status); } }, [txt("⬇ Download Certificate")]),
+      el("button", { class:"btn-ghost", onclick:function () { exportPortfolio(); } }, [txt("⬇ Export Full Portfolio")])
+    ]);
+    sheet.appendChild(actions);
+    sheet.appendChild(status);
+
+    screen.appendChild(sheet);
+    wrap.appendChild(screen);
+    return wrap;
+  }
+
+  function downloadCertificate(statusEl) {
+    var text = buildCertificateText();
+    var filename = "CQSA-I-Certificate-" + state.roll + ".txt";
+    if (window.claude && window.claude.downloads && window.claude.downloads.save) {
+      window.claude.downloads.save({ filename: filename, data: text }).then(function () {
+        statusEl.textContent = "Downloaded " + filename;
+        statusEl.className = "cert-status ok";
+      }).catch(function (err) {
+        statusEl.textContent = "Download unavailable here (" + ((err && err.code) || "unknown") + ") - copy the text below.";
+        statusEl.className = "cert-status err";
+        showCopyFallback(statusEl, text);
+      });
+    } else {
+      showCopyFallback(statusEl, text);
+    }
+  }
+  function showCopyFallback(statusEl, text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.width = "100%";
+    ta.style.minHeight = "160px";
+    ta.style.marginTop = "10px";
+    ta.style.fontFamily = "Consolas, monospace";
+    ta.style.fontSize = "0.78rem";
+    statusEl.parentNode.appendChild(ta);
+  }
+
+  function exportPortfolio() {
+    var lines = [];
+    lines.push("QE3001 CQSA-I - CERTIFICATION PORTFOLIO");
+    lines.push(state.name + " (" + state.roll + ")");
+    lines.push("Weeks complete: " + weeksDoneCount() + "/15 · Gates cleared: " + gatesClearedCount() + "/5");
+    lines.push("");
+    WEEKS.forEach(function (w) {
+      var wstate = state.weeks[w.id];
+      lines.push("========================================");
+      lines.push("WEEK " + w.id + " - " + w.concept + (w.gate ? " [" + w.gate.name + "]" : ""));
+      lines.push("========================================");
+      if (w.practice) {
+        lines.push("-- Practice Period: " + w.practice.title + " -- " + (wstate.practiceDone ? "SUBMITTED" : "not submitted"));
+        lines.push(JSON.stringify(wstate.practiceData, null, 2));
+      }
+      lines.push("-- Performance Period: " + w.performance.title + " -- " + (wstate.performanceDone ? "SUBMITTED" : "not submitted"));
+      lines.push(JSON.stringify(wstate.performanceData, null, 2));
+      lines.push("");
+    });
+    var text = lines.join("\n");
+    var filename = "CQSA-I-Portfolio-" + state.roll + ".txt";
+    if (window.claude && window.claude.downloads && window.claude.downloads.save) {
+      window.claude.downloads.save({ filename: filename, data: text }).catch(function () {});
+    }
+  }
+
+  /* ---------- celebration (lightweight, reused pattern) ---------- */
+  var CONFETTI_COLORS = ["#14497A", "#B8860B", "#2E7D5B", "#A63D4F", "#DCCEA0"];
+  function fireConfetti(big) {
+    var canvas = document.createElement("canvas");
+    canvas.style.position = "fixed"; canvas.style.inset = "0"; canvas.style.pointerEvents = "none"; canvas.style.zIndex = "9999";
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext("2d");
+    var particles = [];
+    var n = big ? 140 : 70;
+    for (var i = 0; i < n; i++) {
+      var fromLeft = i % 2 === 0;
+      particles.push({
+        x: fromLeft ? 0 : canvas.width, y: canvas.height,
+        vx: (fromLeft ? 1 : -1) * (Math.random() * 6 + 3), vy: -(Math.random() * 10 + 8),
+        size: Math.random() * 5 + 3, color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+        rot: Math.random() * 360, vr: (Math.random() - 0.5) * 12, life: 0, maxLife: big ? 2.6 : 1.7
+      });
+    }
+    var start = null;
+    function frame(ts) {
+      if (!start) start = ts;
+      var dt = 0.016;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var alive = false;
+      particles.forEach(function (p) {
+        p.life += dt;
+        if (p.life > p.maxLife) return;
+        alive = true;
+        p.vy += 22 * dt; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI / 180);
+        ctx.globalAlpha = Math.max(0, 1 - p.life / p.maxLife);
+        ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+      });
+      if (alive) requestAnimationFrame(frame); else canvas.remove();
+    }
+    requestAnimationFrame(frame);
+  }
+  function playBellStrike(ctx, freq, startTime, sizeScale) {
+    var ratios = [1.0, 2.0, 2.76, 4.07, 5.4];
+    var decays = [1.6, 1.1, 0.9, 0.6, 0.4];
+    ratios.forEach(function (r, idx) {
+      var osc = ctx.createOscillator(); var gain = ctx.createGain();
+      osc.type = "sine"; osc.frequency.value = freq * r;
+      var peak = (0.18 / (idx + 1)) * sizeScale;
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(peak, startTime + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + decays[idx] * sizeScale);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(startTime); osc.stop(startTime + decays[idx] * sizeScale + 0.1);
+    });
+  }
+  function playChime(big) {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      var ctx = new Ctx();
+      if (big) { [523.25, 659.25, 783.99].forEach(function (f, i) { playBellStrike(ctx, f, ctx.currentTime + i * 0.16, 1.3); }); }
+      else { playBellStrike(ctx, 659.25, ctx.currentTime, 0.9); }
+    } catch (e) {}
+  }
+  function celebrate(big) { fireConfetti(big); playChime(big); }
+
+  /* ---------- boot ---------- */
+  render();
+})();
+</script>

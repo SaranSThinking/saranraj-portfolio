@@ -1,0 +1,1317 @@
+<meta charset="utf-8" />
+<title>PROJECT WSD - DOIE - Work System Design Laboratory Floor Plan</title>
+<style>
+  :root {
+    --bg: #F5F1E8;
+    --surface: #FFFFFF;
+    --surface-2: #EBE4D3;
+    --border: #D4C9AC;
+    --ink: #1B2B3A;
+    --ink-muted: #5C6B7A;
+    --accent: #B5652D;
+    --accent-ink: #FFFFFF;
+    --accent-2: #2E7D6B;
+    --gold: #C9A227;
+    --violet: #5B4B8A;
+    --danger: #B23A48;
+    --lock: #D8CFB8;
+    --line: #D4C9AC;
+    --shadow: 0 8px 24px rgba(27,43,58,0.1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E2439; --surface: #16324D; --surface-2: #1D3E5C; --border: #2E5478;
+      --ink: #E8F1F8; --ink-muted: #9FB8CC; --accent: #E08A3E; --accent-ink: #0E2439;
+      --accent-2: #4FD8B8; --gold: #E8C547; --violet: #A78BDB; --danger: #F0768A;
+      --lock: #2E4A63; --line: #2E5478; --shadow: 0 8px 28px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E2439; --surface: #16324D; --surface-2: #1D3E5C; --border: #2E5478;
+    --ink: #E8F1F8; --ink-muted: #9FB8CC; --accent: #E08A3E; --accent-ink: #0E2439;
+    --accent-2: #4FD8B8; --gold: #E8C547; --violet: #A78BDB; --danger: #F0768A;
+    --lock: #2E4A63; --line: #2E5478; --shadow: 0 8px 28px rgba(0,0,0,0.45);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, .display { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; text-wrap: balance; font-weight: 400; letter-spacing: 0.2px; }
+  .mono, .stat { font-family: Consolas, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; color: var(--ink-muted); font-weight: 600; }
+  button { font-family: inherit; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
+
+  #app { min-height: 100vh; display: flex; flex-direction: column; }
+
+  .login-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 20px; position: relative; overflow: hidden; }
+  .login-screen::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 36px 36px; opacity: 0.35; pointer-events: none;
+  }
+  .login-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; box-shadow: var(--shadow); padding: 40px 36px; max-width: 460px; width: 100%; }
+  .login-card .eyebrow { margin-bottom: 10px; }
+  .login-card h1 { font-size: 1.85rem; margin: 0 0 8px; }
+  .login-card p.sub { color: var(--ink-muted); margin: 0 0 28px; line-height: 1.55; font-size: 0.94rem; }
+  .field-label { display: block; font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 6px; font-weight: 600; }
+  .login-card input { width: 100%; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; color: var(--ink); font-size: 1rem; margin-bottom: 18px; }
+  .login-card input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--accent); color: var(--accent-ink); border: none; padding: 13px 22px; border-radius: 3px; font-size: 0.95rem; font-weight: 600; cursor: pointer; width: 100%; transition: filter 0.15s ease, transform 0.15s ease; }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+  .login-foot { margin-top: 16px; font-size: 0.78rem; color: var(--ink-muted); text-align: center; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; border-bottom: 1px solid var(--border); background: var(--surface); gap: 16px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .mark { font-family: Georgia, serif; font-size: 1.2rem; letter-spacing: 0.02em; }
+  .brand .tag { font-size: 0.78rem; color: var(--ink-muted); }
+  .hud { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .hud-stat { display: flex; flex-direction: column; align-items: flex-end; }
+  .hud-stat .num { font-size: 1.05rem; font-weight: 700; color: var(--accent); }
+  .hud-stat .lbl { font-size: 0.68rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hud-name { font-size: 0.85rem; color: var(--ink-muted); }
+  .hud-name b { color: var(--ink); }
+  .fx-toggle { background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-muted); width: 34px; height: 34px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease, border-color 0.15s ease; }
+  .fx-toggle:hover { border-color: var(--accent); transform: scale(1.06); }
+  .fx-toggle[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+  .link-btn { background: none; border: none; color: var(--ink-muted); font-size: 0.82rem; cursor: pointer; padding: 4px 0; }
+  .link-btn:hover { color: var(--accent); }
+
+  .atlas-wrap { flex: 1; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr); gap: 0; }
+  .atlas-main { padding: 28px 28px 60px; overflow-x: auto; }
+  .atlas-main h2 { font-size: 1.5rem; margin: 0 0 4px; }
+  .atlas-main .sub { color: var(--ink-muted); font-size: 0.92rem; margin: 0 0 24px; max-width: 62ch; line-height: 1.6; }
+  .map-svg { width: 100%; height: auto; min-width: 560px; }
+  .map-line { stroke: var(--line); stroke-width: 2; stroke-dasharray: 5 4; fill: none; }
+  .map-line.done { stroke: var(--accent-2); stroke-dasharray: none; }
+  .node-group { cursor: pointer; }
+  .node-group:focus-visible rect.node-ring { outline: 2px solid var(--ink); }
+  .node-ring { fill: var(--surface); stroke: var(--lock); stroke-width: 2.5; transition: stroke 0.2s ease, fill 0.2s ease; }
+  .node-group.active .node-ring { stroke: var(--accent); animation: pulse 2.2s ease-in-out infinite; }
+  .node-group.done .node-ring { stroke: var(--accent-2); fill: var(--accent-2); }
+  .node-group.locked .node-ring { stroke: var(--lock); }
+  @keyframes pulse { 0%, 100% { filter: drop-shadow(0 0 0 rgba(224,138,62,0)); } 50% { filter: drop-shadow(0 0 7px var(--accent)); } }
+  .node-icon { font-size: 18px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .node-group.locked .node-icon { opacity: 0.45; }
+  .node-label { font-size: 11.5px; text-anchor: middle; fill: var(--ink); font-family: "Segoe UI", sans-serif; pointer-events: none; }
+  .node-num { font-size: 9px; text-anchor: middle; fill: var(--ink-muted); font-family: Consolas, monospace; letter-spacing: 0.04em; pointer-events: none; }
+
+  .side-panel { border-left: 1px solid var(--border); background: var(--surface); padding: 26px 24px; display: flex; flex-direction: column; gap: 22px; }
+  .progress-block .eyebrow { margin-bottom: 10px; }
+  .progress-bar-track { height: 8px; background: var(--surface-2); border-radius: 5px; overflow: hidden; margin-bottom: 8px; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 5px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+  .progress-count { font-size: 0.8rem; color: var(--ink-muted); }
+  .proofs-list { display: flex; flex-direction: column; gap: 10px; }
+  .proof-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; background: var(--surface-2); border-radius: 3px; border: 1px solid var(--border); opacity: 0.4; }
+  .proof-row.earned { opacity: 1; }
+  .proof-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+  .proof-name { font-size: 0.82rem; }
+  .proof-name .sub { display: block; font-size: 0.7rem; color: var(--ink-muted); }
+  .how-block { background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 16px; }
+  .how-block h3 { font-size: 0.9rem; margin: 0 0 8px; }
+  .how-block p { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.6; margin: 0; }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(14,36,57,0.55); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 50; }
+  .modal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 5px; box-shadow: var(--shadow); max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 30px 32px 28px; }
+  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+  .modal-head .eyebrow { color: var(--accent); }
+  .modal-close { background: none; border: none; color: var(--ink-muted); font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 4px; }
+  .modal-close:hover { color: var(--ink); }
+  .modal-card h2 { font-size: 1.28rem; margin: 4px 0 16px; }
+  .scenario-box { background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: 0 3px 3px 0; padding: 14px 16px; font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px; }
+  .industry-note { background: color-mix(in srgb, var(--gold) 14%, var(--surface)); border: 1px dashed var(--gold); border-radius: 3px; padding: 10px 14px; font-size: 0.82rem; line-height: 1.55; margin-bottom: 18px; }
+  .industry-note b.tag { color: var(--gold); }
+  .step-label { font-size: 0.78rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 6px; }
+  .option-btn { text-align: left; background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; padding: 12px 14px; font-size: 0.88rem; line-height: 1.5; color: var(--ink); cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; }
+  .option-btn:hover { border-color: var(--accent); }
+  .option-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .option-btn.correct { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 16%, var(--surface-2)); }
+  .option-btn.wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, var(--surface-2)); }
+  .option-letter { font-family: Consolas, monospace; font-weight: 700; margin-right: 8px; color: var(--ink-muted); }
+  .hint-box { display: flex; gap: 10px; align-items: flex-start; background: color-mix(in srgb, var(--danger) 10%, var(--surface)); border: 1px solid var(--danger); border-radius: 3px; padding: 12px 14px; margin-top: 14px; font-size: 0.85rem; line-height: 1.55; }
+  .hint-box .tag { font-weight: 700; color: var(--danger); flex-shrink: 0; }
+  .concept-reveal { margin-top: 22px; background: color-mix(in srgb, var(--accent-2) 10%, var(--surface)); border: 1px solid var(--accent-2); border-radius: 4px; padding: 18px 20px; }
+  .concept-reveal .eyebrow { color: var(--accent-2); margin-bottom: 8px; }
+  .concept-reveal h3 { font-size: 1.05rem; margin: 0 0 10px; }
+  .concept-reveal p, .concept-reveal li { font-size: 0.87rem; line-height: 1.65; color: var(--ink); }
+  .concept-reveal .xp-line { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .xp-badge { font-size: 0.85rem; font-weight: 700; color: var(--accent-2); }
+  .step-nav { display: flex; justify-content: flex-end; margin-top: 18px; gap: 10px; }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--ink-muted); padding: 10px 16px; border-radius: 3px; font-size: 0.85rem; cursor: pointer; }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink-muted); }
+
+  /* calc / sim widgets */
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .calc-field { background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; padding: 10px 12px; }
+  .calc-field .k { font-size: 0.72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .calc-field .v { font-size: 1.05rem; font-weight: 700; font-family: Consolas, monospace; }
+  .calc-input-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 6px; }
+  .calc-input-row .col { flex: 1; min-width: 200px; }
+  .calc-input-row input[type="number"], .calc-input-row input[type="text"] {
+    width: 100%; padding: 11px 13px; background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 3px; color: var(--ink); font-size: 1rem; font-family: Consolas, monospace;
+  }
+  .calc-input-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .calc-result { margin-top: 14px; padding: 12px 14px; border-radius: 3px; font-size: 0.87rem; }
+  .calc-result.ok { background: color-mix(in srgb, var(--accent-2) 14%, var(--surface)); border: 1px solid var(--accent-2); color: var(--ink); }
+  .calc-result.bad { background: color-mix(in srgb, var(--danger) 12%, var(--surface)); border: 1px solid var(--danger); color: var(--ink); }
+  .sim-bars { display: flex; gap: 3px; align-items: flex-end; height: 60px; margin: 14px 0; padding: 8px; background: var(--surface-2); border-radius: 3px; border: 1px solid var(--border); overflow-x: auto; }
+  .sim-bar { width: 6px; flex-shrink: 0; border-radius: 1px 1px 0 0; }
+  .sim-bar.working { background: var(--accent-2); }
+  .sim-bar.idle { background: var(--lock); }
+  .sim-readout { display: flex; gap: 22px; flex-wrap: wrap; margin: 10px 0 16px; }
+  .sim-readout .item .k { font-size: 0.72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .sim-readout .item .v { font-size: 1.3rem; font-weight: 700; font-family: Consolas, monospace; color: var(--accent); }
+
+  .complete-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 20px; }
+  .complete-card { max-width: 560px; width: 100%; text-align: center; background: var(--surface); border: 1px solid var(--accent-2); border-radius: 5px; box-shadow: var(--shadow); padding: 44px 36px; }
+  .complete-card .eyebrow { color: var(--accent-2); justify-content: center; display: block; margin-bottom: 10px; }
+  .complete-card h1 { font-size: 2rem; margin: 0 0 14px; }
+  .complete-card p.sub { color: var(--ink-muted); line-height: 1.6; margin: 0 0 26px; }
+  .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 28px; }
+  .badge-grid .proof-row { flex-direction: column; text-align: center; opacity: 1; padding: 12px 6px; }
+  .badge-grid .proof-icon { font-size: 1.5rem; width: auto; }
+  .badge-grid .proof-name { font-size: 0.68rem; }
+  .cta-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+  .btn-capstone { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: var(--accent-ink); border: none; padding: 15px 22px; border-radius: 3px; font-size: 0.98rem; font-weight: 700; cursor: pointer; width: 100%; transition: filter 0.15s ease, transform 0.15s ease; }
+  .btn-capstone:hover { filter: brightness(1.06); }
+  .btn-capstone:active { transform: scale(0.98); }
+
+  .studio-wrap { flex: 1; padding: 30px 28px 70px; max-width: 900px; margin: 0 auto; width: 100%; }
+  .studio-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 10px; }
+  .brief-card { background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 24px 26px; margin-bottom: 26px; box-shadow: var(--shadow); }
+  .brief-card .eyebrow { color: var(--accent); margin-bottom: 8px; }
+  .brief-card h1 { font-size: 1.55rem; margin: 0 0 12px; }
+  .brief-card p { font-size: 0.92rem; line-height: 1.65; color: var(--ink); margin: 0 0 10px; }
+  .brief-card p:last-child { margin-bottom: 0; }
+  .milestone-card { background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 20px 24px; margin-bottom: 16px; }
+  .milestone-card.locked { opacity: 0.5; }
+  .milestone-card.done { border-color: var(--accent-2); }
+  .milestone-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .milestone-head .eyebrow { margin-bottom: 4px; }
+  .milestone-head h2 { font-size: 1.1rem; margin: 0; }
+  .milestone-done-badge { font-size: 0.76rem; font-weight: 700; color: var(--accent-2); white-space: nowrap; padding-top: 4px; }
+  .milestone-lock-note { font-size: 0.82rem; color: var(--ink-muted); margin-top: 4px; }
+  .milestone-goal { font-size: 0.9rem; line-height: 1.6; margin: 10px 0 10px; }
+  .milestone-why { background: var(--surface-2); border-left: 3px solid var(--accent-2); border-radius: 0 3px 3px 0; padding: 10px 14px; font-size: 0.84rem; line-height: 1.6; color: var(--ink); margin-bottom: 14px; }
+  .milestone-why b.tag { color: var(--accent-2); }
+  .checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .check-row { display: flex; align-items: flex-start; gap: 9px; font-size: 0.87rem; line-height: 1.5; cursor: pointer; }
+  .check-row input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--accent-2); flex-shrink: 0; cursor: pointer; }
+  .check-row.checked span { color: var(--ink-muted); text-decoration: line-through; text-decoration-color: var(--accent-2); }
+  .guidance-box { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: 1px solid var(--accent); border-radius: 3px; padding: 10px 14px; font-size: 0.83rem; line-height: 1.6; margin-bottom: 14px; }
+  .guidance-box b.tag { color: var(--accent); }
+  .reflect-label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .reflect-box { width: 100%; min-height: 90px; padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; color: var(--ink); font-size: 0.87rem; font-family: inherit; line-height: 1.55; resize: vertical; margin-bottom: 6px; }
+  .reflect-box:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .portfolio-tip { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 14px; }
+  .portfolio-tip b.tag { color: var(--ink); }
+  .milestone-actions { display: flex; justify-content: flex-end; }
+  .packet-card { background: var(--surface); border: 1px solid var(--accent-2); border-radius: 5px; padding: 24px 26px; margin-top: 6px; }
+  .packet-card h2 { font-size: 1.2rem; margin: 0 0 8px; }
+  .packet-card .eyebrow { color: var(--accent-2); margin-bottom: 8px; }
+  .packet-preview { width: 100%; min-height: 220px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; padding: 12px 14px; font-family: Consolas, monospace; font-size: 0.78rem; line-height: 1.5; color: var(--ink); margin: 14px 0; white-space: pre-wrap; }
+  .packet-status { font-size: 0.8rem; margin-top: 10px; color: var(--ink-muted); }
+  .packet-status.err { color: var(--danger); }
+  .packet-status.ok { color: var(--accent-2); }
+
+  /* chart-building / rating-worksheet widgets */
+  .chart-hands-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 6px; }
+  @media (max-width: 560px) { .chart-hands-wrap { grid-template-columns: 1fr; } }
+  .chart-hand-label { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .chart-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .chart-step-row { background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; padding: 10px 12px; transition: border-color 0.15s ease; }
+  .chart-step-row.correct { border-color: var(--accent-2); }
+  .chart-step-row.wrong { border-color: var(--danger); }
+  .chart-step-desc { font-size: 0.86rem; line-height: 1.5; margin-bottom: 8px; }
+  .symbol-btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .symbol-btn {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
+    padding: 6px 11px; font-size: 0.85rem; cursor: pointer; color: var(--ink);
+    display: inline-flex; align-items: center; gap: 6px; transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .symbol-btn .sym { font-family: Consolas, monospace; font-weight: 700; font-size: 1rem; }
+  .symbol-btn:hover { border-color: var(--accent); }
+  .symbol-btn.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); font-weight: 600; }
+  .chart-step-row.correct .symbol-btn.selected { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 16%, var(--surface)); }
+  .chart-step-row.wrong .symbol-btn.selected { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, var(--surface)); }
+  .symbol-key { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 14px; line-height: 1.7; }
+  .symbol-key .sym { font-family: Consolas, monospace; font-weight: 700; color: var(--ink); margin-right: 3px; }
+
+  .rate-factor-row { background: var(--surface-2); border: 1px solid var(--border); border-radius: 3px; padding: 12px 14px; margin-bottom: 10px; transition: border-color 0.15s ease; }
+  .rate-factor-row.correct { border-color: var(--accent-2); }
+  .rate-factor-row.wrong { border-color: var(--danger); }
+  .rate-factor-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+  .rate-factor-desc { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 8px; }
+  .level-btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .level-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 6px 12px; font-size: 0.82rem; cursor: pointer; color: var(--ink); transition: border-color 0.15s ease, background 0.15s ease; }
+  .level-btn:hover { border-color: var(--accent); }
+  .level-btn.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); font-weight: 600; }
+  .rate-factor-row.correct .level-btn.selected { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 16%, var(--surface)); }
+  .rate-factor-row.wrong .level-btn.selected { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, var(--surface)); }
+
+  @media (max-width: 860px) {
+    .atlas-wrap { grid-template-columns: 1fr; }
+    .side-panel { border-left: none; border-top: 1px solid var(--border); }
+    .badge-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<div id="app"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_PREFIX = "wsd_lab_state_v2_";
+  var LAST_ROLL_KEY = "wsd_lab_last_roll_v2";
+
+  /* SAMPLE DATA - replace with the real IE23901 lab roster before real classroom use. */
+  /* ME23C04 - B.E Industrial Engineering, Sem 2, Work System Design Laboratory (CEG). */
+  var ROSTER = [
+    { roll: "2024108048", name: "Prannav R" },
+    { roll: "2025108001", name: "Mithra M S" },
+    { roll: "2025108002", name: "Iyyanar S" },
+    { roll: "2025108003", name: "Vinoth Kumar A" },
+    { roll: "2025108004", name: "Jasina M" },
+    { roll: "2025108005", name: "Dharshini K" },
+    { roll: "2025108006", name: "Jeevitha Sri P" },
+    { roll: "2025108007", name: "Prithviraj S" },
+    { roll: "2025108008", name: "Jaganath A U" },
+    { roll: "2025108009", name: "Dhareen Ram L" },
+    { roll: "2025108010", name: "Akshara B" },
+    { roll: "2025108011", name: "Pranavnatesh MN" },
+    { roll: "2025108012", name: "Akash S" },
+    { roll: "2025108013", name: "Vidhya P" },
+    { roll: "2025108014", name: "Bhavana S" },
+    { roll: "2025108015", name: "Yazhisai K" },
+    { roll: "2025108016", name: "Kowsik E S" },
+    { roll: "2025108018", name: "Muthukaruppasamy S" },
+    { roll: "2025108019", name: "Velan V S" },
+    { roll: "2025108020", name: "Tharunkumar M" },
+    { roll: "2025108022", name: "Shakthivishnu J" },
+    { roll: "2025108023", name: "Jefrin Samraj J" },
+    { roll: "2025108024", name: "Viknesh M" },
+    { roll: "2025108025", name: "Yamuna S" },
+    { roll: "2025108026", name: "Vignesh N" },
+    { roll: "2025108027", name: "Senthamizh Arasi A" },
+    { roll: "2025108028", name: "Yuvarani S" },
+    { roll: "2025108029", name: "Navarasu C" },
+    { roll: "2025108030", name: "Surya M" },
+    { roll: "2025108031", name: "Dharani K G" },
+    { roll: "2025108032", name: "Afrin K" },
+    { roll: "2025108033", name: "Shanmugasundharam R" },
+    { roll: "2025108034", name: "Balaji G" },
+    { roll: "2025108035", name: "Pradeepa T" },
+    { roll: "2025108036", name: "Kavipriya K" },
+    { roll: "2025108037", name: "Punith P" },
+    { roll: "2025108038", name: "Sarvesh L" },
+    { roll: "2025108039", name: "Rohit S" },
+    { roll: "2025108040", name: "Jayasree R" },
+    { roll: "2025108041", name: "Elavarasi V" },
+    { roll: "2025108042", name: "Deepthi Nakshathra S" },
+    { roll: "2025108043", name: "Dharani S" },
+    { roll: "2025108044", name: "Swathi V" },
+    { roll: "2025108045", name: "Sakthipriyan N J" },
+    { roll: "2025108046", name: "Jeeva M" },
+    { roll: "2025108047", name: "Srikannan T" },
+    { roll: "2025108048", name: "Raghav Karthick M" },
+    { roll: "2025108049", name: "John Jackson J" },
+    { roll: "2025108050", name: "Vaishnav M" },
+    { roll: "2025108051", name: "Mohamed Shaariq Hussain S" },
+    { roll: "2025108052", name: "Naveen Balaji S S" },
+    { roll: "2025108053", name: "Afrina A" },
+    { roll: "2025108054", name: "Johanna Jovitha" },
+    { roll: "2025108055", name: "Salman Anwar Nalakath" },
+    { roll: "2025108056", name: "Selvendra S" },
+    { roll: "2025108057", name: "Dhiraj H" },
+    { roll: "2025108058", name: "Aishwarya A" },
+    { roll: "2025108059", name: "Charu Latha U" },
+    { roll: "2025108060", name: "Karthikeyan P" },
+    { roll: "2025108061", name: "Hemamalini G" },
+    { roll: "2025108062", name: "Abishek K" },
+    { roll: "2025108063", name: "Aparup Roy" },
+    { roll: "2025108064", name: "S Nidhish" },
+    { roll: "2025108065", name: "Keturah Talia Manoharan" },
+    { roll: "2025108066", name: "Aryan Balaji" },
+    { roll: "2025108067", name: "Maan A" },
+    { roll: "2025108068", name: "Srigayathri K" },
+    { roll: "2025108069", name: "Musku Srikruthi" },
+    { roll: "2025108070", name: "Manisha T" },
+    { roll: "2025108071", name: "Swayampakam Shanmukha Bharadwaz Sharma" },
+    { roll: "2025108072", name: "Yuvaraja K" }
+  ];
+  var CLASS_CODE = "WSD2026";
+
+  function findRosterEntry(roll) {
+    var r = (roll || "").trim().toUpperCase();
+    for (var i = 0; i < ROSTER.length; i++) { if (ROSTER[i].roll.toUpperCase() === r) return ROSTER[i]; }
+    return null;
+  }
+
+  var COMPANY = "Swift Logistics Fulfillment Center";
+
+  /* ---------- 8 official lab experiments, reframed as one real onboarding case study ---------- */
+  var LEVELS = [
+    {
+      id: 1, icon: "📦", title: "Outline Process Chart", module: "Exp 1", type: "chart",
+      scenario: "Management at " + COMPANY + " wants a fast, high-level view of the customer-returns process before funding a detailed study. Build the Outline Process Chart yourself: assign the correct symbol to each of the 5 steps below. An Outline Process Chart uses only 2 symbols - Operation and Inspection.",
+      symbolSet: [ { sym: "○", label: "Operation" }, { sym: "□", label: "Inspection" } ],
+      steps: [
+        { desc: "Package received at the dock", correct: "○" },
+        { desc: "Checked against the return authorisation number", correct: "□" },
+        { desc: "Item unpacked and logged into the system", correct: "○" },
+        { desc: "Condition inspected for visible damage", correct: "□" },
+        { desc: "Item restocked to the shelf", correct: "○" }
+      ],
+      hint: "Ask of each step: is this step DOING/changing something (→ Operation), or CHECKING something against a standard (→ Inspection)?",
+      concept: {
+        h: "Outline Process Chart - the first move on a real project",
+        body: [
+          "An <b>Outline Process Chart</b> records, in sequence, only the main Operations (○) and Inspections (□) - the coarsest, highest-level chart, using just 2 of the 5 standard symbols.",
+          "This is exactly why real operations analysts start almost every improvement project here: it's fast to produce and gives decision-makers the big picture before anyone commits budget to a detailed study.",
+          "<b>Try it for real:</b> sketch an Outline Process Chart (2 symbols only) for a process you can actually observe today - how your mess/canteen serves a meal, or how your library issues a book."
+        ]
+      }
+    },
+    {
+      id: 2, icon: "🔄", title: "Flow Process Chart", module: "Exp 2", type: "chart",
+      scenario: "The Outline Chart from Project 1 flagged the inspection stage as the slow point. Now build the COMPLETE record of what happens to one returned item - a Flow Process Chart (Material type), using all 5 standard symbols - as it moves through receiving and inspection.",
+      symbolSet: [ { sym: "○", label: "Operation" }, { sym: "□", label: "Inspection" }, { sym: "→", label: "Transport" }, { sym: "D", label: "Delay" }, { sym: "▽", label: "Storage" } ],
+      steps: [
+        { desc: "Item arrives at the dock", correct: "○" },
+        { desc: "Waits in the receiving queue", correct: "D" },
+        { desc: "Moved to the inspection area", correct: "→" },
+        { desc: "Inspected for damage", correct: "□" },
+        { desc: "Moved to the restocking area", correct: "→" },
+        { desc: "Placed into shelf storage", correct: "▽" }
+      ],
+      hint: "Is the item being changed/handled (Operation), checked (Inspection), physically moved (Transport), waiting with nothing happening (Delay), or placed under controlled storage (Storage)?",
+      concept: {
+        h: "Flow Process Chart - Man / Material / Equipment",
+        body: [
+          "A <b>Flow Process Chart</b> records a complete, detailed sequence for one subject - worker (Man type), physical item (Material type), or machine (Equipment type) - using all 5 standard symbols: Operation ○, Inspection □, Transport →, Delay D, Storage ▽.",
+          "Never confuse “outline” (overview, 2 symbols) with “flow” (complete detail, 5 symbols, one subject) - this exact distinction is one of the most commonly tested points in Work Study."
+        ]
+      }
+    },
+    {
+      id: 3, icon: "🤲", title: "Two-Handed Process Chart", module: "Exp 3", type: "chart", hands: true,
+      scenario: "Project 2 traced the returned item's journey - now you're at the packing bench itself. Packers seem to fumble: one hand often sits idle while the other reaches across the body for tape. Build the Two-Handed Process Chart: assign a symbol to what EACH hand is doing at each step.",
+      symbolSet: [ { sym: "○", label: "Operation" }, { sym: "→", label: "Transport" }, { sym: "D", label: "Delay" } ],
+      leftSteps: [
+        { desc: "Reach for the tape dispenser", correct: "→" },
+        { desc: "Grasp the tape", correct: "○" },
+        { desc: "Apply tape to seal the box", correct: "○" },
+        { desc: "Return tape dispenser to its spot", correct: "→" }
+      ],
+      rightSteps: [
+        { desc: "Reach for the box", correct: "→" },
+        { desc: "Grasp the box", correct: "○" },
+        { desc: "Hold steady, waiting", correct: "D" },
+        { desc: "Move box to the output area", correct: "→" }
+      ],
+      hint: "For each hand at each step: is it physically moving to/from somewhere (Transport), actively working on something (Operation), or just sitting idle (Delay)?",
+      concept: {
+        h: "Two-Handed Process Chart - diagnosing hand coordination",
+        body: [
+          "Records the left hand's and right hand's activities against each other on a common timeline, using the same 5 symbols adapted to hand-motions - used especially for short, repetitive, cyclic operations like assembly-bench work.",
+          "Look at what you just charted: the Right Hand shows <b>Delay</b> at the exact step where the Left Hand is doing the real work (applying tape) - that idle hand is precisely the kind of waste a Two-Handed Chart is built to expose.",
+          "This chart is the direct diagnostic tool for applying the Principles of Motion Economy: an idle hand, or two hands reaching at different times instead of together, shows up immediately on it."
+        ]
+      }
+    },
+    {
+      id: 4, icon: "⏱️", title: "Performance Rating - Pace", module: "Exp 4", type: "calc",
+      scenario: "You've timed a packing-station operator: they sealed and labelled <b>45 packages</b> in a <b>30-minute</b> observed period. " + COMPANY + "'s documented standard (qualified-worker, 100% pace) rate for this exact task is <b>40 packages per 30 minutes</b>.",
+      note: "Real work-study analysts don't train their rating judgement on classroom card-dealing - they calibrate against documented, known-speed footage of real operators, the same way MTM-certified analysts are trained today. This is that same skill, applied to a real packing-station rate instead.",
+      given: [
+        { k: "Observed output", v: "45 packages / 30 min" },
+        { k: "Standard output", v: "40 packages / 30 min" }
+      ],
+      inputLabel: "This operator's Pace Rating (%)",
+      answer: 112.5, tolerance: 2.5,
+      formulaHint: "Rating % = (Observed rate ÷ Standard rate) × 100 - you don't need the raw times in minutes at all, just the two package counts over the same 30-minute period.",
+      concept: {
+        h: "Pace (Speed) Rating",
+        body: [
+          "<b>Pace Rating</b> judges only the operator's speed of movement - a ratio of observed performance to standard performance, expressed as a percentage.",
+          "Rating % = (Observed rate ÷ Standard rate) × 100. Here: (45 ÷ 40) × 100 = <b>112.5%</b> - this operator is working faster than the standard, qualified-worker pace.",
+          "<b>PR = 100%</b> → average/qualified worker · <b>PR &gt; 100%</b> → faster than standard · <b>PR &lt; 100%</b> → slower than standard."
+        ]
+      }
+    },
+    {
+      id: 5, icon: "🧭", title: "Westinghouse Rating Worksheet", module: "Exp 5", type: "rate",
+      scenario: "You're rating a picker who shows excellent skill and consistency, but is working in a poorly-lit, awkward aisle, at slightly-above-average effort. Fill out the real Westinghouse rating worksheet: assign a level to each of the four factors based on what you observed.",
+      note: "The classic “walking pace” exercise taught rating with a single factor - speed. Real industry rarely stops there - the Westinghouse System is still used today because it captures more than raw speed.",
+      factors: [
+        { name: "Skill", desc: "How practised and capable the operator appears at this task", correct: "Excellent" },
+        { name: "Effort", desc: "How much determination and pace the operator is applying", correct: "Good" },
+        { name: "Conditions", desc: "The physical work environment - lighting, layout, aisle space", correct: "Poor" },
+        { name: "Consistency", desc: "How repeatable the operator's cycle times are, run to run", correct: "Excellent" }
+      ],
+      levels: [ { name: "Poor", pts: -0.08 }, { name: "Fair", pts: -0.04 }, { name: "Average", pts: 0.00 }, { name: "Good", pts: 0.04 }, { name: "Excellent", pts: 0.08 } ],
+      hint: "Re-read the scenario factor by factor: “excellent skill,” “slightly-above-average effort,” “poorly-lit, awkward aisle” (Conditions), “excellent consistency.” Match each phrase to its factor.",
+      concept: {
+        h: "The Westinghouse System - and the other three rating systems",
+        body: [
+          "<b>Westinghouse System</b> rates four factors separately - Skill, Effort, Conditions, Consistency - each as Poor/Fair/Average/Good/Excellent with an illustrative point value, then sums them into one combined Rating Factor: 1 + (sum of points).",
+          "Here: Skill Excellent (+0.08) + Effort Good (+0.04) + Conditions Poor (−0.08) + Consistency Excellent (+0.08) = +0.12 → Rating Factor = <b>1.12 (112%)</b> - this picker is rated above standard overall, even though their environment is working against them.",
+          "The other three systems: <b>Pace Rating</b> (speed only, a ratio of observed to standard). <b>Objective Rating</b> (speed and job difficulty rated separately, combined as R = P × D). <b>Synthetic Rating</b> (compares observed times against Predetermined Motion Time System values, R = P / A - doesn't rely on the analyst's subjective judgement)."
+        ]
+      }
+    },
+    {
+      id: 6, icon: "📐", title: "Standard Time - Packing Task", module: "Exp 6", type: "calc",
+      scenario: "You observed a packing task averaging <b>2.500 min</b> (Observed Time). You've assessed the operator's Performance Rating at <b>95%</b>. " + COMPANY + "'s standard Allowance Factor for this task is <b>15%</b>.",
+      note: "Instead of an artificial peg-board, you're setting a real standard time for a real packing task - exactly the deliverable a work-study analyst hands to production planning.",
+      given: [
+        { k: "Observed Time (OT)", v: "2.500 min" },
+        { k: "Performance Rating", v: "95%" },
+        { k: "Allowance Factor", v: "15%" }
+      ],
+      inputLabel: "Standard Time (minutes, 2 decimal places)",
+      answer: 2.79, tolerance: 0.03,
+      formulaHint: "Work in two steps: first find Normal Time = OT × PR, then apply the allowance: ST = NT / (1 − AF).",
+      concept: {
+        h: "Standard Time, built in layers",
+        body: [
+          "<b>Normal Time (NT)</b> = OT × PR = 2.500 × 0.95 = <b>2.375 min</b> - corrects for this operator's pace vs. a qualified worker at standard performance.",
+          "<b>Standard Time (ST)</b> = NT / (1 − AF) = 2.375 / 0.85 = <b>≈2.79 min</b> - adds back genuine time for rest, fatigue, and personal needs.",
+          "(The equivalent form ST = NT + AF×OT gives a slightly different answer, 2.375 + 0.375 = 2.750, since it applies the allowance to a different base - state which formula you're using in a real report.)"
+        ]
+      }
+    },
+    {
+      id: 7, icon: "🎲", title: "Work Sampling - Monte Carlo", module: "Exp 7", type: "sim",
+      scenario: "You believe a picker is actually working about <b>80% of the time</b> (true utilization = 0.80). Rather than walking the floor for weeks with a clipboard, run a Monte Carlo simulation - exactly how " + COMPANY + "'s real analytics team would do it in Python, Excel, or simulation software.",
+      note: "This is genuinely how modern operations analysts run work sampling today - a live statistical simulation, not a clipboard and a stopwatch.",
+      simDefaults: { p: 0.8, n: 40 },
+      followup: {
+        q: "As you increase N (the number of simulated observations) from a small number to a large number, what happens to the simulated estimate?",
+        options: [
+          { t: "It always exactly equals the true value, regardless of N.", c: false },
+          { t: "It tends to get closer to the true value, with smaller run-to-run swings, as N grows.", c: true },
+          { t: "It gets further from the true value as N grows.", c: false },
+          { t: "N has no effect on accuracy at all.", c: false }
+        ]
+      },
+      concept: {
+        h: "Work Sampling - the statistical basis",
+        body: [
+          "<b>Work Sampling</b> finds the percentage occurrence of an activity through random, instantaneous observation - grounded in the principle that a large-enough random sample reflects the population's true characteristics.",
+          "Sample-size formula: <b>N = Z²pq / E²</b> - Z = 1.96 for 95% confidence, p = estimated proportion, q = 1−p, E = desired absolute error.",
+          "The simulation you just ran demonstrates exactly why: small samples swing wildly run to run, but as N grows, the estimate reliably converges toward the true value - the same law of large numbers that makes work sampling a statistically valid substitute for continuous observation."
+        ]
+      }
+    },
+    {
+      id: 8, icon: "🧩", title: "MTM Practice", module: "Exp 8 - Capstone", type: "calc", boss: true,
+      scenario: "A packer's motion sequence for sealing one box: Reach 12in to grab tape → Grasp the tape → Move it 10in to the box → Position it on the seam → Release it.",
+      note: "MTM (Methods-Time Measurement) is still used today at manufacturers worldwide - including Bosch and Toyota - to set standard times WITHOUT ever using a stopwatch, by summing pre-published times for basic motions. (TMU = Time Measurement Unit; these are illustrative reference values, consistent with published MTM tables - exact editions vary slightly.)",
+      given: [
+        { k: "Reach 12in", v: "12.9 TMU" },
+        { k: "Grasp", v: "2.0 TMU" },
+        { k: "Move 10in", v: "8.5 TMU" },
+        { k: "Position", v: "5.6 TMU" },
+        { k: "Release", v: "2.0 TMU" }
+      ],
+      inputLabel: "Total time for this sequence (minutes, 4 decimal places)",
+      answer: 0.0186, tolerance: 0.0005,
+      formulaHint: "First add up all five TMU values, then multiply the total by 0.0006 (1 TMU = 0.0006 min) to convert to minutes.",
+      concept: {
+        h: "MTM - predetermined time, no stopwatch",
+        body: [
+          "Sum of TMUs: 12.9 + 2.0 + 8.5 + 5.6 + 2.0 = <b>31.0 TMU</b>. Time = 31.0 × 0.0006 = <b>0.0186 min</b> (≈1.12 seconds).",
+          "<b>Predetermined Motion Time Systems</b> like MTM let analysts set a standard time for a NEW job before it's ever run, by summing published times for its basic motions (Reach, Move, Grasp, Position, Release, and more) - no stopwatch, no operator to observe yet.",
+          "This is the same technique behind Synthetic Rating (Station 5) - comparing real observed times against these same predetermined values."
+        ]
+      }
+    }
+  ];
+
+  var CAPSTONE_BASE = {
+    title: "Your First Independent Audit: A Real Method Study & Ergonomics Report",
+    brief: [
+      "Your manager at " + COMPANY + " has one more request: prove you can run this whole process independently, on a task nobody assigned you. Pick a real, repeatable task from your own daily life - making tea, packing a bag, folding laundry, filing papers, anything you do more than once - and apply what you used across the 8 Stations to it: record the current method properly, examine and improve it, time it honestly, and consider the ergonomics. Package it as a real Method Study Report, the kind industrial engineers actually write.",
+      "There's no notebook or code here - you're observing, timing, and documenting a real task with your own hands and a stopwatch (your phone timer is fine)."
+    ],
+    milestones: [
+      {
+        id: 1, title: "Select & frame the job", tie: "Ties to Station 1 - job selection",
+        goal: "Pick a real, repeatable task from your own life - not a one-off event - and justify why it's worth studying using at least one of the three selection factors (economic, technical, human).",
+        why: "A study only pays off on a job that's worth the time spent studying it. Skipping this step is the most common reason a method study wanders.",
+        checklist: [
+          "Chosen a specific, repeatable task you actually do (e.g. making tea, packing your bag, folding laundry, filing notes)",
+          "Described who currently does it and roughly how often",
+          "Justified why it's worth studying, using at least one of the economic/technical/human selection factors"
+        ],
+        guidance: "Would this task run often enough to be worth the time you'll spend studying it? If you did it once and never again, would it still be worth studying?",
+        tip: "This becomes your report's “Job Selected & Justification” section, close to word for word.",
+        reflectPrompt: "Write which task you chose, who does it and how often, and your justification for studying it."
+      },
+      {
+        id: 2, title: "Record the current method", tie: "Ties to Stations 2 & 3 - recording techniques",
+        goal: "Record the CURRENT method precisely using a real recording technique - a simple process chart with proper symbols, or a clearly numbered step-by-step breakdown - not a vague paragraph.",
+        why: "A standard symbolic language lets anyone read your chart and understand exactly what happens - not just the person who made it. A vague description can't be examined critically; a proper recording can.",
+        checklist: [
+          "Broken the task into distinct elements/steps",
+          "Recorded it using process chart symbols, or a clearly labelled step list",
+          "Noted an approximate time or distance for at least one element",
+          "Confirmed someone else could follow your chart and understand the process"
+        ],
+        guidance: "Could a stranger read your chart and correctly redo the task without ever watching you do it? If not, it isn't detailed enough yet.",
+        tip: "An actual photo or sketch of your process chart is one of the strongest things you can put in the report - concrete proof you recorded, not just remembered.",
+        reflectPrompt: "Describe your recording (chart or step list), and how many distinct elements you broke the task into."
+      },
+      {
+        id: 3, title: "Examine & improve the method", tie: "Ties to Stations 1-3 - what your charts reveal about waste",
+        goal: "Apply the questioning technique (Purpose / Place / Sequence / Person / Means) to your recorded method, then redesign at least one element using a named principle of motion economy.",
+        why: "Jumping straight to “how can this be faster” skips whether the step should even exist. Naming a real motion economy principle turns a vague improvement into a specific, defensible one.",
+        checklist: [
+          "Asked and answered the questioning technique's 5 headings for at least 2 elements",
+          "Identified at least one improvement using ECRS (Eliminate / Combine / Rearrange / Simplify)",
+          "Applied at least one specific, named motion economy principle to redesign part of the task",
+          "Recorded what the improved method actually looks like"
+        ],
+        guidance: "Before redesigning anything, guess which single element is wasting the most time or effort. Does asking the 5 questions on that element confirm your guess, or surprise you?",
+        tip: "State the comparison explicitly in your report - “eliminated 2 unnecessary steps and cut backtracking distance in half” reads far more credibly than a vague “made it better.”",
+        reflectPrompt: "State your ECRS finding, the motion economy principle you applied, and what changed."
+      },
+      {
+        id: 4, title: "Measure & evaluate honestly", tie: "Ties to Stations 4, 6 & 8 - rating, standard time, MTM",
+        goal: "Time both the old and new method (a few stopwatch or phone-timer runs is fine), and honestly evaluate whether the new method is actually better - including any ergonomic trade-off.",
+        why: "A real standard needs actual timing, not a feeling. A “faster” redesign can still be a worse one ergonomically - honest evaluation catches both.",
+        checklist: [
+          "Timed the old method at least 2–3 times and noted the average",
+          "Timed the new/improved method at least 2–3 times and noted the average",
+          "Stated the % time saved (or honestly noted if it didn't actually improve)",
+          "Identified one honest limitation or ergonomic trade-off of your new method"
+        ],
+        guidance: "Is your new method actually faster, or does it just feel faster because you're paying closer attention now that you're studying it? Time it for real before you claim it.",
+        tip: "An honest “this saved time but increased hand strain” is more credible - and more genuinely IE - than pretending your redesign is perfect.",
+        reflectPrompt: "State your before/after timing, the % change, and one honest limitation or trade-off you found."
+      },
+      {
+        id: 5, title: "Package it as a report", tie: "Brings every Station together",
+        goal: "Turn Milestones 1–4 into an actual, presentable Method Study Report someone else could read and understand.",
+        why: "A study only becomes useful once someone other than you - a supervisor, a classmate - can understand it in under two minutes.",
+        checklist: [
+          "Report includes: Job Selected & Why, Current Method (chart/steps), Examination & Improvements (ECRS + motion economy), Before/After Timing & Honest Evaluation",
+          "Report would make sense to someone who never watched you do the task",
+          "Read your own report once, start to finish, as if you were a stranger"
+        ],
+        guidance: "Hand your report to a classmate who's never seen your task. Can they explain back to you, in one sentence, what you improved and by how much?",
+        tip: "Generate your packet below once every checklist item is done - it drafts your report structure directly from what you wrote in each milestone.",
+        reflectPrompt: "What would you check first if you had to repeat this study on a completely different task next month?"
+      }
+    ]
+  };
+
+  var XP_PER_LEVEL = 100;
+  var XP_PENALTY_PER_WRONG = 15;
+  var XP_MIN = 40;
+
+  function loadState(roll) {
+    try { var raw = localStorage.getItem(STORAGE_PREFIX + roll.toUpperCase()); if (raw) return JSON.parse(raw); } catch (e) {}
+    return null;
+  }
+  function saveState(s) {
+    if (!s || !s.roll) return;
+    try { localStorage.setItem(STORAGE_PREFIX + s.roll.toUpperCase(), JSON.stringify(s)); } catch (e) {}
+  }
+  function freshCapstoneState() {
+    var ms = {};
+    CAPSTONE_BASE.milestones.forEach(function (m) { ms[m.id] = { checks: m.checklist.map(function () { return false; }), reflection: "", done: false }; });
+    return { lastView: "bridge", milestones: ms, packetDownloaded: false, celebrated: false };
+  }
+  function freshState(name, roll) {
+    return { name: name, roll: roll, cleared: {}, xp: 0, createdAt: Date.now(), effectsOn: true, atlasCelebrated: false, capstone: freshCapstoneState() };
+  }
+  function ensureCapstone() { if (!state.capstone) { state.capstone = freshCapstoneState(); saveState(state); } }
+
+  var state = null;
+  var activeLevelId = null;
+  var stepIndex = 0;
+  var chosenApproach = null;
+  var chosenJustification = null;
+  var showHint = false;
+  var wrongAttempts = 0;
+  var calcWrong = false;
+  var simRuns = [];
+  var simFollowupChosen = null;
+  var chartAssign = []; // single-chart assignments (parallel to lvl.steps)
+  var chartAssignLeft = []; // two-handed: left hand assignments
+  var chartAssignRight = []; // two-handed: right hand assignments
+  var chartChecked = false; // whether "Check my chart" has been clicked at least once
+  var rateAssign = []; // rate-worksheet assignments (parallel to lvl.factors)
+  var rateChecked = false;
+
+  var app = document.getElementById("app");
+
+  function esc(s) { var d = document.createElement("div"); d.innerText = s; return d.innerHTML; }
+  function escKeepTags(s) { return s; } // scenario/note strings intentionally contain light <b> markup
+
+  /* ---------- celebration effects ---------- */
+  var audioCtx = null;
+  function getAudioCtx() { if (audioCtx) return audioCtx; try { var Ctx = window.AudioContext || window.webkitAudioContext; if (Ctx) audioCtx = new Ctx(); } catch (e) {} return audioCtx; }
+  function effectsEnabled() { return !state || state.effectsOn !== false; }
+  function playBellStrike(ctx, freq, startTime, sizeScale) {
+    var partials = [
+      { ratio: 1.00, gain: 0.32, decay: 1.5 * sizeScale }, { ratio: 2.00, gain: 0.20, decay: 1.2 * sizeScale },
+      { ratio: 2.76, gain: 0.14, decay: 0.9 * sizeScale }, { ratio: 4.07, gain: 0.09, decay: 0.6 * sizeScale },
+      { ratio: 5.40, gain: 0.05, decay: 0.42 * sizeScale }
+    ];
+    partials.forEach(function (p) {
+      var osc = ctx.createOscillator(); var gain = ctx.createGain();
+      osc.type = "sine"; osc.frequency.value = freq * p.ratio;
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.linearRampToValueAtTime(p.gain, startTime + 0.006);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + p.decay);
+      osc.connect(gain); gain.connect(ctx.destination); osc.start(startTime); osc.stop(startTime + p.decay + 0.05);
+    });
+  }
+  function playChime(big) {
+    if (!effectsEnabled()) return;
+    var ctx = getAudioCtx(); if (!ctx) return;
+    if (ctx.state === "suspended") { ctx.resume().catch(function () {}); }
+    var now = ctx.currentTime;
+    if (big) { [783.99, 987.77, 1318.51].forEach(function (freq, i) { playBellStrike(ctx, freq, now + i * 0.22, 1.15); }); }
+    else { playBellStrike(ctx, 987.77, now, 0.75); }
+  }
+  var CONFETTI_COLORS = ["#B5652D", "#2E7D6B", "#C9A227", "#5B4B8A", "#B23A48", "#E08A3E"];
+  function fireConfetti(big) {
+    if (!effectsEnabled()) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var canvas = document.createElement("canvas");
+    canvas.style.position = "fixed"; canvas.style.inset = "0"; canvas.style.pointerEvents = "none"; canvas.style.zIndex = "999";
+    document.body.appendChild(canvas);
+    var dpr = window.devicePixelRatio || 1;
+    function resize() { canvas.width = window.innerWidth * dpr; canvas.height = window.innerHeight * dpr; canvas.style.width = window.innerWidth + "px"; canvas.style.height = window.innerHeight + "px"; }
+    resize();
+    var ctx2d = canvas.getContext("2d"); ctx2d.scale(dpr, dpr);
+    window.addEventListener("resize", resize);
+    var count = big ? 150 : 80;
+    var particles = [];
+    for (var i = 0; i < count; i++) {
+      var fromLeft = i % 2 === 0;
+      var ox = fromLeft ? window.innerWidth * 0.06 : window.innerWidth * 0.94;
+      var oy = window.innerHeight * 0.94;
+      var angle = (fromLeft ? -1.0 : -2.1) + (Math.random() - 0.5) * 0.7;
+      var speed = (big ? 12 : 8.5) + Math.random() * 6;
+      particles.push({ x: ox, y: oy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, size: 4 + Math.random() * 5, color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)], rot: Math.random() * Math.PI * 2, vr: (Math.random() - 0.5) * 0.35, shape: Math.random() < 0.55 ? "rect" : "circle" });
+    }
+    var gravity = 0.32; var start = performance.now(); var duration = big ? 2600 : 1700;
+    function frame(t) {
+      var elapsed = t - start;
+      ctx2d.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      var alive = false;
+      particles.forEach(function (p) {
+        p.vy += gravity * 0.06; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        var fade = Math.max(0, 1 - elapsed / duration);
+        if (fade > 0) {
+          alive = true;
+          ctx2d.save(); ctx2d.globalAlpha = fade; ctx2d.translate(p.x, p.y); ctx2d.rotate(p.rot); ctx2d.fillStyle = p.color;
+          if (p.shape === "rect") { ctx2d.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.66); }
+          else { ctx2d.beginPath(); ctx2d.arc(0, 0, p.size / 2, 0, Math.PI * 2); ctx2d.fill(); }
+          ctx2d.restore();
+        }
+      });
+      if (alive && elapsed < duration) { requestAnimationFrame(frame); } else { window.removeEventListener("resize", resize); canvas.remove(); }
+    }
+    requestAnimationFrame(frame);
+  }
+  function celebrate(big) { playChime(big); fireConfetti(big); }
+
+  function fxToggleHtml() {
+    var on = effectsEnabled();
+    return '<button class="fx-toggle" id="fxToggleBtn" aria-pressed="' + on + '" aria-label="' + (on ? "Sound and confetti on - click to mute" : "Sound and confetti off - click to unmute") + '" title="Sound & confetti">' + (on ? "🔊" : "🔇") + '</button>';
+  }
+  function bindFxToggle() { var btn = document.getElementById("fxToggleBtn"); if (!btn) return; btn.addEventListener("click", function () { state.effectsOn = !effectsEnabled(); saveState(state); render(); }); }
+  function switchStudentHtml() { return '<button class="link-btn" id="switchStudentBtn" style="white-space:nowrap;">Not you? Switch student</button>'; }
+  function bindSwitchStudent() { var btn = document.getElementById("switchStudentBtn"); if (!btn) return; btn.addEventListener("click", function () { state = null; render(); }); }
+
+  function render() {
+    if (!state) { renderLogin(); return; }
+    ensureCapstone();
+    var clearedCount = Object.keys(state.cleared).length;
+    if (clearedCount >= LEVELS.length) {
+      if (state.capstone.lastView === "studio") renderCapstone(); else renderBridge();
+      return;
+    }
+    renderAtlas();
+    if (activeLevelId !== null) renderModal();
+  }
+
+  function renderLogin() {
+    var lastRoll = ""; try { lastRoll = localStorage.getItem(LAST_ROLL_KEY) || ""; } catch (e) {}
+    app.innerHTML =
+      '<div class="login-screen">' +
+        '<div class="login-card">' +
+          '<div class="eyebrow">Industrial Engineering Lab</div>' +
+          '<h1 class="display">PROJECT WSD - DOIE</h1>' +
+          '<p class="sub">Your first 8 projects as a Junior Industrial Engineer at ' + esc(COMPANY) + ' - the same charting, rating, timing, and simulation techniques real analysts use, not the classroom card-dealing/walking versions. Every Station is hands-on: build the real chart, fill out the real worksheet, run the real numbers yourself.</p>' +
+          '<label class="field-label" for="rollInput">Your roll number</label>' +
+          '<input id="rollInput" type="text" placeholder="e.g. 2025229026" autocomplete="off" value="' + esc(lastRoll) + '" />' +
+          '<label class="field-label" for="codeInput">Class access code</label>' +
+          '<input id="codeInput" type="text" placeholder="Given by your instructor" autocomplete="off" />' +
+          '<button class="btn-primary" id="beginBtn">Check in →</button>' +
+          '<div id="loginError" style="display:none;color:var(--danger);font-size:0.8rem;margin-top:10px;"></div>' +
+          '<div class="login-foot">You must be on the class roster to check in. Progress saves to this device only - use the same device each time to keep your streak.</div>' +
+        '</div>' +
+      '</div>';
+    var rollInput = document.getElementById("rollInput");
+    var codeInput = document.getElementById("codeInput");
+    var btn = document.getElementById("beginBtn");
+    var errBox = document.getElementById("loginError");
+    function showError(msg) { errBox.textContent = msg; errBox.style.display = "block"; rollInput.style.borderColor = "var(--danger)"; }
+    function tryBegin() {
+      var roll = (rollInput.value || "").trim(); var code = (codeInput.value || "").trim();
+      errBox.style.display = "none"; rollInput.style.borderColor = "";
+      if (!roll || !code) { showError("Enter both your roll number and the class access code."); return; }
+      if (code !== CLASS_CODE) { showError("That access code doesn't match - check with your instructor."); return; }
+      var entry = findRosterEntry(roll);
+      if (!entry) { showError("That roll number isn't on the class roster. Check the spelling, or ask your instructor to add you."); return; }
+      try { localStorage.setItem(LAST_ROLL_KEY, entry.roll); } catch (e) {}
+      var existing = loadState(entry.roll);
+      state = existing || freshState(entry.name, entry.roll);
+      state.name = entry.name;
+      saveState(state);
+      render();
+    }
+    btn.addEventListener("click", tryBegin);
+    codeInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryBegin(); });
+    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
+    setTimeout(function () { (lastRoll ? codeInput : rollInput).focus(); }, 50);
+  }
+
+  function levelStatus(id) {
+    if (state.cleared[id]) return "done";
+    var prev = id - 1;
+    if (prev === 0 || state.cleared[prev]) return "active";
+    return "locked";
+  }
+  function buildMapSvg() {
+    var n = LEVELS.length; var w = 720, h = 460; var pts = [];
+    var xs = [70, 190, 330, 470, 610, 480, 320, 170];
+    var ys = [70, 150, 90, 160, 260, 340, 300, 400];
+    for (var i = 0; i < n; i++) pts.push({ x: xs[i], y: ys[i] });
+    var svg = '<svg class="map-svg" viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Floor plan">';
+    for (var i = 0; i < n - 1; i++) {
+      var a = pts[i], b = pts[i + 1];
+      var doneLine = state.cleared[LEVELS[i].id] ? " done" : "";
+      svg += '<path class="map-line' + doneLine + '" d="M' + a.x + ',' + a.y + ' L' + b.x + ',' + b.y + '"></path>';
+    }
+    for (var j = 0; j < n; j++) {
+      var lvl = LEVELS[j]; var st = levelStatus(lvl.id); var p = pts[j];
+      var rw = lvl.boss ? 62 : 54, rh = 40;
+      svg += '<g class="node-group ' + st + '" tabindex="0" role="button" aria-label="Station ' + lvl.id + ': ' + esc(lvl.title) + ' (' + st + ')" data-id="' + lvl.id + '">' +
+        '<rect class="node-ring" x="' + (p.x - rw / 2) + '" y="' + (p.y - rh / 2) + '" width="' + rw + '" height="' + rh + '" rx="6"></rect>' +
+        '<text class="node-icon" x="' + p.x + '" y="' + (p.y - 2) + '">' + (st === "locked" ? "🔒" : (st === "done" ? "✓" : lvl.icon)) + '</text>' +
+        '<text class="node-num" x="' + p.x + '" y="' + (p.y + rh / 2 + 14) + '">STATION ' + lvl.id + '</text>' +
+        '<text class="node-label" x="' + p.x + '" y="' + (p.y + rh / 2 + 30) + '">' + esc(lvl.title) + '</text>' +
+      '</g>';
+    }
+    svg += '</svg>'; return svg;
+  }
+  function renderAtlas() {
+    var clearedCount = Object.keys(state.cleared).length;
+    var pct = Math.round((clearedCount / LEVELS.length) * 100);
+    var proofsHtml = LEVELS.map(function (lvl) {
+      var earned = !!state.cleared[lvl.id];
+      return '<div class="proof-row' + (earned ? ' earned' : '') + '"><div class="proof-icon">' + (earned ? "✅" : lvl.icon) + '</div><div class="proof-name">' + esc(lvl.title) + '<span class="sub">' + esc(lvl.module) + '</span></div></div>';
+    }).join("");
+    app.innerHTML =
+      '<div class="topbar">' +
+        '<div class="brand"><span class="mark display">PROJECT WSD - DOIE</span><span class="tag">Work System Design Laboratory Floor Plan</span></div>' +
+        '<div class="hud">' +
+          '<div class="hud-name">Analyst: <b>' + esc(state.name) + '</b></div>' +
+          '<div class="hud-stat"><span class="num stat">' + state.xp + '</span><span class="lbl">Study Pts</span></div>' +
+          '<div class="hud-stat"><span class="num stat">' + clearedCount + '/' + LEVELS.length + '</span><span class="lbl">Stations Charted</span></div>' +
+          switchStudentHtml() + fxToggleHtml() +
+        '</div>' +
+      '</div>' +
+      '<div class="atlas-wrap">' +
+        '<div class="atlas-main">' +
+          '<h2 class="display">The Floor Plan</h2>' +
+          '<p class="sub">Eight real lab experiments, reframed as your first 8 projects at ' + esc(COMPANY) + '. Reasoning stations ask you to choose and justify an approach; calculation and simulation stations ask you to actually do the work - the way a real analyst would.</p>' +
+          buildMapSvg() +
+        '</div>' +
+        '<div class="side-panel">' +
+          '<div class="progress-block"><div class="eyebrow">Course Progress</div><div class="progress-bar-track"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div><div class="progress-count stat">' + pct + '% · ' + clearedCount + ' of ' + LEVELS.length + ' Stations charted</div></div>' +
+          '<div class="proofs-block"><div class="eyebrow">Sign-offs Earned</div><div class="proofs-list" style="margin-top:10px;">' + proofsHtml + '</div></div>' +
+          '<div class="how-block"><h3 class="display">How Stations work</h3><p>Every Station is hands-on: build a real process chart symbol by symbol, fill out a real rating worksheet, calculate a real standard time, or run a real live simulation. Get it right to earn the sign-off and unlock the next Station.</p></div>' +
+        '</div>' +
+      '</div>';
+    var nodes = app.querySelectorAll(".node-group");
+    nodes.forEach(function (node) {
+      var id = parseInt(node.getAttribute("data-id"), 10);
+      var status = levelStatus(id);
+      function open() { if (status === "locked") return; openLevel(id); }
+      node.addEventListener("click", open);
+      node.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    });
+    bindFxToggle(); bindSwitchStudent();
+  }
+
+  function getLevel(id) { for (var i = 0; i < LEVELS.length; i++) if (LEVELS[i].id === id) return LEVELS[i]; return null; }
+
+  function openLevel(id) {
+    activeLevelId = id; stepIndex = 0; chosenApproach = null; chosenJustification = null; showHint = false; wrongAttempts = 0;
+    calcWrong = false; simRuns = []; simFollowupChosen = null;
+    chartChecked = false; rateChecked = false;
+    var lvl = getLevel(id);
+    if (lvl && lvl.type === "chart") {
+      if (lvl.hands) {
+        chartAssignLeft = lvl.leftSteps.map(function () { return null; });
+        chartAssignRight = lvl.rightSteps.map(function () { return null; });
+      } else {
+        chartAssign = lvl.steps.map(function () { return null; });
+      }
+    } else if (lvl && lvl.type === "rate") {
+      rateAssign = lvl.factors.map(function () { return null; });
+    }
+    render();
+  }
+  function closeLevel() { activeLevelId = null; render(); }
+
+  function renderOptionList(options, chosenIdx, disabled) {
+    var letters = ["A", "B", "C", "D"];
+    return '<div class="options">' + options.map(function (opt, idx) {
+      var cls = "option-btn";
+      if (chosenIdx !== null && idx === chosenIdx) cls += opt.c ? " correct" : " wrong";
+      return '<button class="' + cls + '" data-idx="' + idx + '"' + (disabled ? " disabled" : "") + '><span class="option-letter">' + letters[idx] + '</span>' + esc(opt.t) + '</button>';
+    }).join("") + '</div>';
+  }
+
+  function awardAndReveal(lvl, overlayBodyBuilder) {
+    var alreadyCleared = !!state.cleared[lvl.id];
+    var xpEarnedThisVisit = alreadyCleared ? 0 : Math.max(XP_MIN, XP_PER_LEVEL - wrongAttempts * XP_PENALTY_PER_WRONG);
+    if (!alreadyCleared) {
+      state.cleared[lvl.id] = true; state.xp += xpEarnedThisVisit; saveState(state);
+      celebrate(!!lvl.boss);
+    }
+    var xpNote = (!alreadyCleared && wrongAttempts > 0)
+      ? '<div style="font-size:0.76rem;color:var(--ink-muted);margin-top:4px;">Full marks are ' + XP_PER_LEVEL + ' - ' + wrongAttempts + ' wrong attempt' + (wrongAttempts === 1 ? "" : "s") + ' cost you ' + (XP_PER_LEVEL - xpEarnedThisVisit) + '.</div>'
+      : '';
+    return '<div class="concept-reveal">' +
+        '<div class="eyebrow">You worked this out yourself - now the concept</div>' +
+        '<h3 class="display">' + esc(lvl.concept.h) + '</h3>' +
+        lvl.concept.body.map(function (p) { return '<p>' + p + '</p>'; }).join("") +
+        '<div class="xp-line"><div><span class="xp-badge">✓ Sign-off earned: ' + esc(lvl.title) + '</span>' + xpNote + '</div>' +
+        '<span class="mono" style="color:var(--accent-2);font-weight:700;">+' + (alreadyCleared ? 0 : xpEarnedThisVisit) + ' Study Pts</span></div>' +
+      '</div>' +
+      '<div class="step-nav"><button class="btn-primary" id="backToAtlasBtn" style="width:auto;">Back to the Floor Plan →</button></div>';
+  }
+
+  function buildSymbolKey(symbolSet) {
+    return '<div class="symbol-key">' + symbolSet.map(function (s) { return '<span class="sym">' + esc(s.sym) + '</span>' + esc(s.label); }).join('&nbsp;&nbsp;·&nbsp;&nbsp;') + '</div>';
+  }
+  function buildChartStepRow(step, idx, assignArr, symbolSet, checked) {
+    var chosen = assignArr[idx];
+    var isCorrect = checked && chosen === step.correct;
+    var isWrong = checked && chosen !== null && chosen !== step.correct;
+    var rowClass = "chart-step-row" + (isCorrect ? " correct" : "") + (isWrong ? " wrong" : "");
+    var btns = symbolSet.map(function (s) {
+      var sel = chosen === s.sym;
+      return '<button class="symbol-btn' + (sel ? " selected" : "") + '" data-idx="' + idx + '" data-sym="' + esc(s.sym) + '"><span class="sym">' + esc(s.sym) + '</span>' + esc(s.label) + '</button>';
+    }).join("");
+    return '<div class="' + rowClass + '"><div class="chart-step-desc">' + esc(step.desc) + '</div><div class="symbol-btn-group">' + btns + '</div></div>';
+  }
+
+  function renderModal() {
+    var lvl = getLevel(activeLevelId);
+    if (!lvl) return;
+    var body = "";
+    var overlay = document.createElement("div");
+    overlay.className = "modal-overlay";
+    var noteHtml = lvl.note ? '<div class="industry-note"><b class="tag">Real industry note -</b> ' + lvl.note + '</div>' : '';
+
+    if (lvl.type === "reason") {
+      if (stepIndex === 0) {
+        body = '<div class="scenario-box">' + escKeepTags(lvl.scenario) + '</div>' + noteHtml +
+          '<div class="step-label">Step 1 of 2 - What approach would you take?</div>' +
+          renderOptionList(lvl.approach, chosenApproach, chosenApproach !== null && !lvl.approach[chosenApproach].c ? false : chosenApproach !== null) +
+          (showHint ? '<div class="hint-box"><span class="tag">Think again -</span><span>' + esc(lvl.hint) + ' <b>Pick another option below to try again.</b></span></div>' : '') +
+          '<div class="step-nav">' + (chosenApproach !== null && lvl.approach[chosenApproach].c ? '<button class="btn-primary" id="nextStepBtn" style="width:auto;">Continue to justification →</button>' : '') + '</div>';
+      } else if (stepIndex === 1) {
+        body = '<div class="scenario-box">' + escKeepTags(lvl.scenario) + '</div>' +
+          '<div class="step-label">Step 2 of 2 - Why is that the right approach?</div>' +
+          renderOptionList(lvl.justification, chosenJustification, chosenJustification !== null && !lvl.justification[chosenJustification].c ? false : chosenJustification !== null) +
+          (showHint ? '<div class="hint-box"><span class="tag">Not quite -</span><span>Reasoning matters as much as the answer. Re-read the approach you just picked. <b>Pick another option below to try again.</b></span></div>' : '') +
+          '<div class="step-nav">' + (chosenJustification !== null && lvl.justification[chosenJustification].c ? '<button class="btn-primary" id="nextStepBtn" style="width:auto;">Reveal the concept →</button>' : '') + '</div>';
+      } else {
+        body = awardAndReveal(lvl);
+      }
+    } else if (lvl.type === "calc") {
+      if (stepIndex === 0) {
+        var givenHtml = lvl.given.map(function (g) { return '<div class="calc-field"><div class="k">' + esc(g.k) + '</div><div class="v">' + esc(g.v) + '</div></div>'; }).join("");
+        body = '<div class="scenario-box">' + escKeepTags(lvl.scenario) + '</div>' + noteHtml +
+          '<div class="step-label">Given</div>' +
+          '<div class="calc-grid">' + givenHtml + '</div>' +
+          '<div class="step-label">Your calculation</div>' +
+          '<div class="calc-input-row"><div class="col"><input type="number" step="any" id="calcInput" placeholder="' + esc(lvl.inputLabel) + '" /></div>' +
+          '<button class="btn-primary" id="calcCheckBtn" style="width:auto;">Check my answer →</button></div>' +
+          (calcWrong ? '<div class="calc-result bad"><b>Not quite.</b> ' + esc(lvl.formulaHint) + '</div>' : '');
+      } else {
+        body = awardAndReveal(lvl);
+      }
+    } else if (lvl.type === "sim") {
+      if (stepIndex === 0) {
+        var lastRun = simRuns.length ? simRuns[simRuns.length - 1] : null;
+        var barsHtml = "";
+        if (lastRun) {
+          barsHtml = '<div class="sim-bars">' + lastRun.sequence.map(function (w) { return '<div class="sim-bar ' + (w ? "working" : "idle") + '" style="height:' + (w ? 100 : 45) + '%;"></div>'; }).join("") + '</div>';
+        }
+        var readoutHtml = lastRun
+          ? '<div class="sim-readout"><div class="item"><div class="k">Simulated Utilization</div><div class="v">' + lastRun.pct.toFixed(1) + '%</div></div><div class="item"><div class="k">True Value</div><div class="v">' + (lastRun.p * 100).toFixed(1) + '%</div></div><div class="item"><div class="k">Error</div><div class="v">' + Math.abs(lastRun.pct - lastRun.p * 100).toFixed(1) + ' pts</div></div></div>'
+          : '';
+        body = '<div class="scenario-box">' + escKeepTags(lvl.scenario) + '</div>' + noteHtml +
+          '<div class="step-label">Run the simulation</div>' +
+          '<div class="calc-input-row">' +
+            '<div class="col"><label class="field-label">True utilization (0–1)</label><input type="number" step="0.01" min="0" max="1" id="simP" value="' + lvl.simDefaults.p + '" /></div>' +
+            '<div class="col"><label class="field-label">Number of observations (N)</label><input type="number" step="1" min="1" max="2000" id="simN" value="' + lvl.simDefaults.n + '" /></div>' +
+            '<button class="btn-primary" id="simRunBtn" style="width:auto;">Run Simulation →</button>' +
+          '</div>' +
+          barsHtml + readoutHtml +
+          (lastRun ? (
+            '<div class="step-label" style="margin-top:18px;">' + esc(lvl.followup.q) + '</div>' +
+            renderOptionList(lvl.followup.options, simFollowupChosen, simFollowupChosen !== null && !lvl.followup.options[simFollowupChosen].c ? false : simFollowupChosen !== null) +
+            (showHint ? '<div class="hint-box"><span class="tag">Think again -</span><span>Try running the simulation once with a small N (like 10) and once with a large N (like 1000) - compare how much the result swings each time you re-run it. <b>Pick another option below to try again.</b></span></div>' : '') +
+            '<div class="step-nav">' + (simFollowupChosen !== null && lvl.followup.options[simFollowupChosen].c ? '<button class="btn-primary" id="nextStepBtn" style="width:auto;">Reveal the concept →</button>' : '') + '</div>'
+          ) : '');
+      } else {
+        body = awardAndReveal(lvl);
+      }
+    } else if (lvl.type === "chart") {
+      if (stepIndex === 0) {
+        var symbolKeyHtml = buildSymbolKey(lvl.symbolSet);
+        var chartBodyHtml;
+        if (lvl.hands) {
+          chartBodyHtml = '<div class="chart-hands-wrap">' +
+            '<div><div class="chart-hand-label">Left Hand</div><div class="chart-steps" id="chartStepsLeft">' +
+              lvl.leftSteps.map(function (s, i) { return buildChartStepRow(s, i, chartAssignLeft, lvl.symbolSet, chartChecked); }).join("") +
+            '</div></div>' +
+            '<div><div class="chart-hand-label">Right Hand</div><div class="chart-steps" id="chartStepsRight">' +
+              lvl.rightSteps.map(function (s, i) { return buildChartStepRow(s, i, chartAssignRight, lvl.symbolSet, chartChecked); }).join("") +
+            '</div></div>' +
+          '</div>';
+        } else {
+          chartBodyHtml = '<div class="chart-steps" id="chartSteps">' +
+            lvl.steps.map(function (s, i) { return buildChartStepRow(s, i, chartAssign, lvl.symbolSet, chartChecked); }).join("") +
+          '</div>';
+        }
+        var allFilled = lvl.hands
+          ? chartAssignLeft.every(function (v) { return v !== null; }) && chartAssignRight.every(function (v) { return v !== null; })
+          : chartAssign.every(function (v) { return v !== null; });
+        body = '<div class="scenario-box">' + escKeepTags(lvl.scenario) + '</div>' + noteHtml +
+          '<div class="step-label">Build the chart - click a symbol for each step</div>' +
+          symbolKeyHtml + chartBodyHtml +
+          (chartChecked ? '<div class="hint-box"><span class="tag">Not quite -</span><span>' + esc(lvl.hint) + ' Fix the highlighted step(s) and check again.</span></div>' : '') +
+          '<div class="step-nav"><button class="btn-primary" id="chartCheckBtn" style="width:auto;"' + (allFilled ? '' : ' disabled') + '>Check my chart →</button></div>';
+      } else {
+        body = awardAndReveal(lvl);
+      }
+    } else if (lvl.type === "rate") {
+      if (stepIndex === 0) {
+        var factorRowsHtml = lvl.factors.map(function (f, i) {
+          var chosen = rateAssign[i];
+          var isCorrect = rateChecked && chosen === f.correct;
+          var isWrong = rateChecked && chosen !== null && chosen !== f.correct;
+          var rowClass = "rate-factor-row" + (isCorrect ? " correct" : "") + (isWrong ? " wrong" : "");
+          var btns = lvl.levels.map(function (lv) {
+            var sel = chosen === lv.name;
+            return '<button class="level-btn' + (sel ? " selected" : "") + '" data-idx="' + i + '" data-level="' + esc(lv.name) + '">' + esc(lv.name) + '</button>';
+          }).join("");
+          return '<div class="' + rowClass + '"><div class="rate-factor-name">' + esc(f.name) + '</div><div class="rate-factor-desc">' + esc(f.desc) + '</div><div class="level-btn-group">' + btns + '</div></div>';
+        }).join("");
+        var allFilledR = rateAssign.every(function (v) { return v !== null; });
+        body = '<div class="scenario-box">' + escKeepTags(lvl.scenario) + '</div>' + noteHtml +
+          '<div class="step-label">Fill out the rating worksheet</div>' +
+          factorRowsHtml +
+          (rateChecked ? '<div class="hint-box"><span class="tag">Not quite -</span><span>' + esc(lvl.hint) + ' Fix the highlighted factor(s) and check again.</span></div>' : '') +
+          '<div class="step-nav"><button class="btn-primary" id="rateCheckBtn" style="width:auto;"' + (allFilledR ? '' : ' disabled') + '>Check my rating →</button></div>';
+      } else {
+        body = awardAndReveal(lvl);
+      }
+    }
+
+    overlay.innerHTML =
+      '<div class="modal-card">' +
+        '<div class="modal-head"><div><div class="eyebrow">Station ' + lvl.id + (lvl.boss ? " · Capstone Prep" : "") + ' · ' + esc(lvl.module) + '</div>' +
+        '<h2 class="display">' + lvl.icon + '&nbsp; ' + esc(lvl.title) + '</h2></div>' +
+        '<button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button></div>' +
+        body +
+      '</div>';
+    document.body.appendChild(overlay);
+    overlay.querySelector("#modalCloseBtn").addEventListener("click", function () { overlay.remove(); closeLevel(); });
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) { overlay.remove(); closeLevel(); } });
+
+    if (lvl.type === "reason") {
+      if (stepIndex === 0) {
+        var aOpts = overlay.querySelectorAll(".options")[0].querySelectorAll(".option-btn");
+        aOpts.forEach(function (btn, idx) {
+          btn.addEventListener("click", function () {
+            if (chosenApproach !== null && lvl.approach[chosenApproach].c) return;
+            chosenApproach = idx; showHint = !lvl.approach[idx].c;
+            if (showHint) wrongAttempts++;
+            rerenderModalOnly();
+          });
+        });
+        var next = overlay.querySelector("#nextStepBtn");
+        if (next) next.addEventListener("click", function () { stepIndex = 1; showHint = false; rerenderModalOnly(); });
+      } else if (stepIndex === 1) {
+        var jOpts = overlay.querySelectorAll(".options")[0].querySelectorAll(".option-btn");
+        jOpts.forEach(function (btn, idx) {
+          btn.addEventListener("click", function () {
+            if (chosenJustification !== null && lvl.justification[chosenJustification].c) return;
+            chosenJustification = idx; showHint = !lvl.justification[idx].c;
+            if (showHint) wrongAttempts++;
+            rerenderModalOnly();
+          });
+        });
+        var next2 = overlay.querySelector("#nextStepBtn");
+        if (next2) next2.addEventListener("click", function () { stepIndex = 2; rerenderModalOnly(); });
+      } else {
+        overlay.querySelector("#backToAtlasBtn").addEventListener("click", function () { overlay.remove(); closeLevel(); });
+      }
+    } else if (lvl.type === "calc") {
+      if (stepIndex === 0) {
+        var checkBtn = overlay.querySelector("#calcCheckBtn");
+        var input = overlay.querySelector("#calcInput");
+        checkBtn.addEventListener("click", function () {
+          var val = parseFloat(input.value);
+          if (isNaN(val)) { calcWrong = true; wrongAttempts++; rerenderModalOnly(); return; }
+          if (Math.abs(val - lvl.answer) <= lvl.tolerance) { calcWrong = false; stepIndex = 1; rerenderModalOnly(); }
+          else { calcWrong = true; wrongAttempts++; rerenderModalOnly(); }
+        });
+        input.addEventListener("keydown", function (e) { if (e.key === "Enter") checkBtn.click(); });
+      } else {
+        overlay.querySelector("#backToAtlasBtn").addEventListener("click", function () { overlay.remove(); closeLevel(); });
+      }
+    } else if (lvl.type === "sim") {
+      if (stepIndex === 0) {
+        var runBtn = overlay.querySelector("#simRunBtn");
+        runBtn.addEventListener("click", function () {
+          var pVal = parseFloat(overlay.querySelector("#simP").value);
+          var nVal = parseInt(overlay.querySelector("#simN").value, 10);
+          if (isNaN(pVal) || pVal < 0 || pVal > 1) pVal = lvl.simDefaults.p;
+          if (isNaN(nVal) || nVal < 1) nVal = lvl.simDefaults.n;
+          nVal = Math.min(nVal, 2000);
+          var sequence = [];
+          var workingCount = 0;
+          for (var i = 0; i < nVal; i++) {
+            var w = Math.random() < pVal;
+            if (w) workingCount++;
+            sequence.push(w);
+          }
+          simRuns.push({ p: pVal, n: nVal, pct: (workingCount / nVal) * 100, sequence: sequence.slice(0, 300) });
+          rerenderModalOnly();
+        });
+        var fOpts = overlay.querySelectorAll(".options");
+        if (fOpts.length) {
+          fOpts[0].querySelectorAll(".option-btn").forEach(function (btn, idx) {
+            btn.addEventListener("click", function () {
+              if (simFollowupChosen !== null && lvl.followup.options[simFollowupChosen].c) return;
+              simFollowupChosen = idx; showHint = !lvl.followup.options[idx].c;
+              if (showHint) wrongAttempts++;
+              rerenderModalOnly();
+            });
+          });
+        }
+        var next3 = overlay.querySelector("#nextStepBtn");
+        if (next3) next3.addEventListener("click", function () { stepIndex = 1; rerenderModalOnly(); });
+      } else {
+        overlay.querySelector("#backToAtlasBtn").addEventListener("click", function () { overlay.remove(); closeLevel(); });
+      }
+    } else if (lvl.type === "chart") {
+      if (stepIndex === 0) {
+        function bindSymbolGroup(containerId, assignArr) {
+          var container = overlay.querySelector("#" + containerId);
+          if (!container) return;
+          container.querySelectorAll(".symbol-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var idx = parseInt(btn.getAttribute("data-idx"), 10);
+              assignArr[idx] = btn.getAttribute("data-sym");
+              chartChecked = false;
+              rerenderModalOnly();
+            });
+          });
+        }
+        if (lvl.hands) { bindSymbolGroup("chartStepsLeft", chartAssignLeft); bindSymbolGroup("chartStepsRight", chartAssignRight); }
+        else { bindSymbolGroup("chartSteps", chartAssign); }
+        var chartCheckBtn = overlay.querySelector("#chartCheckBtn");
+        if (chartCheckBtn) chartCheckBtn.addEventListener("click", function () {
+          var allCorrect = lvl.hands
+            ? lvl.leftSteps.every(function (s, i) { return chartAssignLeft[i] === s.correct; }) && lvl.rightSteps.every(function (s, i) { return chartAssignRight[i] === s.correct; })
+            : lvl.steps.every(function (s, i) { return chartAssign[i] === s.correct; });
+          chartChecked = true;
+          if (allCorrect) { stepIndex = 1; } else { wrongAttempts++; }
+          rerenderModalOnly();
+        });
+      } else {
+        overlay.querySelector("#backToAtlasBtn").addEventListener("click", function () { overlay.remove(); closeLevel(); });
+      }
+    } else if (lvl.type === "rate") {
+      if (stepIndex === 0) {
+        overlay.querySelectorAll(".level-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var idx = parseInt(btn.getAttribute("data-idx"), 10);
+            rateAssign[idx] = btn.getAttribute("data-level");
+            rateChecked = false;
+            rerenderModalOnly();
+          });
+        });
+        var rateCheckBtn = overlay.querySelector("#rateCheckBtn");
+        if (rateCheckBtn) rateCheckBtn.addEventListener("click", function () {
+          var allCorrect = lvl.factors.every(function (f, i) { return rateAssign[i] === f.correct; });
+          rateChecked = true;
+          if (allCorrect) { stepIndex = 1; } else { wrongAttempts++; }
+          rerenderModalOnly();
+        });
+      } else {
+        overlay.querySelector("#backToAtlasBtn").addEventListener("click", function () { overlay.remove(); closeLevel(); });
+      }
+    }
+    window._wsdOverlay = overlay;
+  }
+  function rerenderModalOnly() { if (window._wsdOverlay) window._wsdOverlay.remove(); renderModal(); }
+
+  function renderBridge() {
+    var badgeHtml = LEVELS.map(function (lvl) { return '<div class="proof-row earned"><div class="proof-icon">✅</div><div class="proof-name">' + esc(lvl.title) + '</div></div>'; }).join("");
+    app.innerHTML =
+      '<div class="topbar">' +
+        '<div class="brand"><span class="mark display">PROJECT WSD - DOIE</span><span class="tag">Work System Design Laboratory Floor Plan</span></div>' +
+        '<div class="hud"><div class="hud-name">Analyst: <b>' + esc(state.name) + '</b></div><div class="hud-stat"><span class="num stat">' + state.xp + '</span><span class="lbl">Study Pts</span></div>' + switchStudentHtml() + fxToggleHtml() + '</div>' +
+      '</div>' +
+      '<div class="complete-screen"><div class="complete-card">' +
+        '<span class="eyebrow">Floor plan fully charted</span><h1 class="display">Qualified Analyst</h1>' +
+        '<p class="sub">' + esc(state.name) + ', you completed all 8 projects at ' + esc(COMPANY) + ' - charting real processes, rating real performance, calculating real standard times, and running a real work-sampling simulation. Now put it all together on a task of your own.</p>' +
+        '<div class="cta-row"><button class="btn-capstone" id="beginCapstoneBtn">Begin the Independent Audit →</button></div>' +
+        '<div class="badge-grid">' + badgeHtml + '</div>' +
+        '<button class="btn-ghost" id="resetBtn">Reset progress &amp; start over</button>' +
+      '</div></div>';
+    document.getElementById("beginCapstoneBtn").addEventListener("click", function () { state.capstone.lastView = "studio"; saveState(state); render(); });
+    document.getElementById("resetBtn").addEventListener("click", function () {
+      if (confirm("Reset all progress for " + state.name + "? This can't be undone.")) { localStorage.removeItem(STORAGE_PREFIX + state.roll.toUpperCase()); state = null; render(); }
+    });
+    bindFxToggle(); bindSwitchStudent();
+    if (!state.atlasCelebrated) { state.atlasCelebrated = true; saveState(state); celebrate(true); }
+  }
+
+  function milestoneStatus(id) {
+    var st = state.capstone.milestones[id];
+    if (st.done) return "done";
+    var prev = id - 1;
+    if (prev === 0 || state.capstone.milestones[prev].done) return "active";
+    return "locked";
+  }
+  function buildMilestoneCard(m) {
+    var status = milestoneStatus(m.id);
+    var ms = state.capstone.milestones[m.id];
+    if (status === "locked") {
+      return '<div class="milestone-card locked"><div class="milestone-head"><div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div><h2 class="display">' + esc(m.title) + '</h2></div></div><div class="milestone-lock-note">🔒 Complete Milestone ' + (m.id - 1) + ' first.</div></div>';
+    }
+    var checklistHtml = m.checklist.map(function (item, cidx) {
+      var checked = ms.checks[cidx];
+      return '<label class="check-row' + (checked ? ' checked' : '') + '"><input type="checkbox" data-milestone="' + m.id + '" data-check="' + cidx + '"' + (checked ? " checked" : "") + ' /><span>' + esc(item) + '</span></label>';
+    }).join("");
+    var allChecked = ms.checks.every(function (c) { return c; });
+    return '<div class="milestone-card' + (status === "done" ? " done" : "") + '" data-mcard="' + m.id + '">' +
+      '<div class="milestone-head"><div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div><h2 class="display">' + esc(m.title) + '</h2></div>' + (status === "done" ? '<div class="milestone-done-badge">✓ Complete</div>' : '') + '</div>' +
+      '<p class="milestone-goal">' + esc(m.goal) + '</p>' +
+      '<div class="milestone-why"><b class="tag">Why it matters -</b> ' + esc(m.why) + '</div>' +
+      '<div class="checklist">' + checklistHtml + '</div>' +
+      '<div class="guidance-box"><b class="tag">Think about -</b> ' + esc(m.guidance) + '</div>' +
+      '<label class="reflect-label" for="reflect-' + m.id + '">' + esc(m.reflectPrompt) + '</label>' +
+      '<textarea class="reflect-box" id="reflect-' + m.id + '" data-milestone="' + m.id + '" placeholder="Write a few sentences - this feeds your report packet.">' + esc(ms.reflection) + '</textarea>' +
+      '<div class="portfolio-tip"><b class="tag">Report tip:</b> ' + esc(m.tip) + '</div>' +
+      (status !== "done" ? '<div class="milestone-actions"><button class="btn-primary" style="width:auto;" id="complete-' + m.id + '"' + (allChecked ? "" : " disabled") + '>Mark milestone complete →</button></div>' : '') +
+    '</div>';
+  }
+  function buildReportMarkdown() {
+    var ms = state.capstone.milestones;
+    var lines = [];
+    lines.push("# " + CAPSTONE_BASE.title);
+    lines.push(""); lines.push("**Author:** " + state.name);
+    lines.push("**Course:** IE23901 - Work System Design Laboratory · drafted with PROJECT WSD - DOIE");
+    lines.push(""); lines.push("## Job Selected & Justification"); lines.push(ms[1].reflection || "_(not filled in)_");
+    lines.push(""); lines.push("## Current Method (Recording)"); lines.push(ms[2].reflection || "_(not filled in)_");
+    lines.push(""); lines.push("## Examination & Improvements (ECRS + Motion Economy)"); lines.push(ms[3].reflection || "_(not filled in)_");
+    lines.push(""); lines.push("## Before/After Timing & Honest Evaluation"); lines.push(ms[4].reflection || "_(not filled in)_");
+    lines.push(""); lines.push("## What I'd Check First On a New Task"); lines.push(ms[5].reflection || "_(not filled in)_");
+    lines.push(""); lines.push("## Skills Demonstrated");
+    lines.push("- Process charting: Outline, Flow, and Two-Handed charts (Stations 1-3)");
+    lines.push("- Performance rating: Pace Rating and the Westinghouse system (Stations 4-5)");
+    lines.push("- Standard time determination: OT -> NT -> ST (Station 6)");
+    lines.push("- Statistical work sampling via Monte Carlo simulation (Station 7)");
+    lines.push("- Predetermined Motion Time Systems / MTM (Station 8)");
+    lines.push(""); lines.push("---"); lines.push("_Drafted via PROJECT WSD - DOIE - Work System Design Laboratory Floor Plan, IE23901._");
+    return lines.join("\n");
+  }
+  function setPacketStatus(container, msg, kind) { var el = container.querySelector("#packetStatus"); if (!el) return; el.textContent = msg; el.className = "packet-status" + (kind ? " " + kind : ""); }
+  function handleDownloadPacket(container) {
+    var md = buildReportMarkdown();
+    if (window.claude && window.claude.downloads) {
+      window.claude.downloads.save({ filename: "METHOD-STUDY-REPORT.md", data: md }).then(function () {
+        state.capstone.packetDownloaded = true; saveState(state);
+        setPacketStatus(container, "Saved - check your downloads.", "ok");
+      }).catch(function (err) {
+        var code = err && err.code ? err.code : "unavailable";
+        var msg = code === "declined" ? "No problem - copy the text below instead whenever you're ready." : "Couldn't save automatically (" + code + ") - copy the text below instead.";
+        setPacketStatus(container, msg, "err");
+      });
+    } else { setPacketStatus(container, "Downloads aren't available in this preview - copy the text below instead.", "err"); }
+  }
+  function renderCapstone() {
+    var clearedCount = Object.keys(state.cleared).length;
+    var allMilestonesDone = CAPSTONE_BASE.milestones.every(function (m) { return state.capstone.milestones[m.id].done; });
+    var milestonesHtml = CAPSTONE_BASE.milestones.map(buildMilestoneCard).join("");
+    var packetHtml = "";
+    if (allMilestonesDone) {
+      packetHtml = '<div class="packet-card"><div class="eyebrow">All 5 milestones complete</div><h2 class="display">Generate Your Method Study Report</h2>' +
+        '<p style="font-size:0.88rem;line-height:1.6;color:var(--ink-muted);margin:0;">Drafted from what you wrote in each milestone above.</p>' +
+        '<div class="milestone-actions" style="margin-top:14px;"><button class="btn-primary" style="width:auto;" id="downloadPacketBtn">Download Report →</button></div>' +
+        '<div id="packetStatus" class="packet-status"></div><textarea class="packet-preview" id="packetPreview" readonly></textarea></div>';
+    }
+    app.innerHTML =
+      '<div class="topbar"><div class="brand"><span class="mark display">PROJECT WSD - DOIE</span><span class="tag">Independent Audit</span></div>' +
+      '<div class="hud"><div class="hud-name">Analyst: <b>' + esc(state.name) + '</b></div><div class="hud-stat"><span class="num stat">' + state.xp + '</span><span class="lbl">Study Pts</span></div>' +
+      '<div class="hud-stat"><span class="num stat">' + clearedCount + '/' + LEVELS.length + '</span><span class="lbl">Stations Charted</span></div>' + switchStudentHtml() + fxToggleHtml() + '</div></div>' +
+      '<div class="studio-wrap"><div class="studio-nav"><button class="link-btn" id="backToAtlasNav">← Back to the Floor Plan</button></div>' +
+      '<div class="brief-card"><div class="eyebrow">Independent Audit</div><h1 class="display">' + esc(CAPSTONE_BASE.title) + '</h1>' +
+      CAPSTONE_BASE.brief.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join("") +
+      '<p><b>Need an idea?</b> Kitchen tasks (making tea, chopping vegetables), desk tasks (filing notes, packing a bag), household chores (folding laundry, washing dishes), or a personal routine (getting ready in the morning) all work well.</p></div>' +
+      milestonesHtml + packetHtml + '</div>';
+    document.getElementById("backToAtlasNav").addEventListener("click", function () { state.capstone.lastView = "bridge"; saveState(state); render(); });
+    app.querySelectorAll('input[type="checkbox"][data-milestone]').forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        var mid = parseInt(cb.getAttribute("data-milestone"), 10); var cidx = parseInt(cb.getAttribute("data-check"), 10);
+        state.capstone.milestones[mid].checks[cidx] = cb.checked; saveState(state); render();
+      });
+    });
+    app.querySelectorAll("textarea.reflect-box[data-milestone]").forEach(function (ta) {
+      ta.addEventListener("input", function () { var mid = parseInt(ta.getAttribute("data-milestone"), 10); state.capstone.milestones[mid].reflection = ta.value; saveState(state); });
+    });
+    CAPSTONE_BASE.milestones.forEach(function (m) {
+      var btn = document.getElementById("complete-" + m.id);
+      if (btn) { btn.addEventListener("click", function () { state.capstone.milestones[m.id].done = true; saveState(state); celebrate(false); render(); }); }
+    });
+    if (allMilestonesDone) {
+      var preview = document.getElementById("packetPreview");
+      if (preview) preview.value = buildReportMarkdown();
+      var dlBtn = document.getElementById("downloadPacketBtn");
+      if (dlBtn) dlBtn.addEventListener("click", function () { handleDownloadPacket(app); });
+      if (!state.capstone.celebrated) { state.capstone.celebrated = true; saveState(state); celebrate(true); }
+    }
+    bindFxToggle(); bindSwitchStudent();
+  }
+
+  render();
+})();
+</script>
