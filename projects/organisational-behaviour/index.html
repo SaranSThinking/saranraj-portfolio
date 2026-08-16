@@ -64,6 +64,55 @@
       <h2 class="section-title">Diagnose the team</h2>
       <div class="tools-grid">
 
+        <!-- Team Constraint Diagnostic (original framework) -->
+        <article class="tool-card tool-card-wide" id="tool-constraint">
+          <span class="capability-badge badge-amber">🎯 My framework - Theory of Constraints for teams</span>
+          <header class="tool-header">
+            <h3>Team Constraint Diagnostic</h3>
+            <span class="tool-tag">Original Framework</span>
+          </header>
+          <p class="tool-desc">Most team assessments average your scores across dimensions - and hide the one
+          thing actually limiting performance. This framework adapts Theory of Constraints from operations
+          management: a team's real throughput is set by its weakest dimension, not its average one - the same
+          way one slow station caps an entire production line, no matter how fast the others run.</p>
+          <div class="tool-body">
+            <div class="tool-inputs">
+              <label>Trust
+                <select id="tcdTrust"><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+              <label>Communication
+                <select id="tcdComm"><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+              <label>Role Clarity
+                <select id="tcdRole"><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+              <label>Accountability
+                <select id="tcdAccount"><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+              <label>Psychological Safety
+                <select id="tcdSafety"><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6" selected>6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+              <label>Coordination &amp; Cohesion
+                <select id="tcdCoord"><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+              <label>Motivation &amp; Engagement
+                <select id="tcdMotivation"><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8" selected>8</option><option value="9">9</option><option value="10">10</option></select>
+              </label>
+            </div>
+            <button class="btn btn-small" id="tcdCalc">Diagnose the Constraint</button>
+            <div class="tool-result" id="tcdResult">Rate each dimension and diagnose.</div>
+
+            <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+              <p style="margin:0 0 10px;font-size:0.85rem;color:var(--text-muted);">See the asymmetry for yourself - simulate improving the constraint versus improving your strongest dimension by the same amount:</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn btn-small" id="tcdSimConstraint">Simulate: +2 to Constraint</button>
+                <button class="btn btn-small" id="tcdSimStrongest">Simulate: +2 to Strongest</button>
+              </div>
+              <div class="tool-result" id="tcdSimResult" style="margin-top:10px;"></div>
+            </div>
+          </div>
+        </article>
+
         <!-- Leadership Style -->
         <article class="tool-card tool-card-wide" id="tool-leadership">
           <span class="capability-badge">🤝 3-style leadership lean</span>

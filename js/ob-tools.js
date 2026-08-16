@@ -1,3 +1,63 @@
+// ---------- Team Constraint Diagnostic (original framework) ----------
+const TCD_DIMENSIONS = [
+  { id: 'tcdTrust', name: 'Trust', tip: 'Run a small, visible reliability test - hit one commitment publicly and name it as a trust deposit.' },
+  { id: 'tcdComm', name: 'Communication', tip: 'Install one standing checkpoint (daily huddle or shared board) - most communication gaps are a missing ritual, not a missing skill.' },
+  { id: 'tcdRole', name: 'Role Clarity', tip: 'Run a RACI pass on the team’s current work this week - ambiguity here quietly taxes every other dimension.' },
+  { id: 'tcdAccount', name: 'Accountability', tip: 'Make commitments visible and time-boxed - accountability fails when commitments are private and open-ended.' },
+  { id: 'tcdSafety', name: 'Psychological Safety', tip: 'Explicitly reward a surfaced mistake or dissenting view in the next team meeting - safety is built by what gets rewarded, not what gets said.' },
+  { id: 'tcdCoord', name: 'Coordination & Cohesion', tip: 'Map the handoff points between team members - most coordination failures live at the handoff, not within any one role.' },
+  { id: 'tcdMotivation', name: 'Motivation & Engagement', tip: 'Reconnect the team’s current task to a visible outcome they actually care about - competence without meaning fades fast.' }
+];
+
+function tcdScores() {
+  return TCD_DIMENSIONS.map(d => parseInt(document.getElementById(d.id).value, 10));
+}
+
+function tcdThroughput(scores) {
+  const min = Math.min(...scores);
+  const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+  return { tti: min * 0.7 + avg * 0.3, min, avg };
+}
+
+document.getElementById('tcdCalc').addEventListener('click', () => {
+  const scores = tcdScores();
+  const { tti, min, avg } = tcdThroughput(scores);
+  const constraintIdx = scores.indexOf(min);
+  const constraint = TCD_DIMENSIONS[constraintIdx];
+
+  document.getElementById('tcdResult').innerHTML =
+    `Naive average: <strong>${avg.toFixed(1)}/10</strong> &middot; Team Throughput Index: <strong>${tti.toFixed(1)}/10</strong><br>` +
+    `Your team's constraint: <strong>${constraint.name}</strong> (${min}/10)<br>` +
+    `<span style="color:var(--text-muted);font-size:0.85rem;">Your average looks like ${avg.toFixed(1)}, but the team can only actually deliver at ${tti.toFixed(1)} - the constraint sets the ceiling, the way one slow station caps an entire production line's throughput.</span><br><br>` +
+    `<strong>Priority move:</strong> ${constraint.tip}`;
+  document.getElementById('tcdSimResult').innerHTML = '';
+});
+
+document.getElementById('tcdSimConstraint').addEventListener('click', () => {
+  const scores = tcdScores();
+  const { tti, min } = tcdThroughput(scores);
+  const constraintIdx = scores.indexOf(min);
+  const newScores = [...scores];
+  newScores[constraintIdx] = Math.min(10, newScores[constraintIdx] + 2);
+  const { tti: newTti } = tcdThroughput(newScores);
+  document.getElementById('tcdSimResult').innerHTML =
+    `Fix the constraint (+2 to ${TCD_DIMENSIONS[constraintIdx].name}): <strong>${tti.toFixed(1)} &rarr; ${newTti.toFixed(1)}</strong> ` +
+    `<span style="color:var(--teal);font-weight:700;">(+${(newTti - tti).toFixed(1)})</span>`;
+});
+
+document.getElementById('tcdSimStrongest').addEventListener('click', () => {
+  const scores = tcdScores();
+  const { tti } = tcdThroughput(scores);
+  const maxIdx = scores.indexOf(Math.max(...scores));
+  const newScores = [...scores];
+  newScores[maxIdx] = Math.min(10, newScores[maxIdx] + 2);
+  const { tti: newTti } = tcdThroughput(newScores);
+  const prev = document.getElementById('tcdSimResult').innerHTML;
+  document.getElementById('tcdSimResult').innerHTML = prev + (prev ? '<br>' : '') +
+    `Polish your strength instead (+2 to ${TCD_DIMENSIONS[maxIdx].name}): <strong>${tti.toFixed(1)} &rarr; ${newTti.toFixed(1)}</strong> ` +
+    `<span style="color:var(--red);font-weight:700;">(+${(newTti - tti).toFixed(1)})</span>`;
+});
+
 // ---------- Leadership Style Self-Assessment ----------
 document.getElementById('lsCalc').addEventListener('click', () => {
   const q = id => parseInt(document.getElementById(id).value, 10);
