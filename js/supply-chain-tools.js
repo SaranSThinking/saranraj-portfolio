@@ -20,11 +20,23 @@ document.getElementById('eoqCalc').addEventListener('click', () => {
   const reorderPoint = avgDailyDemand * leadTime + safetyStock;
   const totalCost = (d / eoq) * s + (eoq / 2) * h;
 
+  let action;
+  if (safetyStock > eoq * 0.5) {
+    action = `Safety stock (${safetyStock.toFixed(0)}) is unusually large relative to EOQ - demand is volatile relative to your order size. Push on lead time with the supplier or re-check your service-level target (z) before just carrying more buffer.`;
+  } else if (ordersPerYear < 2) {
+    action = `You're ordering less than twice a year - verify that's intentional. Very large batches tie up capital and raise obsolescence risk; re-check that your ordering cost input is realistic.`;
+  } else if (ordersPerYear > 52) {
+    action = `You'd be reordering more than weekly - that usually means ordering cost is understated. Get a real number for it before trusting this EOQ.`;
+  } else {
+    action = `Reorder ${eoq.toFixed(0)} units every time stock hits ${reorderPoint.toFixed(0)} - this cadence (${ordersPerYear.toFixed(1)}&times;/year) is a reasonable balance of ordering and holding cost.`;
+  }
+
   resultEl.innerHTML =
     `EOQ = <strong>${eoq.toFixed(0)} units/order</strong> &middot; ${ordersPerYear.toFixed(1)} orders/year<br>` +
     `Safety Stock = <strong>${safetyStock.toFixed(0)} units</strong> &middot; ` +
     `Reorder Point = <strong>${reorderPoint.toFixed(0)} units</strong><br>` +
-    `Annual ordering + holding cost &asymp; <strong>₹${totalCost.toFixed(0)}</strong>`;
+    `Annual ordering + holding cost &asymp; <strong>₹${totalCost.toFixed(0)}</strong><br>` +
+    `<span class="tool-recommend">${action}</span>`;
 });
 
 // ---------- ABC Analysis ----------
@@ -57,7 +69,8 @@ document.getElementById('abcCalc').addEventListener('click', () => {
     `<strong>A</strong>: ${countA} SKUs, ${(valueA / total * 100).toFixed(1)}% of value &middot; ` +
     `<strong>B</strong>: ${countB} SKUs, ${(valueB / total * 100).toFixed(1)}% of value &middot; ` +
     `<strong>C</strong>: ${countC} SKUs, ${(valueC / total * 100).toFixed(1)}% of value ` +
-    `(of ${sorted.length} total SKUs)`;
+    `(of ${sorted.length} total SKUs)<br>` +
+    `<span class="tool-recommend">Put tight control on your ${countA} A items - frequent counts, low safety stock, negotiated pricing; they're only ${(countA / sorted.length * 100).toFixed(0)}% of SKUs but ${(valueA / total * 100).toFixed(0)}% of value. B items need periodic review. Let C items run on a simple two-bin or max-stock rule - don't spend management effort where the value isn't.</span>`;
 });
 
 // ---------- Total Landed Cost ----------
@@ -81,10 +94,20 @@ document.getElementById('lcCalc').addEventListener('click', () => {
   const totalLandedCost = unitLandedCost * units;
   const markup = ((unitLandedCost - product) / product) * 100;
 
+  let action;
+  if (markup > 30) {
+    action = `Landed cost is running ${markup.toFixed(0)}% over the sticker price - that's a large hidden layer. Check whether a supplier closer to destination, a different Incoterm, or consolidated shipments would cut freight/duty before you accept this as the real cost.`;
+  } else if (markup < 10) {
+    action = `Landed cost is close to product cost (+${markup.toFixed(0)}%) - freight, duty, and handling are well controlled here relative to unit price.`;
+  } else {
+    action = `A +${markup.toFixed(0)}% landed-cost markup is typical - worth tracking each component over time to catch a creeping freight or duty rate before it compounds across volume.`;
+  }
+
   resultEl.innerHTML =
     `Landed Cost = <strong>₹${unitLandedCost.toFixed(2)}/unit</strong> ` +
     `(+${markup.toFixed(1)}% over product cost) &middot; ` +
-    `Total for ${units} units = <strong>₹${totalLandedCost.toFixed(0)}</strong>`;
+    `Total for ${units} units = <strong>₹${totalLandedCost.toFixed(0)}</strong><br>` +
+    `<span class="tool-recommend">${action}</span>`;
 });
 
 // ---------- Transportation Mode Comparison ----------
@@ -110,12 +133,23 @@ document.getElementById('tmCalc').addEventListener('click', () => {
   });
 
   const cheapest = modes.reduce((a, b) => (b.totalCost < a.totalCost ? b : a));
+  const fastest = modes.reduce((a, b) => (b.days < a.days ? b : a));
+  const costGap = fastest.totalCost - cheapest.totalCost;
 
   const rows = modes.map(m =>
     `${m.label}: freight ₹${m.freight.toFixed(2)} + in-transit carrying ₹${m.carryingCost.toFixed(2)} = <strong>₹${m.totalCost.toFixed(2)}/unit</strong> (${m.days}d)`
   ).join('<br>');
 
-  resultEl.innerHTML = `${rows}<br>Lowest total cost: <strong>${cheapest.label}</strong>`;
+  let action;
+  if (fastest.label === cheapest.label) {
+    action = `${cheapest.label} wins on both cost and speed - an easy call, no trade-off to make here.`;
+  } else if (costGap <= cheapest.totalCost * 0.05) {
+    action = `${fastest.label} costs only ₹${costGap.toFixed(2)}/unit more than ${cheapest.label} for ${(cheapest.days - fastest.days).toFixed(0)} fewer transit days - that's cheap insurance against a stockout. Take the speed unless cash is genuinely tight.`;
+  } else {
+    action = `${cheapest.label} saves ₹${costGap.toFixed(2)}/unit over ${fastest.label} but costs ${(cheapest.days - fastest.days).toFixed(0)} more transit days - only worth it if your safety stock already covers that extra lead time without risking service level.`;
+  }
+
+  resultEl.innerHTML = `${rows}<br>Lowest total cost: <strong>${cheapest.label}</strong><br><span class="tool-recommend">${action}</span>`;
 });
 
 // ---------- Demand Forecast (Moving Average & Exponential Smoothing) ----------
@@ -151,9 +185,21 @@ document.getElementById('fcCalc').addEventListener('click', () => {
   const esErrors = data.slice(1).map((d, i) => Math.abs(d - esForecasts[i + 1]));
   const madES = esErrors.reduce((a, b) => a + b, 0) / esErrors.length;
 
+  const better = madES < madMA ? 'Exponential Smoothing' : 'Moving Average';
+  const betterVal = madES < madMA ? esNext : maNext;
+  const gapPct = Math.abs(madMA - madES) / Math.max(madMA, madES) * 100;
+
+  let action;
+  if (gapPct < 5) {
+    action = `Both methods track this data about equally well - no strong reason to prefer one. Default to Moving Average for simplicity unless the pattern shifts.`;
+  } else {
+    action = `${better} fits this data noticeably better (lower MAD) - use its forecast of <strong>${betterVal.toFixed(1)}</strong> going forward. ${better === 'Exponential Smoothing' ? `If recent periods keep swinging, try raising &alpha; further to react faster.` : `If demand looks stable, a smaller MA window would react to trend changes sooner.`}`;
+  }
+
   resultEl.innerHTML =
     `Moving Average (n=${n}) next-period forecast = <strong>${maNext.toFixed(1)}</strong> (MAD ${madMA.toFixed(1)})<br>` +
-    `Exponential Smoothing (&alpha;=${alpha}) next-period forecast = <strong>${esNext.toFixed(1)}</strong> (MAD ${madES.toFixed(1)})`;
+    `Exponential Smoothing (&alpha;=${alpha}) next-period forecast = <strong>${esNext.toFixed(1)}</strong> (MAD ${madES.toFixed(1)})<br>` +
+    `<span class="tool-recommend">${action}</span>`;
 });
 
 // ---------- Bullwhip Effect Ratio ----------
@@ -179,13 +225,21 @@ document.getElementById('bwCalc').addEventListener('click', () => {
   const cvDemand = d.std / d.mean;
   const ratio = (cvOrders ** 2) / (cvDemand ** 2);
 
-  let verdict;
-  if (ratio <= 1.1) verdict = 'Little to no amplification - orders track demand closely.';
-  else if (ratio <= 2) verdict = 'Moderate bullwhip effect - some amplification upstream.';
-  else verdict = 'Strong bullwhip effect - orders are amplifying demand signal significantly.';
+  let verdict, action;
+  if (ratio <= 1.1) {
+    verdict = 'Little to no amplification - orders track demand closely.';
+    action = `Whatever information-sharing or batching discipline is already in place is working - keep it, and use it as the baseline when you add new partners or SKUs.`;
+  } else if (ratio <= 2) {
+    verdict = 'Moderate bullwhip effect - some amplification upstream.';
+    action = `Start with order-batching: shrink the order cycle length or share real point-of-sale data with your immediate upstream partner before touching anything else.`;
+  } else {
+    verdict = 'Strong bullwhip effect - orders are amplifying demand signal significantly.';
+    action = `Fix information sharing first - real-time POS or consumption data with suppliers. Safety-stock or batching tweaks won't help much if the root cause is signal distortion this large.`;
+  }
 
   resultEl.innerHTML =
-    `Bullwhip Ratio (CV&sup2; orders / CV&sup2; demand) = <strong>${ratio.toFixed(2)}</strong><br>${verdict}`;
+    `Bullwhip Ratio (CV&sup2; orders / CV&sup2; demand) = <strong>${ratio.toFixed(2)}</strong><br>${verdict}<br>` +
+    `<span class="tool-recommend">${action}</span>`;
 });
 
 // ---------- Supply Risk Exposure Score ----------
@@ -207,7 +261,17 @@ document.getElementById('srCalc').addEventListener('click', () => {
   else if (score >= 20) tier = 'Moderate exposure - monitor and plan contingency';
   else tier = 'Low exposure - routine monitoring';
 
-  resultEl.innerHTML = `Risk Score = <strong>${score}</strong> / 125 &middot; ${tier}`;
+  const factors = { Likelihood: likelihood, Impact: impact, Detectability: detect };
+  const driver = Object.entries(factors).sort((a, b) => b[1] - a[1])[0][0];
+  const driverAction = {
+    Likelihood: 'diversify or dual-source whatever is making this risk likely to occur - that\'s the lever with the most headroom here.',
+    Impact: 'reduce the blast radius before the probability - build inventory buffer or insurance for this specific failure so a hit doesn\'t cascade.',
+    Detectability: 'this risk would catch you by surprise - invest in monitoring/visibility here first, since you can\'t mitigate what you can\'t see coming.'
+  }[driver];
+
+  resultEl.innerHTML =
+    `Risk Score = <strong>${score}</strong> / 125 &middot; ${tier}<br>` +
+    `<span class="tool-recommend"><strong>${driver}</strong> is the highest-scoring factor (${factors[driver]}/5) - ${driverAction}</span>`;
 });
 
 // ---------- Supply Chain Resilience Index ----------
@@ -230,5 +294,16 @@ document.getElementById('resCalc').addEventListener('click', () => {
   else if (pct >= 30) tier = 'Fragile - a single disruption could be severe';
   else tier = 'Highly vulnerable - minimal resilience capacity';
 
-  resultEl.innerHTML = `Resilience Score = <strong>${total}/20</strong> (${pct.toFixed(0)}%) &middot; ${tier}`;
+  const pillars = { Redundancy: values[0], Visibility: values[1], Flexibility: values[2], Collaboration: values[3] };
+  const weakest = Object.entries(pillars).sort((a, b) => a[1] - b[1])[0][0];
+  const pillarAction = {
+    Redundancy: 'build backup supplier relationships or buffer stock for your most critical items - right now a single failure point has no fallback.',
+    Visibility: 'invest in real-time tracking or data-sharing with suppliers - you likely find out about disruptions later than you should.',
+    Flexibility: 'diversify sourcing or manufacturing options - too much of your capacity depends on one configuration working.',
+    Collaboration: 'formalize joint contingency planning with your key partners - ad hoc coordination breaks down exactly when you need it most.'
+  }[weakest];
+
+  resultEl.innerHTML =
+    `Resilience Score = <strong>${total}/20</strong> (${pct.toFixed(0)}%) &middot; ${tier}<br>` +
+    `<span class="tool-recommend">Weakest pillar: <strong>${weakest}</strong> (${pillars[weakest]}/5) - ${pillarAction}</span>`;
 });

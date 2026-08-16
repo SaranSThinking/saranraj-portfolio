@@ -101,18 +101,31 @@ function ppoRenderSummary(entries) {
     summaryEl.textContent = 'Add a day or load the sample week to see your trend.';
     return;
   }
-  const oeeValues = entries.map(e => ppoCompute(e).oee);
+  const computed = entries.map(e => ppoCompute(e));
+  const oeeValues = computed.map(c => c.oee);
   const avg = oeeValues.reduce((a, b) => a + b, 0) / oeeValues.length;
   const worst = Math.min(...oeeValues);
+
+  const avgA = computed.reduce((a, c) => a + c.availability, 0) / computed.length;
+  const avgP = computed.reduce((a, c) => a + c.performance, 0) / computed.length;
+  const avgQ = computed.reduce((a, c) => a + c.quality, 0) / computed.length;
+  const factors = { Availability: avgA, Performance: avgP, Quality: avgQ };
+  const loss = Object.entries(factors).sort((a, b) => a[1] - b[1])[0][0];
+  const lossFix = {
+    Availability: 'you\'re losing the most to time not spent working at all - look at what interrupts or delays your start, not how fast you work once started.',
+    Performance: 'you\'re present but not moving at full pace - check what\'s slowing you down mid-task (distractions, unclear priorities, context-switching).',
+    Quality: 'rework is your biggest loss - fixing mistakes eats more of your effective output than showing up late or working slowly would.'
+  }[loss];
 
   let tier;
   if (avg >= 85) tier = 'World-class average - rare, and worth understanding why.';
   else if (avg >= 60) tier = 'Typical range - look at the lowest-scoring days for the biggest loss.';
-  else tier = 'Low average - availability or quality is likely the dominant loss, check the breakdown.';
+  else tier = 'Low average - check the breakdown below for the dominant loss.';
 
   summaryEl.innerHTML =
     `Average OEE across ${entries.length} day(s) = <strong>${avg.toFixed(1)}%</strong> &middot; ` +
-    `Worst day = <strong>${worst.toFixed(1)}%</strong><br>${tier}`;
+    `Worst day = <strong>${worst.toFixed(1)}%</strong><br>${tier}<br>` +
+    `<span class="tool-recommend"><strong>${loss}</strong> is your lowest average factor (${factors[loss].toFixed(0)}%) - ${lossFix}</span>`;
 }
 
 function ppoRenderAll() {

@@ -112,11 +112,24 @@ function pqcRenderSummary(result) {
     return;
   }
   const flagged = result.rows.filter(r => r.outOfControl).length;
+  const metricName = (localStorage.getItem(PQC_METRIC_KEY) || 'this metric').toLowerCase();
+
+  let action;
+  if (result.n < 8) {
+    action = `Log a few more days before trusting these limits - control limits computed from under 8-10 points move around a lot as new data comes in.`;
+  } else if (flagged === 0) {
+    action = `No flagged days - ${metricName} is behaving consistently. If you want to actually improve it rather than just track it, changing the process now (not reacting to a flag) is the only way, since there's no special cause to chase here.`;
+  } else {
+    const flaggedDates = result.rows.filter(r => r.outOfControl).map(r => r.date).join(', ');
+    action = `Look at what was different on ${flaggedDates} specifically - a flagged point means something changed that day (special cause), not just bad luck. Find that cause before assuming it'll happen again.`;
+  }
+
   summaryEl.innerHTML =
     `n = <strong>${result.n}</strong> &middot; Mean = <strong>${result.mean.toFixed(2)}</strong> &middot; ` +
     `MR&#772; = <strong>${result.mrBar.toFixed(2)}</strong><br>` +
     `UCL = <strong>${result.ucl.toFixed(2)}</strong> &middot; LCL = <strong>${result.lcl.toFixed(2)}</strong> &middot; ` +
-    `${flagged} of ${result.n} day(s) flagged out-of-control`;
+    `${flagged} of ${result.n} day(s) flagged out-of-control<br>` +
+    `<span class="tool-recommend">${action}</span>`;
 }
 
 function pqcRenderAll() {

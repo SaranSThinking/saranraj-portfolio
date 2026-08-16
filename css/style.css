@@ -410,6 +410,18 @@ img, svg { max-width: 100%; display: block; }
   min-height: 20px;
 }
 .tool-result strong { color: var(--teal); }
+.tool-recommend {
+  display: block;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  color: var(--text);
+}
+.tool-recommend::before {
+  content: "\2192  ";
+  color: var(--teal);
+  font-weight: 700;
+}
 
 .dmaic-steps {
   display: grid;

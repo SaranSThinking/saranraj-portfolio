@@ -53,7 +53,7 @@ function pmcdmRenderRanking(scores) {
   const maxScore = Math.max(...scores.map(s => s.score), 0.01);
   const sorted = [...scores].sort((a, b) => b.score - a.score);
 
-  rankingEl.innerHTML = sorted.map((s, i) => `
+  const rows = sorted.map((s, i) => `
     <div class="pp-rank-row ${i === 0 ? 'pp-rank-winner' : ''}">
       <div class="pp-rank-label">${i === 0 ? '🏆 ' : ''}${s.option}</div>
       <div class="pp-rank-track">
@@ -63,6 +63,19 @@ function pmcdmRenderRanking(scores) {
       </div>
     </div>
   `).join('');
+
+  let action = '';
+  if (sorted.length >= 2) {
+    const [winner, runnerUp] = sorted;
+    const gapPct = ((winner.score - runnerUp.score) / winner.score) * 100;
+    if (gapPct < 10) {
+      action = `<div class="tool-recommend"><strong>${winner.option}</strong> only edges out <strong>${runnerUp.option}</strong> by ${gapPct.toFixed(0)}% - that's within the noise of how confidently you rated each criterion. Re-check your weights before treating this as a clear decision, or treat both as viable.</div>`;
+    } else {
+      action = `<div class="tool-recommend"><strong>${winner.option}</strong> beats <strong>${runnerUp.option}</strong> by a clear ${gapPct.toFixed(0)}% margin - confident enough to act on unless a criterion you didn't rate turns out to matter.</div>`;
+    }
+  }
+
+  rankingEl.innerHTML = rows + action;
 }
 
 function pmcdmRenderTable() {

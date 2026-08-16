@@ -73,10 +73,16 @@ document.getElementById('lsCalc').addEventListener('click', () => {
     Participative: 'You lean toward shared decision-making and consensus-building - strong for buy-in and morale, but can slow decisions under time pressure.',
     Delegative: 'You default to handing off ownership to capable people - powerful for developing autonomy, but risky with an inexperienced team.'
   };
+  const actions = {
+    Directive: 'This week, pick one decision you\'d normally make alone and ask the team for input first - your risk isn\'t under-leading, it\'s under-listening.',
+    Participative: 'This week, pick one decision with a clear deadline and make the call yourself instead of seeking consensus - practice trusting your own judgment under time pressure.',
+    Delegative: 'This week, check in on one delegated task earlier than you normally would - delegation without any checkpoint is how small problems become late surprises.'
+  };
 
   document.getElementById('lsResult').innerHTML =
     `Directive: <strong>${directive}/10</strong> &middot; Participative: <strong>${participative}/10</strong> &middot; Delegative: <strong>${delegative}/10</strong><br>` +
-    `Primary lean: <strong>${lean}</strong> - ${descriptions[lean]}`;
+    `Primary lean: <strong>${lean}</strong> - ${descriptions[lean]}<br>` +
+    `<span class="tool-recommend">${actions[lean]}</span>`;
 });
 
 // ---------- Tuckman Stage Finder ----------

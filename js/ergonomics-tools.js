@@ -35,8 +35,21 @@ document.getElementById('rulaCalc').addEventListener('click', () => {
   else if (score <= 15) { level = 'Action Level 3'; action = 'Investigate soon; change required.'; }
   else { level = 'Action Level 4'; action = 'Investigate and change immediately.'; }
 
+  const rulaFactors = { 'Upper arm': upperArm, 'Lower arm': lowerArm, Wrist: wrist, Neck: neck, Trunk: trunk, 'Muscle use': muscle, Force: force };
+  const rulaDriver = Object.entries(rulaFactors).sort((a, b) => b[1] - a[1])[0][0];
+  const rulaFix = {
+    'Upper arm': 'bring the work closer to the body or lower the working height - this cuts shoulder abduction/flexion directly.',
+    'Lower arm': 'keep the elbow closer to 90&deg; and avoid reaching across the body.',
+    Wrist: 'add a wrist rest and realign the tool/keyboard angle to reduce deviation.',
+    Neck: 'raise the visual target closer to eye level - most neck load comes from looking down.',
+    Trunk: 'add lumbar support or adjust seat/work height to cut forward bend or twist.',
+    'Muscle use': 'break up static holds with micro-breaks or task rotation - this is a duration problem, not a posture one.',
+    Force: 'reduce the weight/force required or add mechanical assistance before touching posture at all.'
+  }[rulaDriver];
+
   document.getElementById('rulaResult').innerHTML =
-    `Score = <strong>${score}</strong> &middot; ${level} &mdash; ${action}`;
+    `Score = <strong>${score}</strong> &middot; ${level} &mdash; ${action}<br>` +
+    `<span class="tool-recommend"><strong>${rulaDriver}</strong> is your biggest contributor - ${rulaFix}</span>`;
 });
 
 // ---------- REBA scoring (simplified, educational) ----------
@@ -60,8 +73,23 @@ document.getElementById('rebaCalc').addEventListener('click', () => {
   else if (score <= 23) { level = 'High risk'; action = 'Investigate and implement change soon.'; }
   else { level = 'Very high risk'; action = 'Implement change immediately.'; }
 
+  const rebaFactors = { Trunk: trunk, Neck: neck, Legs: legs, 'Upper arm': upperArm, 'Lower arm': lowerArm, Wrist: wrist, Load: load, Coupling: coupling, Activity: activity };
+  const rebaDriver = Object.entries(rebaFactors).sort((a, b) => b[1] - a[1])[0][0];
+  const rebaFix = {
+    Trunk: 'add lumbar support or adjust seat/work height to cut forward bend or twist.',
+    Neck: 'raise the visual target closer to eye level - most neck load comes from looking down.',
+    Legs: 'check for uneven weight-bearing or add a footrest - unsupported or asymmetric stance drives this up fast.',
+    'Upper arm': 'bring the work closer to the body or lower the working height.',
+    'Lower arm': 'keep the elbow closer to 90&deg; and avoid reaching across the body.',
+    Wrist: 'add a wrist rest and realign the tool/keyboard angle.',
+    Load: 'reduce the weight or force required, or add lifting aids - this is the highest-leverage fix on the list.',
+    Coupling: 'improve the grip - better handles or a redesigned grip point cuts this immediately.',
+    Activity: 'break up static holds or rapid repeated motion - this is a duration/pattern problem, not a posture one.'
+  }[rebaDriver];
+
   document.getElementById('rebaResult').innerHTML =
-    `Score = <strong>${score}</strong> &middot; ${level} &mdash; ${action}`;
+    `Score = <strong>${score}</strong> &middot; ${level} &mdash; ${action}<br>` +
+    `<span class="tool-recommend"><strong>${rebaDriver}</strong> is your biggest contributor - ${rebaFix}</span>`;
 });
 
 // ---------- NIOSH Lifting Equation ----------
@@ -127,8 +155,23 @@ document.getElementById('nioshCalc').addEventListener('click', () => {
   else if (LI <= 3) verdict = 'Moderate risk - task redesign recommended.';
   else verdict = 'High risk - task redesign strongly recommended.';
 
+  const multipliers = { Horizontal: HM, Vertical: VM, Distance: DM, Asymmetry: AM, Frequency: FM, Coupling: CM };
+  const worst = Object.entries(multipliers).sort((a, b) => a[1] - b[1])[0][0];
+  const worstFix = {
+    Horizontal: 'the load is too far from the body - pull it in closer before changing anything else; this multiplier is usually the cheapest fix.',
+    Vertical: 'the lift is starting/ending far from ~75cm (knuckle height) - adjust the origin or destination height.',
+    Distance: 'the vertical travel distance is too large - shorten the lift range or split it into stages.',
+    Asymmetry: 'there\'s significant trunk twisting - reposition the destination so the worker doesn\'t rotate while loaded.',
+    Frequency: 'lift frequency is too high for the duration - slow the pace or add rest allowance/job rotation.',
+    Coupling: 'grip quality on the load is poor - better handles or a redesigned grip point directly raises RWL.'
+  }[worst];
+
+  const action = isFinite(LI) && LI > 1
+    ? `<span class="tool-recommend"><strong>${worst}</strong> is dragging RWL down the most - ${worstFix}</span>`
+    : '';
+
   resultEl.innerHTML =
-    `RWL = <strong>${RWL.toFixed(1)} kg</strong> &middot; LI = <strong>${isFinite(LI) ? LI.toFixed(2) : '&infin;'}</strong><br>${verdict}`;
+    `RWL = <strong>${RWL.toFixed(1)} kg</strong> &middot; LI = <strong>${isFinite(LI) ? LI.toFixed(2) : '&infin;'}</strong><br>${verdict}<br>${action}`;
 });
 
 // ---------- Anthropometric Workstation Sizing ----------
@@ -145,7 +188,7 @@ document.getElementById('anthroCalc').addEventListener('click', () => {
 
   const adj = task === 'precision' ? 5 : task === 'heavy' ? -10 : 0;
 
-  let html;
+  let html, action;
   if (posture === 'standing') {
     const elbowHeight = 0.63 * H;
     const workSurface = elbowHeight + adj;
@@ -153,6 +196,7 @@ document.getElementById('anthroCalc').addEventListener('click', () => {
     html = `Elbow height &asymp; <strong>${elbowHeight.toFixed(0)} cm</strong> &middot; ` +
       `Recommended work surface height &asymp; <strong>${workSurface.toFixed(0)} cm</strong> &middot; ` +
       `Standing eye height (monitor top reference) &asymp; <strong>${eyeHeight.toFixed(0)} cm</strong>`;
+    action = `Most standing benches aren't adjustable to the exact centimetre - get within &plusmn;2cm using a platform/riser under the work, not by asking the person to hunch or stretch.`;
   } else {
     const seatHeight = 0.25 * H;
     const deskHeight = 0.40 * H + adj;
@@ -160,6 +204,8 @@ document.getElementById('anthroCalc').addEventListener('click', () => {
     html = `Seat (chair) height &asymp; <strong>${seatHeight.toFixed(0)} cm</strong> &middot; ` +
       `Recommended desk height &asymp; <strong>${deskHeight.toFixed(0)} cm</strong> &middot; ` +
       `Seated eye height (monitor top reference) &asymp; <strong>${eyeHeight.toFixed(0)} cm</strong>`;
+    action = `If the desk itself isn't adjustable, fix seat height first (it's usually adjustable), then close any resulting elbow-to-desk gap with an armrest or keyboard tray rather than raising the chair past the correct seat height.`;
   }
-  resultEl.innerHTML = html + '<br><span class="tool-footnote-inline">Percentage-of-stature guideline - approximate, for teaching use.</span>';
+  resultEl.innerHTML = html + `<br><span class="tool-recommend">${action}</span>` +
+    '<br><span class="tool-footnote-inline">Percentage-of-stature guideline - approximate, for teaching use.</span>';
 });

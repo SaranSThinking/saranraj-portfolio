@@ -17,7 +17,17 @@ document.getElementById('fmeaCalc').addEventListener('click', () => {
   else if (rpn >= 50) tier = 'Moderate priority';
   else tier = 'Low priority';
 
-  resultEl.innerHTML = `RPN = <strong>${rpn}</strong> / 1000 &middot; ${tier}`;
+  const factors = { Severity: sev, Occurrence: occ, Detection: det };
+  const driver = Object.entries(factors).sort((a, b) => b[1] - a[1])[0][0];
+  const driverFix = {
+    Severity: 'this is usually the hardest lever to pull - a high severity score typically means the failure mode itself needs to be designed out, not just controlled downstream.',
+    Occurrence: 'focus on eliminating the root cause or mistake-proofing (poka-yoke) so the failure happens less often in the first place.',
+    Detection: 'as-is, this failure would slip through. Add inspection points, automated checks, or process controls that catch it before it reaches the next stage.'
+  }[driver];
+
+  resultEl.innerHTML =
+    `RPN = <strong>${rpn}</strong> / 1000 &middot; ${tier}<br>` +
+    `<span class="tool-recommend"><strong>${driver}</strong> (${factors[driver]}/10) is the biggest contributor - ${driverFix}</span>`;
 });
 
 // ---------- Takt Time ----------
@@ -32,7 +42,9 @@ document.getElementById('taktCalc').addEventListener('click', () => {
   }
 
   const takt = time / demand;
-  resultEl.innerHTML = `Takt Time = <strong>${takt.toFixed(2)} min/unit</strong> (${(takt * 60).toFixed(1)} sec/unit)`;
+  resultEl.innerHTML =
+    `Takt Time = <strong>${takt.toFixed(2)} min/unit</strong> (${(takt * 60).toFixed(1)} sec/unit)<br>` +
+    `<span class="tool-recommend">Design every station's cycle time at or just under this number. Whichever station actually takes longer than takt is your bottleneck - fix that one station before rebalancing anything else on the line.</span>`;
 });
 
 // ---------- 5S Audit ----------
@@ -55,5 +67,18 @@ document.getElementById('s5Calc').addEventListener('click', () => {
   else if (pct >= 40) tier = 'Developing - needs consistent reinforcement';
   else tier = 'Weak - 5S not yet established';
 
-  resultEl.innerHTML = `Score = <strong>${total}/25</strong> (${pct.toFixed(0)}%) &middot; ${tier}`;
+  const sLabels = ['Sort', 'Set in Order', 'Shine', 'Standardize', 'Sustain'];
+  const weakestIdx = values.indexOf(Math.min(...values));
+  const weakest = sLabels[weakestIdx];
+  const sFix = {
+    Sort: 'clear out what\'s not needed at the workstation - unnecessary items are the single most common source of wasted search time.',
+    'Set in Order': 'give every remaining item a labeled, fixed location - if people are hunting for tools, this is the S to fix.',
+    Shine: 'build cleaning into the shift routine itself, not a separate event - a Shine step that only happens occasionally doesn\'t stick.',
+    Standardize: 'write the standard down - this is usually the missing S even when Sort/Set/Shine look fine, because nothing stops them drifting back within a month.',
+    Sustain: 'this is a discipline problem, not a technique problem - a visible, recurring audit schedule fixes it, not more training.'
+  }[weakest];
+
+  resultEl.innerHTML =
+    `Score = <strong>${total}/25</strong> (${pct.toFixed(0)}%) &middot; ${tier}<br>` +
+    `<span class="tool-recommend">Weakest S: <strong>${weakest}</strong> (${values[weakestIdx]}/5) - ${sFix}</span>`;
 });

@@ -89,13 +89,20 @@ function pspRenderFit(fit) {
     fitEl.textContent = 'Add at least 2 data points or load the sample dataset.';
     return;
   }
-  let warning = '';
+  let action;
   if (fit.r2 < 0.5) {
-    warning = '<br><span style="color:#b3261e;">Fit is weak - other factors likely matter more than hours studied for you.</span>';
+    action = `Fit is weak - other factors (sleep, topic difficulty, prior background) likely matter more than raw hours for you. Track one of those alongside hours before trusting an hours-based prediction.`;
+  } else if (fit.r2 < 0.75) {
+    action = `Decent fit - hours studied is a real signal, but roughly a quarter to half the variation in your scores comes from something else. Use predictions as a planning guide, not a guarantee.`;
+  } else if (fit.slope <= 0) {
+    action = `More hours isn't predicting higher scores here - before adding more study time, check whether those hours are actually focused, since the relationship you're tracking isn't the one you'd expect.`;
+  } else {
+    action = `Strong, consistent relationship - ${fit.slope.toFixed(1)} points per extra hour, reliably enough to plan around. Use the calculator below with real confidence for this subject.`;
   }
   fitEl.innerHTML =
     `Fitted line: score = <strong>${fit.slope.toFixed(2)}</strong> &times; hours + <strong>${fit.intercept.toFixed(2)}</strong> ` +
-    `&middot; R&sup2; = <strong>${fit.r2.toFixed(3)}</strong> (n=${fit.n})${warning}`;
+    `&middot; R&sup2; = <strong>${fit.r2.toFixed(3)}</strong> (n=${fit.n})<br>` +
+    `<span class="tool-recommend">${action}</span>`;
 }
 
 function pspRenderTable(points) {
@@ -152,17 +159,23 @@ document.getElementById('pspCalcBtn').addEventListener('click', () => {
   const targetScore = parseFloat(document.getElementById('pspTargetScore').value);
   const { slope, intercept } = pspFitResult;
 
+  const xs = pspPoints.map(p => p.hours);
+  const maxObservedHours = Math.max(...xs);
+
   let html = '';
   if (!isNaN(predictHours)) {
     const predictedScore = slope * predictHours + intercept;
-    html += `At <strong>${predictHours}h</strong> of study, predicted score &asymp; <strong>${predictedScore.toFixed(1)}</strong><br>`;
+    const capped = Math.max(0, Math.min(100, predictedScore));
+    const outOfRange = predictHours > maxObservedHours * 1.5 ? ` <span class="tool-recommend">This is well beyond your logged hours (max ${maxObservedHours}h) - the trend may not hold that far out; treat it as a rough extrapolation.</span>` : '';
+    html += `At <strong>${predictHours}h</strong> of study, predicted score &asymp; <strong>${capped.toFixed(1)}</strong>${predictedScore > 100 || predictedScore < 0 ? ' (capped to a realistic 0-100 range)' : ''}<br>${outOfRange}`;
   }
   if (!isNaN(targetScore)) {
     if (Math.abs(slope) < 1e-9) {
       html += `Slope is essentially flat - study hours don't predict score changes in this data.`;
     } else {
       const neededHours = (targetScore - intercept) / slope;
-      html += `To reach a score of <strong>${targetScore}</strong>, the trend implies &asymp; <strong>${neededHours.toFixed(1)}h</strong> of study.`;
+      const realism = neededHours > maxObservedHours * 2 ? ` <span class="tool-recommend">That's more than double your longest logged session - if it seems unrealistic, the honest read is that hours alone won't get you there; look at study method too.</span>` : '';
+      html += `To reach a score of <strong>${targetScore}</strong>, the trend implies &asymp; <strong>${neededHours.toFixed(1)}h</strong> of study.${realism}`;
     }
   }
   resultEl.innerHTML = html || 'Enter values and calculate.';

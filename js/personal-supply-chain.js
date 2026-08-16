@@ -67,6 +67,12 @@ function pscRenderItems() {
   container.innerHTML = pscItems.map(item => {
     const m = pscMetrics(item, z);
     const days = isFinite(m.daysUntilStockout) ? m.daysUntilStockout.toFixed(0) : '&infin;';
+    const why = {
+      'reorder-now': `Below reorder point (${m.rop.toFixed(1)} ${item.unit}) - order ${Math.ceil(m.eoq)} ${item.unit} now.`,
+      'reorder-soon': `Within reach of the reorder point - plan to order in the next few days, not this instant.`,
+      overstocked: `Well above target cover (${days} days on hand) - pause ordering this item until stock works back down.`,
+      healthy: `Comfortably between reorder point and overstock - no action needed.`
+    }[m.health];
     return `
       <div class="psc-item-card" data-id="${item.id}">
         <div class="psc-item-header">
@@ -84,6 +90,7 @@ function pscRenderItems() {
           <div>Safety Stock: <strong>${m.safetyStock.toFixed(2)}</strong></div>
           <div>Usage: <strong>${item.avgDailyUsage.toFixed(2)}/day</strong></div>
         </div>
+        <p class="tool-recommend" style="margin:10px 0 0;padding:10px 0 0;">${why}</p>
         <div class="psc-item-actions">
           <button class="psc-log">Log Usage</button>
           <button class="psc-receive">Receive Shipment</button>

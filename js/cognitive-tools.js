@@ -14,8 +14,21 @@ document.getElementById('tlxCalc').addEventListener('click', () => {
   else if (raw <= 70) level = 'High workload';
   else level = 'Very high workload - redesign the task';
 
+  const tlxLabels = ['Mental demand', 'Physical demand', 'Temporal demand', 'Performance (perceived)', 'Effort', 'Frustration'];
+  const tlxDriverIdx = values.indexOf(Math.max(...values));
+  const tlxDriver = tlxLabels[tlxDriverIdx];
+  const tlxFix = {
+    'Mental demand': 'simplify the decision points or add checklists/prompts so less has to be held in working memory.',
+    'Physical demand': 'look at force, repetition, or posture in the task itself, not the person\'s effort.',
+    'Temporal demand': 'the task or pace needs more slack - this is a scheduling problem, not a skill problem.',
+    'Performance (perceived)': 'the person feels they\'re falling short - check whether the goal or standard is actually achievable as the task is currently designed.',
+    'Effort': 'even if the task looks moderate on paper, this person is working hard to keep up - that\'s not sustainable long-term.',
+    'Frustration': 'look for friction in the process itself - bad tools or unclear instructions - rather than the task\'s inherent difficulty.'
+  }[tlxDriver];
+
   document.getElementById('tlxResult').innerHTML =
-    `Raw TLX = <strong>${raw.toFixed(1)}</strong> / 100 &middot; ${level}`;
+    `Raw TLX = <strong>${raw.toFixed(1)}</strong> / 100 &middot; ${level}<br>` +
+    `<span class="tool-recommend"><strong>${tlxDriver}</strong> is the highest subscale (${values[tlxDriverIdx]}/100) - ${tlxFix}</span>`;
 });
 
 // ---------- Fitts's Law ----------
@@ -30,9 +43,15 @@ document.getElementById('fittsCalc').addEventListener('click', () => {
   const a = 0.1, b = 0.2; // typical empirical constants (seconds, seconds/bit)
   const ID = Math.log2((2 * D) / W);
   const MT = a + b * ID;
+
+  const action = ID > 4
+    ? `This is a demanding target (ID &gt; 4 bits) - growing the target width usually buys more speed than shrinking the distance, since width sits directly in the log term. Try doubling W before you touch D.`
+    : `This target is comfortably easy to hit (ID under 4 bits) - movement time is already close to the floor here; further gains would have to come from cutting distance, not widening the target.`;
+
   resultEl.innerHTML =
     `Index of Difficulty = <strong>${ID.toFixed(2)} bits</strong> &middot; ` +
-    `Predicted Movement Time &asymp; <strong>${MT.toFixed(2)} s</strong>`;
+    `Predicted Movement Time &asymp; <strong>${MT.toFixed(2)} s</strong><br>` +
+    `<span class="tool-recommend">${action}</span>`;
 });
 
 // ---------- Signal Detection Theory ----------
@@ -77,11 +96,19 @@ document.getElementById('sdtCalc').addEventListener('click', () => {
   const dPrime = zHit - zFa;
   const criterion = -0.5 * (zHit + zFa);
 
-  let bias;
-  if (criterion > 0.2) bias = 'Conservative - biased toward missing signals';
-  else if (criterion < -0.2) bias = 'Liberal - biased toward false alarms';
-  else bias = 'Roughly neutral response bias';
+  let bias, action;
+  if (criterion > 0.2) {
+    bias = 'Conservative - biased toward missing signals';
+    action = `Lower the response threshold if missed signals are more costly than false alarms in this context - right now the person/system needs more certainty before responding than the situation may warrant.`;
+  } else if (criterion < -0.2) {
+    bias = 'Liberal - biased toward false alarms';
+    action = `Raise the response threshold if false alarms are more costly than misses here - right now it's trigger-happy, flagging things that aren't really there.`;
+  } else {
+    bias = 'Roughly neutral response bias';
+    action = `Bias is balanced. If you want to shift it, that should be a deliberate call based on which error - a miss or a false alarm - is more costly in this specific context, not left to accident.`;
+  }
 
   resultEl.innerHTML =
-    `d&prime; = <strong>${dPrime.toFixed(2)}</strong> &middot; Criterion c = <strong>${criterion.toFixed(2)}</strong> &middot; ${bias}`;
+    `d&prime; = <strong>${dPrime.toFixed(2)}</strong> &middot; Criterion c = <strong>${criterion.toFixed(2)}</strong> &middot; ${bias}<br>` +
+    `<span class="tool-recommend">${action}</span>`;
 });
