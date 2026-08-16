@@ -58,6 +58,15 @@ document.getElementById('tcdSimStrongest').addEventListener('click', () => {
     `<span style="color:var(--red);font-weight:700;">(+${(newTti - tti).toFixed(1)})</span>`;
 });
 
+document.getElementById('tcdCopyCitation').addEventListener('click', () => {
+  const text = document.getElementById('tcdCitationText').textContent.replace(/\s+/g, ' ').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const confirmEl = document.getElementById('tcdCopyConfirm');
+    confirmEl.style.display = 'inline';
+    setTimeout(() => { confirmEl.style.display = 'none'; }, 2500);
+  }).catch(() => {});
+});
+
 // ---------- Leadership Style Self-Assessment ----------
 document.getElementById('lsCalc').addEventListener('click', () => {
   const q = id => parseInt(document.getElementById(id).value, 10);
