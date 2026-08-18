@@ -94,6 +94,9 @@ img, svg { max-width: 100%; display: block; }
 }
 .main-nav a:hover { color: var(--navy); }
 
+.main-nav a.nav-highlight { color: var(--teal); font-weight: 700; }
+.main-nav a.nav-highlight:hover { color: var(--teal-light); }
+
 .nav-cta {
   background: var(--navy);
   color: #fff !important;
