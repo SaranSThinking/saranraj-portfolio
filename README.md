@@ -1,6 +1,6 @@
 # Saranraj Ramachandran - Industrial Engineering Portfolio
 
-**Live site:** https://saransthinking.github.io/saranraj-portfolio/
+**Live site:** https://saranraj.site/
 
 A static portfolio site for Saranraj Ramachandran, Lecturer (Department of Industrial Engineering, CEG,
 Anna University). A lean homepage links out to nine expertise-domain pages (each with live interactive

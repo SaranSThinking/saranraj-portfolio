@@ -1,7 +1,7 @@
 # Organisational Behaviour
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/organisational-behaviour/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/organisational-behaviour/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Team dynamics, leadership, and change management - tested on the shop floor and on the competition floor. This
 domain draws as much from captaining a national fencing team and coaching over 70 athletes as it does from the
@@ -20,7 +20,7 @@ Norming, Performing, Adjourning), with a specific action tip for that stage.
 
 ## Case Study: Leadership Under Pressure
 
-Full details in the [Beyond Academics](https://saransthinking.github.io/saranraj-portfolio/#beyond) section of
+Full details in the [Beyond Academics](https://saranraj.site/#beyond) section of
 the portfolio homepage:
 
 - **2018–19 - Captain, National Team, All India National Fencing** (GNDU Punjab) - led a national team under

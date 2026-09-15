@@ -1,7 +1,7 @@
 # Personal Supply Chain
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-supply-chain/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-supply-chain/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 A household inventory optimizer that applies real supply-chain mathematics - EOQ, reorder points, safety
 stock, and consumption smoothing - to the items in your pantry. Treat your home like a warehouse and stop

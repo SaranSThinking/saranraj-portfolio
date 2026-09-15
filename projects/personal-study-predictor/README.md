@@ -1,7 +1,7 @@
 # Personal Study Predictor
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-study-predictor/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-study-predictor/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 A least-squares regression model fitted live on your own study-hours-vs-score data - the same math behind
 demand forecasting, pointed at your next exam instead. Log a handful of past study sessions and their scores,

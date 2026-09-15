@@ -1,7 +1,7 @@
 # Personal Productivity OEE
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-productivity-oee/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-productivity-oee/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 Score your own day the way a factory scores a machine - Availability × Performance × Quality. OEE decomposes
 machine downtime into three separate losses instead of one vague "productivity" number. Applied to a personal

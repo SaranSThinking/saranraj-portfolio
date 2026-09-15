@@ -1,7 +1,7 @@
 # AI & Machine Learning
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/ai-ml/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/ai-ml/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Applied ML for Industrial Engineering - prediction, classification, and pattern detection on shop-floor and
 operations data. Taught alongside Operations and Analytics, so the framing stays applied: not ML for its own

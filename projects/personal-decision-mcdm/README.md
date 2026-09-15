@@ -1,7 +1,7 @@
 # Personal Decision Making (MCDM)
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-decision-mcdm/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-decision-mcdm/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 A Weighted Sum Model - the same multi-criteria decision-making technique used to prioritize supplier or vendor
 choices - pointed at your next job offer, apartment, or grad school pick. Big personal decisions rarely fail

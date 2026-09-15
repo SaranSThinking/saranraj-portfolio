@@ -1,7 +1,7 @@
 # Work System Design
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/work-system-design/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/work-system-design/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Productivity, OEE, process capability, and SOPs - engineering the work itself, not just the workstation.
 Classical Industrial Engineering: time-and-motion study, line balancing, and equipment effectiveness. This is
@@ -32,7 +32,7 @@ efficiency.
 **Productivity Improvement of an Engine Assembly Line Using MOST** (journal, communicated) - station-wise
 cycle times were decomposed into elemental motions using the Maynard Operation Sequence Technique (MOST),
 establishing standard times used to rebalance the line against takt time. The full DMAIC walkthrough of this
-study lives on the [portfolio homepage](https://saransthinking.github.io/saranraj-portfolio/#tool-dmaic); this
+study lives on the [portfolio homepage](https://saranraj.site/#tool-dmaic); this
 page covers the Work System Design angle (time study and line balancing).
 
 ## Files

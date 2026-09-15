@@ -1,7 +1,7 @@
 # Entrepreneurship
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/entrepreneurship/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/entrepreneurship/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Mentoring student ventures, and researching what actually predicts entrepreneurial intent. Pioneer of CEG's
 Centre for Entrepreneurship Development and coordinator for the Naan Mudhalvan program - this domain sits at

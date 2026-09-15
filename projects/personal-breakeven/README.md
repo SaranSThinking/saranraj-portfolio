@@ -1,7 +1,7 @@
 # Personal Breakeven Analysis
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-breakeven/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-breakeven/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 "Will this actually pay for itself?" - answered with the same breakeven math used to justify capital equipment
 purchases, pointed at your coffee machine instead. Every buy-it-once-vs-pay-per-use decision has a real

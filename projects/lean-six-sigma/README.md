@@ -1,7 +1,7 @@
 # Lean Six Sigma
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/lean-six-sigma/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/lean-six-sigma/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Green Belt certified. DMAIC-driven process improvement and waste elimination. Beyond running DMAIC projects,
 this domain includes research into why Lean Six Sigma adoption actually fails in small-scale industries - the

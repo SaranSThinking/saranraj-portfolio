@@ -1,7 +1,7 @@
 # Personal Quality Control
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-quality-control/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-quality-control/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 An Individuals–Moving Range (I-MR) control chart applied to a metric from your own life - sleep, steps, study
 hours, mood, anything you log daily. The same statistical process control logic that flags a defective batch

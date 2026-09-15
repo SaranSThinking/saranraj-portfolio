@@ -1,7 +1,7 @@
 # Cognitive Ergonomics
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/cognitive-ergonomics/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/cognitive-ergonomics/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Mental workload, decision-making, and human–system interaction - the invisible half of ergonomics. Where
 physical ergonomics asks "does this posture hurt the body," cognitive ergonomics asks "does this task overload

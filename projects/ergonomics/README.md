@@ -1,7 +1,7 @@
 # Ergonomics
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/ergonomics/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/ergonomics/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Human factors, posture, and workload assessment - turning physical and cognitive strain into measurable,
 fixable risk. This is the domain where the portfolio's research concentration sits most heavily: ergonomic

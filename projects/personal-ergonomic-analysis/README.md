@@ -1,7 +1,7 @@
 # Personal Ergonomic Analysis
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/personal-ergonomic-analysis/
-**Part of:** [Learn by Doing](https://saransthinking.github.io/saranraj-portfolio/personal-projects.html) - Saranraj Ramachandran's portfolio
+**Live:** https://saranraj.site/projects/personal-ergonomic-analysis/
+**Part of:** [Learn by Doing](https://saranraj.site/personal-projects.html) - Saranraj Ramachandran's portfolio
 
 An integrated audit of your own desk setup - combining anthropometric fit and posture risk into one Workspace
 Ergonomic Score. The [Ergonomics domain](../ergonomics/) has these techniques as separate calculators; this

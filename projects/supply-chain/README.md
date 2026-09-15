@@ -1,7 +1,7 @@
 # Supply Chain & Logistics Management
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/supply-chain/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/supply-chain/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Inventory parameters, distribution, analytics, and resilience - organized around the four courses taught in
 this space: Supply Chain Management, Logistics Management, Supply Chain Analytics, and Supply Chain Risk &

@@ -1,7 +1,7 @@
 # Quality Management
 
-**Live:** https://saransthinking.github.io/saranraj-portfolio/projects/quality-management/
-**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saransthinking.github.io/saranraj-portfolio/)
+**Live:** https://saranraj.site/projects/quality-management/
+**Part of:** [Saranraj Ramachandran - Industrial Engineering Portfolio](https://saranraj.site/)
 
 Statistical process control and quality systems - for the shop floor and for academic accreditation alike.
 M.E. in Quality Engineering & Management, plus years coordinating NBA and NAAC accreditation processes at CEG:
