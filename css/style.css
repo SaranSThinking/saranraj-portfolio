@@ -959,6 +959,32 @@ img, svg { max-width: 100%; display: block; }
 .pp-project-card h3 { color: var(--navy); font-size: 1.15rem; margin: 10px 0 8px; }
 .pp-project-card p { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 14px; }
 
+/* Expertise index (ruled list) */
+.index-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--navy); }
+.index-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 32px;
+  gap: 20px;
+  align-items: baseline;
+  padding: 24px 4px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+}
+.index-num { font-family: var(--font-display); font-size: 1rem; color: var(--teal); font-variant-numeric: tabular-nums; }
+.index-title { display: block; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; color: var(--navy); }
+.index-desc { display: block; margin-top: 6px; max-width: 720px; color: var(--text-muted); font-size: 0.95rem; }
+.index-go { justify-self: end; color: var(--teal); font-size: 1.1rem; }
+.index-row:hover .index-title, .index-row:focus-visible .index-title { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.index-row:focus-visible { outline: 2px solid var(--teal-light); outline-offset: 2px; }
+
+/* Testimonials (pull quotes) */
+.quote-list { max-width: 820px; border-top: 1px solid var(--navy); }
+.quote { margin: 0; padding: 32px 0; border-bottom: 1px solid var(--border); }
+.quote blockquote { margin: 0; font-family: var(--font-display); font-size: 1.12rem; line-height: 1.7; color: var(--text); }
+.quote figcaption { margin-top: 14px; font-size: 0.88rem; color: var(--text-muted); }
+.quote-name { font-weight: 600; color: var(--navy); margin-right: 10px; }
+
 /* Responsive */
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -978,7 +1004,7 @@ img, svg { max-width: 100%; display: block; }
   .pp-feature-grid { grid-template-columns: 1fr; }
   .pp-stack-outcome { grid-template-columns: 1fr; }
   .pp-project-grid { grid-template-columns: 1fr; }
-  .testimonial-grid { grid-template-columns: 1fr; }
+  .index-row { grid-template-columns: 40px 1fr 20px; gap: 12px; }
   .feedback-average { flex-direction: column; align-items: flex-start; gap: 24px; }
   .feedback-average-stats { grid-template-columns: 1fr 1fr; }
 }
