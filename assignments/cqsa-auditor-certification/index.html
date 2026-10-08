@@ -151,15 +151,14 @@
   .week-card:active { transform:scale(0.995); }
   .week-card.locked { cursor:default; opacity:0.55; }
   .week-card.locked:hover { border-color:var(--border); }
-  .week-card.gate { border-left:4px solid var(--gold); }
+  .week-card.gate { border-color:var(--gold); }
   .week-num {
     width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;
     font-family:Consolas,monospace; font-weight:700; font-size:0.92rem; flex-shrink:0;
     background:var(--surface-2); border:2px solid var(--lock); color:var(--ink-muted);
   }
-  .week-card.current .week-num { border-color:var(--accent); color:var(--accent); animation:pulse 2.2s ease-in-out infinite; }
+  .week-card.current .week-num { border-color:var(--accent); color:var(--accent); }
   .week-card.done .week-num { border-color:var(--accent-2); background:var(--accent-2); color:#fff; }
-  @keyframes pulse { 0%,100%{filter:drop-shadow(0 0 0 rgba(20,73,122,0));} 50%{filter:drop-shadow(0 0 6px var(--accent));} }
   .week-body { flex:1; min-width:0; }
   .week-title { font-size:0.95rem; font-weight:600; margin:0 0 2px; }
   .week-sub { font-size:0.78rem; color:var(--ink-muted); }
@@ -204,7 +203,7 @@
 
   .block { margin-bottom:20px; }
   .block h4 { font-size:0.88rem; margin:0 0 8px; color:var(--ink); }
-  .block .info-box { background:var(--surface-2); border-left:3px solid var(--accent); border-radius:0 3px 3px 0; padding:12px 14px; font-size:0.86rem; line-height:1.6; margin-bottom:6px; }
+  .block .info-box { background:var(--surface-2); border:1px solid var(--line); border-radius:3px; padding:12px 14px; font-size:0.86rem; line-height:1.6; margin-bottom:6px; }
   .block .info-box p { margin:0 0 8px; }
   .block .info-box p:last-child { margin-bottom:0; }
 
@@ -299,30 +298,47 @@
    * NOTE: if QE3001 is taken by a narrower subset than IL3064 (e.g. only the
    * Quality Engg specialisation students), trim this list accordingly.
    */
-  var ROSTER = [
-    { roll: "2025229001", name: "Hari Sriram J K" },
-    { roll: "2025229026", name: "Nikitha M" },
-    { roll: "2025229027", name: "Praveen Chand S" },
-    { roll: "2025229028", name: "Zabira Nusrath" },
-    { roll: "2025229030", name: "Sahaya Renisha M" },
-    { roll: "2025229031", name: "Shree Charan Ranjan Reddy D K" },
-    { roll: "2025229032", name: "Kaushik D" },
-    { roll: "2025229033", name: "Vikram P" },
-    { roll: "2025220026", name: "Amresh Pattanaik" },
-    { roll: "2025220027", name: "Naveen Balaji S" },
-    { roll: "2025220028", name: "Dinesh Kumar U" },
-    { roll: "2025220029", name: "Ashik V S" },
-    { roll: "2025220030", name: "Vibudeshwaran B S" },
-    { roll: "2025220031", name: "Praveen Kumar M" },
-    { roll: "2025220032", name: "Vigneswaran S" },
-    { roll: "26142191175", name: "Richard Jesu Daniel R" }
+  /* Register numbers are stored as salted SHA-256 hashes only. Students type their own name at check-in. */
+  var ROSTER_SALT = "doie-qe3001|";
+  var ROSTER_HASHES = [
+    "7aeb1ff1793a64be410a4a299ab5deae150cda7e3788f275bcd686c7a0ffbe01",
+    "16b589e5f5041e7b8091157c94c4d724ceb34255bd1c2a7978fd92ae76868296",
+    "3d2a470a2cedeb6d3a7597592be76e8e6951aaa42f4ebdd637c6fb88874bc658",
+    "c3d1644982d8d521f5459e990d8fae2788e5ac98570e4fd59c8f0255f25e2fcd",
+    "71b2933761c7fed85a66fa6822e0d60669c4bf4bb9611dee39ccad20fafb6302",
+    "4c55c6f3094865e43c2d35e708697f33bbd537afdbc53e1bf2ddf10e14a61976",
+    "67edad8acb90ccb7b60f5c9fdff2af97bf8c6283cf3d22b3cc2e2f8b9fba5752",
+    "ff80b15d9814e7eb456170e82d68a5ca006c091912853d3085a9ca853ba89a00",
+    "f366313b621362c817342c808f44ccb4a5f5b1d1f67b09a6c1f611d02f0b3c5f",
+    "9dd04b304ed69aa34c0952a4ff1aa6b0e4ea51dc71d1dd1841902e7ebe0b147e",
+    "a8eef12550d50aa04ccb945db605764fac9b3f3908aee4564e25f3901613f60f",
+    "d102007ed25351130ce5002e174a7fc26616c427b52628f8afff472c408dc8d9",
+    "350547dbf894ad76635c9414ceb3bd160224b6e010a48eed46a5a40343346bac",
+    "fed0a7af3576ed8e52c14ec6bca90f00522782de0471cbb42adfd4820e0d348e",
+    "2dba77428c51605a090b60ba8caa34ca1d0d9ee21319a4d7b2e01d52828de14e",
+    "d8b494a9bc94018f8aaee2f62f3392c1a2d75d50b4c75fa73cbedee30617f3c3"
   ];
-  var CLASS_CODE = "CQSA2026";
+  function sha256hex(s){function r(n,x){return(x>>>n)|(x<<(32-n))}
+  var m=Math.pow,mx=m(2,32),i,j,res='',w=[],ab=s.length*8;
+  var h=sha256hex.h=sha256hex.h||[],k=sha256hex.k=sha256hex.k||[],pc=k.length,ic={};
+  for(var c=2;pc<64;c++)if(!ic[c]){for(i=0;i<313;i+=c)ic[i]=c;h[pc]=(m(c,.5)*mx)|0;k[pc++]=(m(c,1/3)*mx)|0}
+  s+='\x80';while(s.length%64-56)s+='\x00';
+  for(i=0;i<s.length;i++){j=s.charCodeAt(i);if(j>>8)return'';w[i>>2]|=j<<((3-i)%4)*8}
+  w[w.length]=((ab/mx)|0);w[w.length]=ab;
+  for(j=0;j<w.length;){var wk=w.slice(j,j+=16),oh=h;h=h.slice(0,8);
+  for(i=0;i<64;i++){var w15=wk[i-15],w2=wk[i-2],a=h[0],e=h[4];
+  var t1=h[7]+(r(6,e)^r(11,e)^r(25,e))+((e&h[5])^(~e&h[6]))+k[i]+(wk[i]=(i<16)?wk[i]:(wk[i-16]+(r(7,w15)^r(18,w15)^(w15>>>3))+wk[i-7]+(r(17,w2)^r(19,w2)^(w2>>>10)))|0);
+  var t2=(r(2,a)^r(13,a)^r(22,a))+((a&h[1])^(a&h[2])^(h[1]&h[2]));
+  h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0}
+  for(i=0;i<8;i++)h[i]=(h[i]+oh[i])|0}
+  for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(h[i]>>(j*8))&255;res+=((b<16)?0:'')+b.toString(16)}return res}
+  var CLASS_CODE_HASH = "cc67ef2d6e7cbb31fd3112ef6231ae4bb4d9d394e2b9ea02d817a523f7304f4d";
+  function classCodeOk(c) { return sha256hex(ROSTER_SALT + "code|" + (c || "")) === CLASS_CODE_HASH; }
 
   function findRosterEntry(roll) {
     var r = (roll || "").trim().toUpperCase();
-    for (var i = 0; i < ROSTER.length; i++) if (ROSTER[i].roll.toUpperCase() === r) return ROSTER[i];
-    return null;
+    if (!r) return null;
+    return ROSTER_HASHES.indexOf(sha256hex(ROSTER_SALT + r)) >= 0 ? { roll: r, name: "" } : null;
   }
 
   /* ============================================================
@@ -849,6 +865,7 @@
   function renderLogin() {
     var screen = el("div", { class:"login-screen" });
     var rollInput = el("input", { type:"text", placeholder:"e.g. 2025229026" });
+    var nameInput = el("input", { type:"text", placeholder:"Full name (first time only)" });
     var codeInput = el("input", { type:"text", placeholder:"Given by your instructor" });
     var err = el("p", { class:"login-foot", style:"color:var(--danger);display:none;" });
 
@@ -861,7 +878,11 @@
       var code = codeInput.value.trim();
       var entry = findRosterEntry(roll);
       if (!entry) { err.textContent = "Roll number not found on the roster. Check with your instructor."; err.style.display = "block"; return; }
-      if (code !== CLASS_CODE) { err.textContent = "Class code doesn't match."; err.style.display = "block"; return; }
+      if (!classCodeOk(code)) { err.textContent = "Class code doesn't match."; err.style.display = "block"; return; }
+      var nameTyped = (nameInput.value || "").trim();
+      var prior = loadState(entry.roll);
+      entry.name = nameTyped || (prior && prior.name) || "";
+      if (!entry.name) { err.textContent = "Enter your name as it should appear on your work."; err.style.display = "block"; return; }
       try { localStorage.setItem(LAST_ROLL_KEY, entry.roll); } catch (e) {}
       state = loadState(entry.roll) || newState(entry.roll, entry.name);
       state.name = entry.name;
@@ -869,7 +890,8 @@
       view = "journey";
       render();
     }
-    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
+    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") nameInput.focus(); });
+    nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
     codeInput.addEventListener("keydown", function (e) { if (e.key === "Enter") doLogin(); });
 
     var card = el("div", { class:"login-card" }, [
@@ -877,6 +899,7 @@
       el("h1", {}, [txt("Auditor Certification Journey")]),
       el("p", { class:"sub" }, [txt("15 weeks. 5 Gates. Every worksheet, template and finding lives here - no hardcopy. Clear all 5 Gates and earn your CQSA-I certificate.")]),
       el("label", { class:"field-label" }, [txt("Register number")]), rollInput,
+      el("label", { class:"field-label" }, [txt("Your name")]), nameInput,
       el("label", { class:"field-label" }, [txt("Class code")]), codeInput,
       el("button", { class:"btn-primary", onclick:doLogin }, [txt("Check in →")]),
       err,
@@ -898,13 +921,13 @@
 
     var topbar = el("div", { class:"topbar" }, [
       el("div", { class:"brand" }, [
-        el("span", { class:"mark" }, [txt("🎓 CQSA-I")]),
+        el("span", { class:"mark" }, [txt("CQSA-I")]),
         el("span", { class:"tag" }, [txt("Certification Journey · QE3001")])
       ]),
       el("div", { class:"topnav" }, [
-        el("button", { class:"btn-tab", onclick:function () { refModal = "dossier"; render(); } }, [txt("📁 Case File")]),
-        el("button", { class:"btn-tab", onclick:function () { refModal = "toolkit"; render(); } }, [txt("📑 Toolkit T-1–T-13")]),
-        el("button", { class:"btn-tab", onclick:exportPortfolio }, [txt("⬇ Export Portfolio")])
+        el("button", { class:"btn-tab", onclick:function () { refModal = "dossier"; render(); } }, [txt("Case File")]),
+        el("button", { class:"btn-tab", onclick:function () { refModal = "toolkit"; render(); } }, [txt("Toolkit T-1–T-13")]),
+        el("button", { class:"btn-tab", onclick:exportPortfolio }, [txt("Export Portfolio")])
       ]),
       el("div", { class:"hud" }, [
         el("div", { class:"hud-stat" }, [el("span", { class:"num mono" }, [txt(weeksDoneCount() + "/15")]), el("span", { class:"lbl" }, [txt("Weeks")])]),
@@ -946,7 +969,7 @@
         var titleRow = el("div", { class:"week-title" }, [txt("Week " + w.id + " - " + w.concept)]);
         if (w.gate) {
           var cleared = weekDone(w.id);
-          titleRow.appendChild(el("span", { class:"gate-pill" + (cleared ? " cleared" : "") }, [txt((cleared ? "✓ " : "🔒 ") + w.gate.name)]));
+          titleRow.appendChild(el("span", { class:"gate-pill" + (cleared ? " cleared" : "") }, [txt((cleared ? "✓ " : "") + w.gate.name)]));
         }
         body.appendChild(titleRow);
         body.appendChild(el("div", { class:"week-sub" }, [txt(w.unit + " · " + (w.performance ? w.performance.title : ""))]));
@@ -960,7 +983,7 @@
     if (allGatesCleared()) {
       jwrap.appendChild(el("div", { class:"cert-banner" }, [
         el("div", {}, [
-          el("h3", {}, [txt("🎓 All 5 Gates cleared")]),
+          el("h3", {}, [txt("All 5 Gates cleared")]),
           el("p", {}, [txt("Your CQSA-I certificate is ready.")])
         ]),
         el("button", { class:"btn-gold", onclick:function () { view = "cert"; render(); } }, [txt("View Certificate →")])
@@ -1223,7 +1246,7 @@
   function renderCertificate() {
     var wrap = el("div", { style:"display:flex;flex-direction:column;flex:1;" });
     wrap.appendChild(el("div", { class:"topbar" }, [
-      el("div", { class:"brand" }, [el("span", { class:"mark" }, [txt("🎓 CQSA-I")]), el("span", { class:"tag" }, [txt("Certificate")])]),
+      el("div", { class:"brand" }, [el("span", { class:"mark" }, [txt("CQSA-I")]), el("span", { class:"tag" }, [txt("Certificate")])]),
       el("button", { class:"btn-tab", onclick:function () { view = "journey"; render(); } }, [txt("← Back to Journey")])
     ]));
 
@@ -1248,8 +1271,8 @@
 
     var status = el("div", { class:"cert-status" });
     var actions = el("div", { class:"cert-actions" }, [
-      el("button", { class:"btn-gold", onclick:function () { downloadCertificate(status); } }, [txt("⬇ Download Certificate")]),
-      el("button", { class:"btn-ghost", onclick:function () { exportPortfolio(); } }, [txt("⬇ Export Full Portfolio")])
+      el("button", { class:"btn-gold", onclick:function () { downloadCertificate(status); } }, [txt("Download Certificate")]),
+      el("button", { class:"btn-ghost", onclick:function () { exportPortfolio(); } }, [txt("Export Full Portfolio")])
     ]);
     sheet.appendChild(actions);
     sheet.appendChild(status);
