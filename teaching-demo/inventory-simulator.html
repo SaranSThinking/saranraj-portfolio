@@ -61,7 +61,7 @@
   <header>
     <p class="eyebrow">Live Teaching Tool &middot; Supply Chain Management</p>
     <h1>Inventory Decision Simulator</h1>
-    <p>Change any input below and every number, and the chart, recomputes instantly &mdash; the exact scenario from today's session, live.</p>
+    <p>Change any input below and every number, and the chart, recomputes instantly - the exact scenario from today's session, live.</p>
   </header>
 
   <div class="grid">
@@ -88,7 +88,7 @@
             <div><span class="num" id="qcBefore">-</span><div class="lbl">EOQ before</div></div>
             <div><span class="num" id="qcAfter">-</span><div class="lbl">EOQ after (H &times; 2)</div></div>
           </div>
-          <p style="margin:12px 0 0;color:var(--text-muted);font-size:.85rem;">EOQ falls by a factor of 1/&radic;2 &mdash; inversely proportional to &radic;H, not to H itself.</p>
+          <p style="margin:12px 0 0;color:var(--text-muted);font-size:.85rem;">EOQ falls by a factor of 1/&radic;2 - inversely proportional to &radic;H, not to H itself.</p>
         </div>
       </div>
     </div>
@@ -283,9 +283,9 @@ function updateAF(){
   const gap = adaptiveLT - staticLT;
   const gapNote = document.getElementById('afGapNote');
   if (Math.abs(gap) < 1) {
-    gapNote.textContent = `Both methods agree closely for this data — demand is stable, so there's little for adaptive forecasting to catch.`;
+    gapNote.textContent = `Both methods agree closely for this data - demand is stable, so there's little for adaptive forecasting to catch.`;
   } else {
-    gapNote.innerHTML = `Over a ${LT}-week lead time: static average implies covering <strong>${staticLT.toLocaleString()} units</strong>, adaptive forecasting implies <strong>${adaptiveLT.toLocaleString()} units</strong> &mdash; a gap of <strong>${gap > 0 ? '+' : ''}${gap.toLocaleString()} units</strong>. ${gap > 0 ? "That's exactly the kind of under-ordering that leads to a stockout during a demand ramp." : "Static average is over-estimating current demand here."}`;
+    gapNote.innerHTML = `Over a ${LT}-week lead time: static average implies covering <strong>${staticLT.toLocaleString()} units</strong>, adaptive forecasting implies <strong>${adaptiveLT.toLocaleString()} units</strong> - a gap of <strong>${gap > 0 ? '+' : ''}${gap.toLocaleString()} units</strong>. ${gap > 0 ? "That's exactly the kind of under-ordering that leads to a stockout during a demand ramp." : "Static average is over-estimating current demand here."}`;
   }
 }
 

@@ -55,7 +55,7 @@ function pmcdmRenderRanking(scores) {
 
   const rows = sorted.map((s, i) => `
     <div class="pp-rank-row ${i === 0 ? 'pp-rank-winner' : ''}">
-      <div class="pp-rank-label">${i === 0 ? '🏆 ' : ''}${s.option}</div>
+      <div class="pp-rank-label">${i === 0 ? 'Top choice: ' : ''}${s.option}</div>
       <div class="pp-rank-track">
         <div class="pp-rank-fill" style="width:${(s.score / maxScore) * 100}%">
           <span>${s.score.toFixed(2)}</span>

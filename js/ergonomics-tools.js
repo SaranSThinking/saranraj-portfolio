@@ -48,7 +48,7 @@ document.getElementById('rulaCalc').addEventListener('click', () => {
   }[rulaDriver];
 
   document.getElementById('rulaResult').innerHTML =
-    `Score = <strong>${score}</strong> &middot; ${level} &mdash; ${action}<br>` +
+    `Score = <strong>${score}</strong> &middot; ${level} - ${action}<br>` +
     `<span class="tool-recommend"><strong>${rulaDriver}</strong> is your biggest contributor - ${rulaFix}</span>`;
 });
 
@@ -88,7 +88,7 @@ document.getElementById('rebaCalc').addEventListener('click', () => {
   }[rebaDriver];
 
   document.getElementById('rebaResult').innerHTML =
-    `Score = <strong>${score}</strong> &middot; ${level} &mdash; ${action}<br>` +
+    `Score = <strong>${score}</strong> &middot; ${level} - ${action}<br>` +
     `<span class="tool-recommend"><strong>${rebaDriver}</strong> is your biggest contributor - ${rebaFix}</span>`;
 });
 
