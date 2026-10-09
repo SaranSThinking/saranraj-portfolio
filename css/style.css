@@ -149,6 +149,8 @@ img, svg { max-width: 100%; display: block; }
   object-fit: cover;
   object-position: center 20%;
 }
+.domain-hero .hero-inner { margin-bottom: 8px; }
+.domain-hero .hero-inner h1 { font-size: clamp(2rem, 3.4vw, 2.7rem); }
 
 .eyebrow {
   font-family: var(--font-mono);
