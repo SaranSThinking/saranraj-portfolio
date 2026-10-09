@@ -190,11 +190,11 @@
   .hud-name b { color: var(--ink); }
   .fx-toggle {
     background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-muted);
-    width: 34px; height: 34px; border-radius: 50%; font-size: 1rem; cursor: pointer;
+    width: auto; height: 34px; padding: 0 12px; border-radius: 3px; font-size: 0.78rem; white-space: nowrap; cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
     transition: transform 0.15s ease, border-color 0.15s ease;
   }
-  .fx-toggle:hover { border-color: var(--accent); transform: scale(1.06); }
+  .fx-toggle:hover { border-color: var(--accent); }
   .fx-toggle[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
 
   .atlas-wrap {
@@ -216,13 +216,9 @@
   .node-group { cursor: pointer; }
   .node-group:focus-visible circle.node-ring { outline: 2px solid var(--ink); }
   .node-ring { fill: var(--surface); stroke: var(--lock); stroke-width: 2.5; transition: stroke 0.2s ease, fill 0.2s ease; }
-  .node-group.active .node-ring { stroke: var(--accent); animation: pulse 2.2s ease-in-out infinite; }
+  .node-group.active .node-ring { stroke: var(--accent); }
   .node-group.done .node-ring { stroke: var(--accent-2); fill: var(--accent-2); }
   .node-group.locked .node-ring { stroke: var(--lock); }
-  @keyframes pulse {
-    0%, 100% { filter: drop-shadow(0 0 0 rgba(245,169,78,0)); }
-    50% { filter: drop-shadow(0 0 7px var(--accent)); }
-  }
   .node-icon { font-size: 20px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
   .node-group.locked .node-icon { opacity: 0.45; }
   .node-label { font-size: 12.5px; text-anchor: middle; fill: var(--ink); font-family: "Segoe UI", sans-serif; pointer-events: none; }
@@ -300,8 +296,8 @@
 
   .scenario-box {
     background: var(--surface-2);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 3px 3px 0;
+    border: 1px solid var(--line);
+    border-radius: 3px;
     padding: 14px 16px;
     font-size: 0.92rem;
     line-height: 1.6;
@@ -425,7 +421,7 @@
   .milestone-lock-note { font-size: 0.82rem; color: var(--ink-muted); margin-top: 4px; }
   .milestone-goal { font-size: 0.9rem; line-height: 1.6; margin: 10px 0 10px; }
   .milestone-why {
-    background: var(--surface-2); border-left: 3px solid var(--accent-2); border-radius: 0 3px 3px 0;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 3px;
     padding: 10px 14px; font-size: 0.84rem; line-height: 1.6; color: var(--ink); margin-bottom: 14px;
   }
   .milestone-why b.tag { color: var(--accent-2); }
@@ -513,37 +509,52 @@
    * their progress is saved under, so two students never share one save-slot
    * even on the same shared/lab computer).
    */
-  var ROSTER = [
-    { roll: "2025229001", name: "Hari Sriram J K" },
-    { roll: "2025229026", name: "Nikitha M" },
-    { roll: "2025229027", name: "Praveen Chand S" },
-    { roll: "2025229028", name: "Zabira Nusrath" },
-    { roll: "2025229030", name: "Sahaya Renisha M" },
-    { roll: "2025229031", name: "Shree Charan Ranjan Reddy D K" },
-    { roll: "2025229032", name: "Kaushik D" },
-    { roll: "2025229033", name: "Vikram P" },
-    { roll: "2025220026", name: "Amresh Pattanaik" },
-    { roll: "2025220027", name: "Naveen Balaji S" },
-    { roll: "2025220028", name: "Dinesh Kumar U" },
-    { roll: "2025220029", name: "Ashik V S" },
-    { roll: "2025220030", name: "Vibudeshwaran B S" },
-    { roll: "2025220031", name: "Praveen Kumar M" },
-    { roll: "2025220032", name: "Vigneswaran S" },
-    { roll: "26142191175", name: "Richard Jesu Daniel R" }
+  /* Register numbers are stored as salted SHA-256 hashes only. Students type their own name at check-in. */
+  var ROSTER_SALT = "doie-il3064|";
+  var ROSTER_HASHES = [
+    "f37373aad0bd6664028571a828f11da9239edf53b0e5126cfbf9bc6ed3ba875e",
+    "04ef0d53a85f0f24cdb9260b711f6cc8200396a4aba2643a2ef1d75913022bcb",
+    "62ea2aaa51dd663e23038171fb9ebff77a1541c9e159476303749fd4d445b061",
+    "1f5ddb55bbfb959d0f88cf3b69d9a6f2d63a43f8ffeda8189d21fdedec0ebbab",
+    "d94a55a903ba82e263b81c1dc312e167a6286016896c7045db5cdff647a2316e",
+    "2db1868f3878894ad0e8567e9b5ba966e6221ef721dd99a54903f55183578cf1",
+    "e188ea3a6db7727a372721c0b166970b6a7aebd5824a9cca65bcdb0f612e148f",
+    "f3ed63ca598fe1cc3330d319e89761d8e004dee07db3dfa826e0bd953d000529",
+    "9f9d935b0b985b263d96f3d43f88590694e3d7e122fadf7b4bb7ad9e432264b3",
+    "9e3dc6d7d8b89c0f891e6a98af0c4b1b5fd9a65a9c76d5a1245cc6f075eea683",
+    "bdd3040b91abc886ca5e4a70dd9f73070e347ddb6eedef4f221ed4977065bb1e",
+    "a5dd3ae3ead51dc12838e7b29de0c3861671278ca7ad0ebaf6bfe991b0ac71ab",
+    "e0d64305ae1759a935b66a6fe1de66f6eb43c7251e6a827676211c03a490888f",
+    "b92a5082b0dbae3cc6a092f6e4c27cabfb49bbc9cf64252e873fd23749758905",
+    "0fdfaeccb4b928e8908eb1a1cf75ace237113fed7f2ebf6d9ef8a5528123f3a9",
+    "664fe7a71bbd2ef6a2ee29423f502ef4276dd7584ed78a8cdf50ba40ade44c37"
   ];
-  var CLASS_CODE = "DOIE2026"; // shared code announced to the class - not real security, just keeps outsiders out
+  function sha256hex(s){function r(n,x){return(x>>>n)|(x<<(32-n))}
+  var m=Math.pow,mx=m(2,32),i,j,res='',w=[],ab=s.length*8;
+  var h=sha256hex.h=sha256hex.h||[],k=sha256hex.k=sha256hex.k||[],pc=k.length,ic={};
+  for(var c=2;pc<64;c++)if(!ic[c]){for(i=0;i<313;i+=c)ic[i]=c;h[pc]=(m(c,.5)*mx)|0;k[pc++]=(m(c,1/3)*mx)|0}
+  s+='\x80';while(s.length%64-56)s+='\x00';
+  for(i=0;i<s.length;i++){j=s.charCodeAt(i);if(j>>8)return'';w[i>>2]|=j<<((3-i)%4)*8}
+  w[w.length]=((ab/mx)|0);w[w.length]=ab;
+  for(j=0;j<w.length;){var wk=w.slice(j,j+=16),oh=h;h=h.slice(0,8);
+  for(i=0;i<64;i++){var w15=wk[i-15],w2=wk[i-2],a=h[0],e=h[4];
+  var t1=h[7]+(r(6,e)^r(11,e)^r(25,e))+((e&h[5])^(~e&h[6]))+k[i]+(wk[i]=(i<16)?wk[i]:(wk[i-16]+(r(7,w15)^r(18,w15)^(w15>>>3))+wk[i-7]+(r(17,w2)^r(19,w2)^(w2>>>10)))|0);
+  var t2=(r(2,a)^r(13,a)^r(22,a))+((a&h[1])^(a&h[2])^(h[1]&h[2]));
+  h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0}
+  for(i=0;i<8;i++)h[i]=(h[i]+oh[i])|0}
+  for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(h[i]>>(j*8))&255;res+=((b<16)?0:'')+b.toString(16)}return res}
+  var CLASS_CODE_HASH = "3f03973e831cea7b6dfb5fb1c09a5518c9672a4800e7de7193738235fc8ffe22";
+  function classCodeOk(c) { return sha256hex(ROSTER_SALT + "code|" + (c || "")) === CLASS_CODE_HASH; }
 
   function findRosterEntry(roll) {
     var r = (roll || "").trim().toUpperCase();
-    for (var i = 0; i < ROSTER.length; i++) {
-      if (ROSTER[i].roll.toUpperCase() === r) return ROSTER[i];
-    }
-    return null;
+    if (!r) return null;
+    return ROSTER_HASHES.indexOf(sha256hex(ROSTER_SALT + r)) >= 0 ? { roll: r, name: "" } : null;
   }
 
   var LEVELS = [
     {
-      id: 1, icon: "📊", title: "Data Foundations", module: "Module 1",
+      id: 1, icon: "1", title: "Data Foundations", module: "Module 1",
       scenario: "Your team has 10,000 unlabeled photos of animals and a small budget. A colleague suggests spending it all on manually tagging every single photo “dog” or “not dog” before training anything. Another colleague says just feed the raw, unlabeled photos straight to the model.",
       approach: [
         { t: "Always fully label the data - labeled data produces the most accurate, reliable models every time, so the extra time and cost of manual tagging is worth paying regardless of the project's budget or timeline.", c: false },
@@ -568,7 +579,7 @@
       }
     },
     {
-      id: 2, icon: "🧭", title: "Machine Learning Types", module: "Module 2",
+      id: 2, icon: "2", title: "Machine Learning Types", module: "Module 2",
       scenario: "A real-estate agent wants an app that predicts a home's selling price from a dataset of past transactions - where size, rooms, location, and the actual sale price are all already known for every past sale.",
       approach: [
         { t: "Unsupervised learning - since there's a lot of historical data available, let the model explore it freely and discover its own natural groupings of homes without being told what price patterns to look for.", c: false },
@@ -593,7 +604,7 @@
       }
     },
     {
-      id: 3, icon: "🧠", title: "Depth & Width", module: "Module 3",
+      id: 3, icon: "3", title: "Depth & Width", module: "Module 3",
       scenario: "You're designing a neural network to recognise handwritten digits from 28×28 pixel MNIST images. A junior engineer says: “Let's just make the network as deep as possible - more layers is always better.”",
       approach: [
         { t: "Agree - always maximise depth, since a deeper network can theoretically represent any pattern given enough training time, so there's never a real downside to adding as many hidden layers as possible.", c: false },
@@ -618,7 +629,7 @@
       }
     },
     {
-      id: 4, icon: "🤖", title: "Robotics AI Stack", module: "Module 4",
+      id: 4, icon: "4", title: "Robotics AI Stack", module: "Module 4",
       scenario: "A warehouse robot must navigate aisles, avoid obstacles, and respond to staff giving it verbal instructions like “bring pallet 12 to bay 3.”",
       approach: [
         { t: "Just use Computer Vision for everything - modern vision models are advanced enough to also handle navigation, obstacle avoidance, and even understanding spoken instructions, all within one unified system, since a sufficiently large model trained on enough data should in principle absorb every one of these capabilities on its own.", c: false },
@@ -643,7 +654,7 @@
       }
     },
     {
-      id: 5, icon: "👁️", title: "Vision Model Families", module: "Module 5",
+      id: 5, icon: "5", title: "Vision Model Families", module: "Module 5",
       scenario: "An e-commerce team needs to (a) sort thousands of product photos into the correct catalogue category, and (b) generate extra realistic training images for a rare product-defect type that has very few real examples.",
       approach: [
         { t: "Use GANs for both tasks, since GANs are widely considered the single most advanced computer-vision family available today, making them the safest default choice for any image-related project.", c: false },
@@ -668,7 +679,7 @@
       }
     },
     {
-      id: 6, icon: "✍️", title: "Text Preprocessing", module: "Module 8 / NLP",
+      id: 6, icon: "6", title: "Text Preprocessing", module: "Module 8 / NLP",
       scenario: "You're given the raw review “The Room Was NOT Clean!!! Staff Was Rude” and need to prepare it for a sentiment-analysis model. A teammate suggests just running the default stopword list - which includes the word “not” - before removing punctuation.",
       approach: [
         { t: "Follow the teammate's suggestion: lowercase, remove all default stopwords (including “not”), then remove punctuation. Result: “room clean staff rude.”", c: false },
@@ -693,7 +704,7 @@
       }
     },
     {
-      id: 7, icon: "🕸️", title: "Vector Embeddings", module: "Module 9",
+      id: 7, icon: "7", title: "Vector Embeddings", module: "Module 9",
       scenario: "A site's search feature only returns results that share the exact same words as the query. A user searches “joyful vacation” and gets zero results - even though the site has an article titled “A Happy Trip Abroad,” which is a near-perfect match in meaning.",
       approach: [
         { t: "Fix it by manually adding synonym pairs to a dictionary, one at a time, forever, since a sufficiently large hand-built list can eventually cover every possible meaning-based match a user might type.", c: false },
@@ -718,7 +729,7 @@
       }
     },
     {
-      id: 8, icon: "⚠️", title: "AI Reliability", module: "Module 15 - Capstone", boss: true,
+      id: 8, icon: "8", title: "AI Reliability", module: "Module 15 - Capstone", boss: true,
       scenario: "Users of your AI product report two separate problems. Problem 1: when they ask for 5 academic references on a topic, 2 of the 5 turn out to be completely fabricated papers that don't exist. Problem 2: the exact same question, asked on Monday, gives a great answer - asked again on Wednesday, it gives a noticeably worse one.",
       approach: [
         { t: "Treat both problems as the same underlying bug, and apply one single fix to both - since they're both examples of the AI giving a “bad” answer, one well-designed patch should resolve them together, saving the team from maintaining two separate reliability workflows for what looks like the same user complaint.", c: false },
@@ -1114,7 +1125,7 @@
     }
   }
 
-  var CONFETTI_COLORS = ["#FF5A36", "#00D9A3", "#FFB800", "#A855F7", "#FF3D77", "#3DDC97"];
+  var CONFETTI_COLORS = ["#F4C14D", "#C9962E", "#FAF8F3", "#8FB3D9", "#2C5480"];
   function fireConfetti(big) {
     if (!effectsEnabled()) return;
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -1207,8 +1218,8 @@
   function fxToggleHtml() {
     var on = effectsEnabled();
     return '<button class="fx-toggle" id="fxToggleBtn" aria-pressed="' + on + '" ' +
-      'aria-label="' + (on ? "Sound and confetti on - click to mute" : "Sound and confetti off - click to unmute") + '" title="Sound & confetti">' +
-      (on ? "🔊" : "🔇") + '</button>';
+      'aria-label="' + (on ? "Sound on" : "Sound off") + '" title="Sound & confetti">' +
+      (on ? "Sound on" : "Sound off") + '</button>';
   }
   function bindFxToggle() {
     var btn = document.getElementById("fxToggleBtn");
@@ -1259,6 +1270,8 @@
           '<p class="sub">A reasoning atlas, not a quiz bank. Every Signal asks you to choose an approach <i>and</i> justify it - the concept is only explained after you’ve reasoned your way there. Clear all 8, then build a real capstone project you can put in your portfolio.</p>' +
           '<label class="field-label" for="rollInput">Your roll number</label>' +
           '<input id="rollInput" type="text" placeholder="e.g. 21IE045" autocomplete="off" value="' + esc(lastRoll) + '" />' +
+          '<label class="field-label" for="nameInput">Your name (first time only)</label>' +
+          '<input id="nameInput" type="text" placeholder="Full name" autocomplete="name" />' +
           '<label class="field-label" for="codeInput">Class access code</label>' +
           '<input id="codeInput" type="text" placeholder="Given by your instructor" autocomplete="off" />' +
           '<button class="btn-primary" id="beginBtn">Check in →</button>' +
@@ -1285,9 +1298,13 @@
       rollInput.style.borderColor = "";
 
       if (!roll || !code) { showError("Enter both your roll number and the class access code."); return; }
-      if (code !== CLASS_CODE) { showError("That access code doesn't match - check with your instructor."); return; }
+      if (!classCodeOk(code)) { showError("That access code doesn't match - check with your instructor."); return; }
       var entry = findRosterEntry(roll);
       if (!entry) { showError("That roll number isn't on the class roster. Check the spelling, or ask your instructor to add you."); return; }
+      var nameTyped = (document.getElementById("nameInput").value || "").trim();
+      var prior = loadState(entry.roll);
+      entry.name = nameTyped || (prior && prior.name) || "";
+      if (!entry.name) { showError("Enter your name as it should appear on your work."); return; }
 
       try { localStorage.setItem(LAST_ROLL_KEY, entry.roll); } catch (e) {}
       var existing = loadState(entry.roll);
@@ -1298,7 +1315,8 @@
     }
     btn.addEventListener("click", tryBegin);
     codeInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryBegin(); });
-    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
+    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById("nameInput").focus(); });
+    document.getElementById("nameInput").addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
     setTimeout(function () { (lastRoll ? codeInput : rollInput).focus(); }, 50);
   }
 
@@ -1336,7 +1354,7 @@
         'aria-label="Signal ' + lvl.id + ': ' + esc(lvl.title) + ' (' + st + ')" ' +
         'data-id="' + lvl.id + '">' +
           '<circle class="node-ring" cx="' + p.x + '" cy="' + p.y + '" r="' + r + '"></circle>' +
-          '<text class="node-icon" x="' + p.x + '" y="' + (p.y - 2) + '">' + (st === "locked" ? "🔒" : (st === "done" ? "✓" : lvl.icon)) + '</text>' +
+          '<text class="node-icon" x="' + p.x + '" y="' + (p.y - 2) + '">' + (st === "locked" ? "" : (st === "done" ? "✓" : lvl.icon)) + '</text>' +
           '<text class="node-num" x="' + p.x + '" y="' + (p.y + r + 14) + '">SIGNAL ' + lvl.id + '</text>' +
           '<text class="node-label" x="' + p.x + '" y="' + (p.y + r + 30) + '">' + esc(lvl.title) + '</text>' +
         '</g>';
@@ -1352,7 +1370,7 @@
     var proofsHtml = LEVELS.map(function (lvl) {
       var earned = !!state.cleared[lvl.id];
       return '<div class="proof-row' + (earned ? ' earned' : '') + '">' +
-        '<div class="proof-icon">' + (earned ? "✅" : lvl.icon) + '</div>' +
+        '<div class="proof-icon">' + (earned ? "✓" : lvl.icon) + '</div>' +
         '<div class="proof-name">' + esc(lvl.title) + '<span class="sub">' + esc(lvl.module) + '</span></div>' +
       '</div>';
     }).join("");
@@ -1553,7 +1571,7 @@
   /* ---------- bridge (atlas complete → capstone CTA) ---------- */
   function renderBridge() {
     var badgeHtml = LEVELS.map(function (lvl) {
-      return '<div class="proof-row earned"><div class="proof-icon">✅</div><div class="proof-name">' + esc(lvl.title) + '</div></div>';
+      return '<div class="proof-row earned"><div class="proof-icon">✓</div><div class="proof-name">' + esc(lvl.title) + '</div></div>';
     }).join("");
 
     app.innerHTML =
@@ -1613,7 +1631,7 @@
       return '<div class="milestone-card locked">' +
         '<div class="milestone-head"><div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div>' +
         '<h2 class="display">' + esc(m.title) + '</h2></div></div>' +
-        '<div class="milestone-lock-note">🔒 Complete Milestone ' + (m.id - 1) + ' first.</div>' +
+        '<div class="milestone-lock-note">Complete Milestone ' + (m.id - 1) + ' first.</div>' +
       '</div>';
     }
 

@@ -74,8 +74,8 @@
   .hud-stat .lbl { font-size: 0.68rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
   .hud-name { font-size: 0.85rem; color: var(--ink-muted); }
   .hud-name b { color: var(--ink); }
-  .fx-toggle { background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-muted); width: 34px; height: 34px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease, border-color 0.15s ease; }
-  .fx-toggle:hover { border-color: var(--accent); transform: scale(1.06); }
+  .fx-toggle { background: var(--surface-2); border: 1px solid var(--border); color: var(--ink-muted); width: auto; height: 34px; padding: 0 12px; border-radius: 3px; font-size: 0.78rem; white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.15s ease, border-color 0.15s ease; }
+  .fx-toggle:hover { border-color: var(--accent); }
   .fx-toggle[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
   .link-btn { background: none; border: none; color: var(--ink-muted); font-size: 0.82rem; cursor: pointer; padding: 4px 0; }
   .link-btn:hover { color: var(--accent); }
@@ -90,10 +90,9 @@
   .node-group { cursor: pointer; }
   .node-group:focus-visible rect.node-ring { outline: 2px solid var(--ink); }
   .node-ring { fill: var(--surface); stroke: var(--lock); stroke-width: 2.5; transition: stroke 0.2s ease, fill 0.2s ease; }
-  .node-group.active .node-ring { stroke: var(--accent); animation: pulse 2.2s ease-in-out infinite; }
+  .node-group.active .node-ring { stroke: var(--accent); }
   .node-group.done .node-ring { stroke: var(--accent-2); fill: var(--accent-2); }
   .node-group.locked .node-ring { stroke: var(--lock); }
-  @keyframes pulse { 0%, 100% { filter: drop-shadow(0 0 0 rgba(224,138,62,0)); } 50% { filter: drop-shadow(0 0 7px var(--accent)); } }
   .node-icon { font-size: 18px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
   .node-group.locked .node-icon { opacity: 0.45; }
   .node-label { font-size: 11.5px; text-anchor: middle; fill: var(--ink); font-family: "Segoe UI", sans-serif; pointer-events: none; }
@@ -121,7 +120,7 @@
   .modal-close { background: none; border: none; color: var(--ink-muted); font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 4px; }
   .modal-close:hover { color: var(--ink); }
   .modal-card h2 { font-size: 1.28rem; margin: 4px 0 16px; }
-  .scenario-box { background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: 0 3px 3px 0; padding: 14px 16px; font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px; }
+  .scenario-box { background: var(--surface-2); border: 1px solid var(--line); border-radius: 3px; padding: 14px 16px; font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px; }
   .industry-note { background: color-mix(in srgb, var(--gold) 14%, var(--surface)); border: 1px dashed var(--gold); border-radius: 3px; padding: 10px 14px; font-size: 0.82rem; line-height: 1.55; margin-bottom: 18px; }
   .industry-note b.tag { color: var(--gold); }
   .step-label { font-size: 0.78rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
@@ -197,7 +196,7 @@
   .milestone-done-badge { font-size: 0.76rem; font-weight: 700; color: var(--accent-2); white-space: nowrap; padding-top: 4px; }
   .milestone-lock-note { font-size: 0.82rem; color: var(--ink-muted); margin-top: 4px; }
   .milestone-goal { font-size: 0.9rem; line-height: 1.6; margin: 10px 0 10px; }
-  .milestone-why { background: var(--surface-2); border-left: 3px solid var(--accent-2); border-radius: 0 3px 3px 0; padding: 10px 14px; font-size: 0.84rem; line-height: 1.6; color: var(--ink); margin-bottom: 14px; }
+  .milestone-why { background: var(--surface-2); border: 1px solid var(--line); border-radius: 3px; padding: 10px 14px; font-size: 0.84rem; line-height: 1.6; color: var(--ink); margin-bottom: 14px; }
   .milestone-why b.tag { color: var(--accent-2); }
   .checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
   .check-row { display: flex; align-items: flex-start; gap: 9px; font-size: 0.87rem; line-height: 1.5; cursor: pointer; }
@@ -270,87 +269,103 @@
   var STORAGE_PREFIX = "wsd_lab_state_v2_";
   var LAST_ROLL_KEY = "wsd_lab_last_roll_v2";
 
-  /* SAMPLE DATA - replace with the real IE23901 lab roster before real classroom use. */
   /* ME23C04 - B.E Industrial Engineering, Sem 2, Work System Design Laboratory (CEG). */
-  var ROSTER = [
-    { roll: "2024108048", name: "Prannav R" },
-    { roll: "2025108001", name: "Mithra M S" },
-    { roll: "2025108002", name: "Iyyanar S" },
-    { roll: "2025108003", name: "Vinoth Kumar A" },
-    { roll: "2025108004", name: "Jasina M" },
-    { roll: "2025108005", name: "Dharshini K" },
-    { roll: "2025108006", name: "Jeevitha Sri P" },
-    { roll: "2025108007", name: "Prithviraj S" },
-    { roll: "2025108008", name: "Jaganath A U" },
-    { roll: "2025108009", name: "Dhareen Ram L" },
-    { roll: "2025108010", name: "Akshara B" },
-    { roll: "2025108011", name: "Pranavnatesh MN" },
-    { roll: "2025108012", name: "Akash S" },
-    { roll: "2025108013", name: "Vidhya P" },
-    { roll: "2025108014", name: "Bhavana S" },
-    { roll: "2025108015", name: "Yazhisai K" },
-    { roll: "2025108016", name: "Kowsik E S" },
-    { roll: "2025108018", name: "Muthukaruppasamy S" },
-    { roll: "2025108019", name: "Velan V S" },
-    { roll: "2025108020", name: "Tharunkumar M" },
-    { roll: "2025108022", name: "Shakthivishnu J" },
-    { roll: "2025108023", name: "Jefrin Samraj J" },
-    { roll: "2025108024", name: "Viknesh M" },
-    { roll: "2025108025", name: "Yamuna S" },
-    { roll: "2025108026", name: "Vignesh N" },
-    { roll: "2025108027", name: "Senthamizh Arasi A" },
-    { roll: "2025108028", name: "Yuvarani S" },
-    { roll: "2025108029", name: "Navarasu C" },
-    { roll: "2025108030", name: "Surya M" },
-    { roll: "2025108031", name: "Dharani K G" },
-    { roll: "2025108032", name: "Afrin K" },
-    { roll: "2025108033", name: "Shanmugasundharam R" },
-    { roll: "2025108034", name: "Balaji G" },
-    { roll: "2025108035", name: "Pradeepa T" },
-    { roll: "2025108036", name: "Kavipriya K" },
-    { roll: "2025108037", name: "Punith P" },
-    { roll: "2025108038", name: "Sarvesh L" },
-    { roll: "2025108039", name: "Rohit S" },
-    { roll: "2025108040", name: "Jayasree R" },
-    { roll: "2025108041", name: "Elavarasi V" },
-    { roll: "2025108042", name: "Deepthi Nakshathra S" },
-    { roll: "2025108043", name: "Dharani S" },
-    { roll: "2025108044", name: "Swathi V" },
-    { roll: "2025108045", name: "Sakthipriyan N J" },
-    { roll: "2025108046", name: "Jeeva M" },
-    { roll: "2025108047", name: "Srikannan T" },
-    { roll: "2025108048", name: "Raghav Karthick M" },
-    { roll: "2025108049", name: "John Jackson J" },
-    { roll: "2025108050", name: "Vaishnav M" },
-    { roll: "2025108051", name: "Mohamed Shaariq Hussain S" },
-    { roll: "2025108052", name: "Naveen Balaji S S" },
-    { roll: "2025108053", name: "Afrina A" },
-    { roll: "2025108054", name: "Johanna Jovitha" },
-    { roll: "2025108055", name: "Salman Anwar Nalakath" },
-    { roll: "2025108056", name: "Selvendra S" },
-    { roll: "2025108057", name: "Dhiraj H" },
-    { roll: "2025108058", name: "Aishwarya A" },
-    { roll: "2025108059", name: "Charu Latha U" },
-    { roll: "2025108060", name: "Karthikeyan P" },
-    { roll: "2025108061", name: "Hemamalini G" },
-    { roll: "2025108062", name: "Abishek K" },
-    { roll: "2025108063", name: "Aparup Roy" },
-    { roll: "2025108064", name: "S Nidhish" },
-    { roll: "2025108065", name: "Keturah Talia Manoharan" },
-    { roll: "2025108066", name: "Aryan Balaji" },
-    { roll: "2025108067", name: "Maan A" },
-    { roll: "2025108068", name: "Srigayathri K" },
-    { roll: "2025108069", name: "Musku Srikruthi" },
-    { roll: "2025108070", name: "Manisha T" },
-    { roll: "2025108071", name: "Swayampakam Shanmukha Bharadwaz Sharma" },
-    { roll: "2025108072", name: "Yuvaraja K" }
+  /* Register numbers are stored as salted SHA-256 hashes only. Students type their own name at check-in. */
+  var ROSTER_SALT = "doie-ie23901|";
+  var ROSTER_HASHES = [
+    "a29c710cfac6133a6dd2d95344189a255c175bc2d53cec8c8f3675c69f1360b7",
+    "b607eedf24fb4a5d887f32d5c98046f133275d23f0a4d2ac2cbc9ff7ebac49f5",
+    "02ece846470486fd4e80050d0c4e9800ead59307edf3be11d9d26a3bd87906b2",
+    "c5aadab16c6080bdccc8363812c01730ef439318e9c8a4c16639421d3be09651",
+    "aadc8dcbbfe0ab7d35bc38691cc18922784285ecac4fd739556a1d579dfb7b9c",
+    "3f3cff8d8d65998817c0a03d159fe85f998de9b5d981aa8ee3548198078bd116",
+    "9c72ea7bece03a686d73810a4eb5d41b41fc617732df50cbc80c477f3c8422ec",
+    "c341b7d1023a199b88cff4879b192a27630767c03caf4bb242df6cc777312d7c",
+    "58e66901804dc367c7f8344f61cf4b7685c99920bf845d5485d5c3866269ed50",
+    "063149f3f86aff5a8db3e18a3f5633bd9e8cec287763c6e266e0150614e81670",
+    "49073f5c71578a84bca6dabd4264a5de3b49d41251805425abe939ced75b3c3f",
+    "e46a48fbe4c3cb38fa690682b0e1be82b6704e00010ece6ec315a1e855849cc2",
+    "73396d1d66a1dbf052e2ef96d74836b3a165ea783946d2cd777e21ae834036c7",
+    "e79d13e958e74e86a2b76794e8f96e6b9640e6ef3b6189a5feca1a0081ce70f4",
+    "0fe284e02cb47df3bb6c9f440f66dc90b1e737f0a1bb1602e59959706141313b",
+    "4ce5b9e28e282af5b86bb4ff7b3d25099772e4d8aec71ac2ee3d1ced592acbd2",
+    "d57eeb8d52cd31da25fab6ccad7bcd9d162f988b528944b14b0c9cbcfc16c94f",
+    "8156722c13fa9a19cd063dcbc94bcc1c373b3a26058315d49c2ea9ecb97484e0",
+    "1b5c971fc0798da0db60a1c67af470f2a3948b5f232ba2febd47fdbc9222ac4e",
+    "4e898203f53511dd61f158887e9324521bdb5f88297cdc59fb161cfeeacc55e7",
+    "3d82108b00f86cb239031e53c2dbdc962c5b7d5d41b8eb1f181ef94d870ea441",
+    "47885c36d79d7e8be47e4a80867cb05e14a5755f2a16e36cc224614ef9a21c18",
+    "d6967573e0ad0c53c5e2ee059221ee520979f7799bcfed8d7755be691f15a223",
+    "3a8cce462a461a2d5211767e11e9f978e274d2f367d6520af891a47aa74fceaf",
+    "51de127b304805d0bbc753b96ac37c4d13462103f36339ad57a90e32b67b6748",
+    "aecb324fc9ba8ddf51b40cbf565c1d7853742d074647b2f89eaec463ab170eff",
+    "be52d5169d26e947e29004554a31e74f7533f17d8108ea82d680d5cc020bfe97",
+    "4ece9b16774dbd06dacfeb016c1d8d59569107ab5f910c13e819abe1dfb07d6e",
+    "88786c4cb684bfe1d47a7743bcae084329774274e6c1804f710e5fc4dd74637f",
+    "b93c998891f5a0461a35c5759d62334eb8d54f37cbd7d9c3782f2d061c64b234",
+    "4f5f5f49e006cc08b81da783f593df72e32602642913d87e10ef4dc0c62d564a",
+    "3bdc8fee2305534a6d7ed7055d010e893f30ecd176b74b0cf768824018fff10e",
+    "a99d3b9a6cade245371b86169842d059deb489ebb1fb4cf2d943a84e7763483f",
+    "3eedcef678bff02fddbb3eedb66540608eb20133365c6264a11965fd8927de63",
+    "9f365f83f413565c27386ee6c7b70ceab4735bc50c1b1cb0de3ed98faffe59c9",
+    "35753dff3cec000c349449a2661f8a0d13432352a363785145da812b1ed3a1de",
+    "384559528b7c422e7823166d7d10fdfb35e87903170872d84168883863e46369",
+    "70fc555767fdaf2ae36f3f6fef296ea9d695e3b78ec9f037a3f093ecab04c1ca",
+    "97f6d08c23daa366d9cee0df23054a58d151a60f6aa7092f27b50a9805a3f56c",
+    "42b527115745f05193f537e7de9dd9f037ad385734be135e5f0b326a32b33a03",
+    "7bb936c4b71aa229b490bfdb670201bb5f30c5d78cfc816ab07ab7721bfdf68f",
+    "57054de7acdcdbb1c3b87da7e093ac4d31804aed29989d402b2913ced6a39e49",
+    "ca79bb7bed6130296deae66556b2420081f835bc2cbe62b2ea5af0ca491769ea",
+    "c0f9db16839dcb77a34374a018d6790ef16ff5ae1304bd2289f255ee846d68a0",
+    "0aa42c5f16a44c82d7e22f4d5cc1b59ac6a9d08020123da06555923aaad04730",
+    "9ffb5c196860e71dd10e5453e9fb3e377be41984a3f50c88ff50553cac176bc8",
+    "0ac6f4654e7dbecacd9ecbe18537a2cc139e227e2f68d9bb0a42bc390551cad8",
+    "3724c57a457482a1ef192d4abd8d6bed63f6d49015a8c249ba3e04f41c5b2f4e",
+    "68b051d90a4e26320aeed4b029664d5b31504e6b7bfe496475fd713586e35d02",
+    "9e2ca7e8187a136e025c9cefcf4cd5cca9a7cbd98f4b94c884a2182e8c77905d",
+    "4d955aff9ab1f6fc17575a643edbb9d473eb68606c1d72ab8e125a75eeff99e5",
+    "a3e08558fc7d159e272a435926fd5cecc64668ab4bb30eb2a28eba5efa2de335",
+    "c30f5ebbd396f0d9a3e1d1a49c85f5c3f3a2d4f43f4f9a5240921c0a5210202a",
+    "e07009faf0a9bb40bf6e5acf882b2a1bdf07656f736d72620b75eb6d3b5da28a",
+    "443dfc7afd3778a1c130bd1047482e0417bb9ea55a43363fea8d85c97110e433",
+    "22a43a6e60f505cc504cbce161dba7c8fd859835ca52ce1531e7d4210c23c963",
+    "64f894df14c76d9f7003aeb8b4a7ab64b54e947faf71a250b456915927515b05",
+    "493d0f3cf188e3e8b7ccb4a1467fe6bc4d3fe7b47250fa9c7b1368d3b35ef767",
+    "fb32fdfce7379f6f9e3f603431b10c53ecc065145347c1ccf0c059452cea15fd",
+    "8c32e06ccbe64c116db6f7076ea3f6dbf14e377a4997dd523daf52886f76c130",
+    "91f26c9b653dea98be0550736d1d2960ed9a53c4ef4f873c28f3b7fcc437c5ca",
+    "1bfd152c77c90a9a819acc53db7ebbf9e3c93838ce894f6abb2008b011b18828",
+    "8dddf2a12bea154f5c51463c5fedf02c3621bc3fdd930048300d96203e7fe921",
+    "11d9c70e3569ec612770cc4258ca03671e5007c3d93b89d3c7c1c47d09d9a2d1",
+    "42ff91d2f1e8db1fe95d4e6d449b5da0649d66cf9e0e42d8ea42112911ebbc1a",
+    "76dad45b97d0352b4cc0438e8295154417529782f06911495455e28fe39b6375",
+    "2e2db2315d8343cd9a09b242c6f1c66f4126aa7e8dfa4e4509ecb77319684833",
+    "41f4d4182bab6a133cc6535df8810d77c8bad3d3410cd0f9b7ceabf4db99336e",
+    "3f085e958b84341affe34e69367c783f7f741b0471b6155d869960485bc57d05",
+    "b363ca27e2933972b5918181d9ca27d95d801b6c0d6bb2e8b17421cfbe8e05a0",
+    "1f4b05ed27802c7613ed9884c768650be357ee3910fda98ad1754278bb66da66"
   ];
-  var CLASS_CODE = "WSD2026";
+  function sha256hex(s){function r(n,x){return(x>>>n)|(x<<(32-n))}
+  var m=Math.pow,mx=m(2,32),i,j,res='',w=[],ab=s.length*8;
+  var h=sha256hex.h=sha256hex.h||[],k=sha256hex.k=sha256hex.k||[],pc=k.length,ic={};
+  for(var c=2;pc<64;c++)if(!ic[c]){for(i=0;i<313;i+=c)ic[i]=c;h[pc]=(m(c,.5)*mx)|0;k[pc++]=(m(c,1/3)*mx)|0}
+  s+='\x80';while(s.length%64-56)s+='\x00';
+  for(i=0;i<s.length;i++){j=s.charCodeAt(i);if(j>>8)return'';w[i>>2]|=j<<((3-i)%4)*8}
+  w[w.length]=((ab/mx)|0);w[w.length]=ab;
+  for(j=0;j<w.length;){var wk=w.slice(j,j+=16),oh=h;h=h.slice(0,8);
+  for(i=0;i<64;i++){var w15=wk[i-15],w2=wk[i-2],a=h[0],e=h[4];
+  var t1=h[7]+(r(6,e)^r(11,e)^r(25,e))+((e&h[5])^(~e&h[6]))+k[i]+(wk[i]=(i<16)?wk[i]:(wk[i-16]+(r(7,w15)^r(18,w15)^(w15>>>3))+wk[i-7]+(r(17,w2)^r(19,w2)^(w2>>>10)))|0);
+  var t2=(r(2,a)^r(13,a)^r(22,a))+((a&h[1])^(a&h[2])^(h[1]&h[2]));
+  h=[(t1+t2)|0].concat(h);h[4]=(h[4]+t1)|0}
+  for(i=0;i<8;i++)h[i]=(h[i]+oh[i])|0}
+  for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(h[i]>>(j*8))&255;res+=((b<16)?0:'')+b.toString(16)}return res}
+  var CLASS_CODE_HASH = "2be67e5e5ccde4396f9f18c1300b2cbe39a490e886526b59e3f54afb6a511198";
+  function classCodeOk(c) { return sha256hex(ROSTER_SALT + "code|" + (c || "")) === CLASS_CODE_HASH; }
 
   function findRosterEntry(roll) {
     var r = (roll || "").trim().toUpperCase();
-    for (var i = 0; i < ROSTER.length; i++) { if (ROSTER[i].roll.toUpperCase() === r) return ROSTER[i]; }
-    return null;
+    if (!r) return null;
+    return ROSTER_HASHES.indexOf(sha256hex(ROSTER_SALT + r)) >= 0 ? { roll: r, name: "" } : null;
   }
 
   var COMPANY = "Swift Logistics Fulfillment Center";
@@ -358,7 +373,7 @@
   /* ---------- 8 official lab experiments, reframed as one real onboarding case study ---------- */
   var LEVELS = [
     {
-      id: 1, icon: "📦", title: "Outline Process Chart", module: "Exp 1", type: "chart",
+      id: 1, icon: "1", title: "Outline Process Chart", module: "Exp 1", type: "chart",
       scenario: "Management at " + COMPANY + " wants a fast, high-level view of the customer-returns process before funding a detailed study. Build the Outline Process Chart yourself: assign the correct symbol to each of the 5 steps below. An Outline Process Chart uses only 2 symbols - Operation and Inspection.",
       symbolSet: [ { sym: "○", label: "Operation" }, { sym: "□", label: "Inspection" } ],
       steps: [
@@ -379,7 +394,7 @@
       }
     },
     {
-      id: 2, icon: "🔄", title: "Flow Process Chart", module: "Exp 2", type: "chart",
+      id: 2, icon: "2", title: "Flow Process Chart", module: "Exp 2", type: "chart",
       scenario: "The Outline Chart from Project 1 flagged the inspection stage as the slow point. Now build the COMPLETE record of what happens to one returned item - a Flow Process Chart (Material type), using all 5 standard symbols - as it moves through receiving and inspection.",
       symbolSet: [ { sym: "○", label: "Operation" }, { sym: "□", label: "Inspection" }, { sym: "→", label: "Transport" }, { sym: "D", label: "Delay" }, { sym: "▽", label: "Storage" } ],
       steps: [
@@ -400,7 +415,7 @@
       }
     },
     {
-      id: 3, icon: "🤲", title: "Two-Handed Process Chart", module: "Exp 3", type: "chart", hands: true,
+      id: 3, icon: "3", title: "Two-Handed Process Chart", module: "Exp 3", type: "chart", hands: true,
       scenario: "Project 2 traced the returned item's journey - now you're at the packing bench itself. Packers seem to fumble: one hand often sits idle while the other reaches across the body for tape. Build the Two-Handed Process Chart: assign a symbol to what EACH hand is doing at each step.",
       symbolSet: [ { sym: "○", label: "Operation" }, { sym: "→", label: "Transport" }, { sym: "D", label: "Delay" } ],
       leftSteps: [
@@ -426,7 +441,7 @@
       }
     },
     {
-      id: 4, icon: "⏱️", title: "Performance Rating - Pace", module: "Exp 4", type: "calc",
+      id: 4, icon: "4", title: "Performance Rating - Pace", module: "Exp 4", type: "calc",
       scenario: "You've timed a packing-station operator: they sealed and labelled <b>45 packages</b> in a <b>30-minute</b> observed period. " + COMPANY + "'s documented standard (qualified-worker, 100% pace) rate for this exact task is <b>40 packages per 30 minutes</b>.",
       note: "Real work-study analysts don't train their rating judgement on classroom card-dealing - they calibrate against documented, known-speed footage of real operators, the same way MTM-certified analysts are trained today. This is that same skill, applied to a real packing-station rate instead.",
       given: [
@@ -446,7 +461,7 @@
       }
     },
     {
-      id: 5, icon: "🧭", title: "Westinghouse Rating Worksheet", module: "Exp 5", type: "rate",
+      id: 5, icon: "5", title: "Westinghouse Rating Worksheet", module: "Exp 5", type: "rate",
       scenario: "You're rating a picker who shows excellent skill and consistency, but is working in a poorly-lit, awkward aisle, at slightly-above-average effort. Fill out the real Westinghouse rating worksheet: assign a level to each of the four factors based on what you observed.",
       note: "The classic “walking pace” exercise taught rating with a single factor - speed. Real industry rarely stops there - the Westinghouse System is still used today because it captures more than raw speed.",
       factors: [
@@ -467,7 +482,7 @@
       }
     },
     {
-      id: 6, icon: "📐", title: "Standard Time - Packing Task", module: "Exp 6", type: "calc",
+      id: 6, icon: "6", title: "Standard Time - Packing Task", module: "Exp 6", type: "calc",
       scenario: "You observed a packing task averaging <b>2.500 min</b> (Observed Time). You've assessed the operator's Performance Rating at <b>95%</b>. " + COMPANY + "'s standard Allowance Factor for this task is <b>15%</b>.",
       note: "Instead of an artificial peg-board, you're setting a real standard time for a real packing task - exactly the deliverable a work-study analyst hands to production planning.",
       given: [
@@ -488,7 +503,7 @@
       }
     },
     {
-      id: 7, icon: "🎲", title: "Work Sampling - Monte Carlo", module: "Exp 7", type: "sim",
+      id: 7, icon: "7", title: "Work Sampling - Monte Carlo", module: "Exp 7", type: "sim",
       scenario: "You believe a picker is actually working about <b>80% of the time</b> (true utilization = 0.80). Rather than walking the floor for weeks with a clipboard, run a Monte Carlo simulation - exactly how " + COMPANY + "'s real analytics team would do it in Python, Excel, or simulation software.",
       note: "This is genuinely how modern operations analysts run work sampling today - a live statistical simulation, not a clipboard and a stopwatch.",
       simDefaults: { p: 0.8, n: 40 },
@@ -511,7 +526,7 @@
       }
     },
     {
-      id: 8, icon: "🧩", title: "MTM Practice", module: "Exp 8 - Capstone", type: "calc", boss: true,
+      id: 8, icon: "8", title: "MTM Practice", module: "Exp 8 - Capstone", type: "calc", boss: true,
       scenario: "A packer's motion sequence for sealing one box: Reach 12in to grab tape → Grasp the tape → Move it 10in to the box → Position it on the seam → Release it.",
       note: "MTM (Methods-Time Measurement) is still used today at manufacturers worldwide - including Bosch and Toyota - to set standard times WITHOUT ever using a stopwatch, by summing pre-published times for basic motions. (TMU = Time Measurement Unit; these are illustrative reference values, consistent with published MTM tables - exact editions vary slightly.)",
       given: [
@@ -684,7 +699,7 @@
     if (big) { [783.99, 987.77, 1318.51].forEach(function (freq, i) { playBellStrike(ctx, freq, now + i * 0.22, 1.15); }); }
     else { playBellStrike(ctx, 987.77, now, 0.75); }
   }
-  var CONFETTI_COLORS = ["#B5652D", "#2E7D6B", "#C9A227", "#5B4B8A", "#B23A48", "#E08A3E"];
+  var CONFETTI_COLORS = ["#B5652D", "#2E7D6B", "#C9A227", "#D4C9AC"];
   function fireConfetti(big) {
     if (!effectsEnabled()) return;
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -730,7 +745,7 @@
 
   function fxToggleHtml() {
     var on = effectsEnabled();
-    return '<button class="fx-toggle" id="fxToggleBtn" aria-pressed="' + on + '" aria-label="' + (on ? "Sound and confetti on - click to mute" : "Sound and confetti off - click to unmute") + '" title="Sound & confetti">' + (on ? "🔊" : "🔇") + '</button>';
+    return '<button class="fx-toggle" id="fxToggleBtn" aria-pressed="' + on + '" aria-label="' + (on ? "Sound on" : "Sound off") + '" title="Sound & confetti">' + (on ? "Sound on" : "Sound off") + '</button>';
   }
   function bindFxToggle() { var btn = document.getElementById("fxToggleBtn"); if (!btn) return; btn.addEventListener("click", function () { state.effectsOn = !effectsEnabled(); saveState(state); render(); }); }
   function switchStudentHtml() { return '<button class="link-btn" id="switchStudentBtn" style="white-space:nowrap;">Not you? Switch student</button>'; }
@@ -758,6 +773,8 @@
           '<p class="sub">Your first 8 projects as a Junior Industrial Engineer at ' + esc(COMPANY) + ' - the same charting, rating, timing, and simulation techniques real analysts use, not the classroom card-dealing/walking versions. Every Station is hands-on: build the real chart, fill out the real worksheet, run the real numbers yourself.</p>' +
           '<label class="field-label" for="rollInput">Your roll number</label>' +
           '<input id="rollInput" type="text" placeholder="e.g. 2025229026" autocomplete="off" value="' + esc(lastRoll) + '" />' +
+          '<label class="field-label" for="nameInput">Your name (first time only)</label>' +
+          '<input id="nameInput" type="text" placeholder="Full name" autocomplete="name" />' +
           '<label class="field-label" for="codeInput">Class access code</label>' +
           '<input id="codeInput" type="text" placeholder="Given by your instructor" autocomplete="off" />' +
           '<button class="btn-primary" id="beginBtn">Check in →</button>' +
@@ -774,9 +791,13 @@
       var roll = (rollInput.value || "").trim(); var code = (codeInput.value || "").trim();
       errBox.style.display = "none"; rollInput.style.borderColor = "";
       if (!roll || !code) { showError("Enter both your roll number and the class access code."); return; }
-      if (code !== CLASS_CODE) { showError("That access code doesn't match - check with your instructor."); return; }
+      if (!classCodeOk(code)) { showError("That access code doesn't match - check with your instructor."); return; }
       var entry = findRosterEntry(roll);
       if (!entry) { showError("That roll number isn't on the class roster. Check the spelling, or ask your instructor to add you."); return; }
+      var nameTyped = (document.getElementById("nameInput").value || "").trim();
+      var prior = loadState(entry.roll);
+      entry.name = nameTyped || (prior && prior.name) || "";
+      if (!entry.name) { showError("Enter your name as it should appear on your work."); return; }
       try { localStorage.setItem(LAST_ROLL_KEY, entry.roll); } catch (e) {}
       var existing = loadState(entry.roll);
       state = existing || freshState(entry.name, entry.roll);
@@ -786,7 +807,8 @@
     }
     btn.addEventListener("click", tryBegin);
     codeInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryBegin(); });
-    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
+    rollInput.addEventListener("keydown", function (e) { if (e.key === "Enter") document.getElementById("nameInput").focus(); });
+    document.getElementById("nameInput").addEventListener("keydown", function (e) { if (e.key === "Enter") codeInput.focus(); });
     setTimeout(function () { (lastRoll ? codeInput : rollInput).focus(); }, 50);
   }
 
@@ -812,7 +834,7 @@
       var rw = lvl.boss ? 62 : 54, rh = 40;
       svg += '<g class="node-group ' + st + '" tabindex="0" role="button" aria-label="Station ' + lvl.id + ': ' + esc(lvl.title) + ' (' + st + ')" data-id="' + lvl.id + '">' +
         '<rect class="node-ring" x="' + (p.x - rw / 2) + '" y="' + (p.y - rh / 2) + '" width="' + rw + '" height="' + rh + '" rx="6"></rect>' +
-        '<text class="node-icon" x="' + p.x + '" y="' + (p.y - 2) + '">' + (st === "locked" ? "🔒" : (st === "done" ? "✓" : lvl.icon)) + '</text>' +
+        '<text class="node-icon" x="' + p.x + '" y="' + (p.y - 2) + '">' + (st === "locked" ? "" : (st === "done" ? "✓" : lvl.icon)) + '</text>' +
         '<text class="node-num" x="' + p.x + '" y="' + (p.y + rh / 2 + 14) + '">STATION ' + lvl.id + '</text>' +
         '<text class="node-label" x="' + p.x + '" y="' + (p.y + rh / 2 + 30) + '">' + esc(lvl.title) + '</text>' +
       '</g>';
@@ -824,7 +846,7 @@
     var pct = Math.round((clearedCount / LEVELS.length) * 100);
     var proofsHtml = LEVELS.map(function (lvl) {
       var earned = !!state.cleared[lvl.id];
-      return '<div class="proof-row' + (earned ? ' earned' : '') + '"><div class="proof-icon">' + (earned ? "✅" : lvl.icon) + '</div><div class="proof-name">' + esc(lvl.title) + '<span class="sub">' + esc(lvl.module) + '</span></div></div>';
+      return '<div class="proof-row' + (earned ? ' earned' : '') + '"><div class="proof-icon">' + (earned ? "✓" : lvl.icon) + '</div><div class="proof-name">' + esc(lvl.title) + '<span class="sub">' + esc(lvl.module) + '</span></div></div>';
     }).join("");
     app.innerHTML =
       '<div class="topbar">' +
@@ -1183,7 +1205,7 @@
   function rerenderModalOnly() { if (window._wsdOverlay) window._wsdOverlay.remove(); renderModal(); }
 
   function renderBridge() {
-    var badgeHtml = LEVELS.map(function (lvl) { return '<div class="proof-row earned"><div class="proof-icon">✅</div><div class="proof-name">' + esc(lvl.title) + '</div></div>'; }).join("");
+    var badgeHtml = LEVELS.map(function (lvl) { return '<div class="proof-row earned"><div class="proof-icon">✓</div><div class="proof-name">' + esc(lvl.title) + '</div></div>'; }).join("");
     app.innerHTML =
       '<div class="topbar">' +
         '<div class="brand"><span class="mark display">PROJECT WSD - DOIE</span><span class="tag">Work System Design Laboratory Floor Plan</span></div>' +
@@ -1215,7 +1237,7 @@
     var status = milestoneStatus(m.id);
     var ms = state.capstone.milestones[m.id];
     if (status === "locked") {
-      return '<div class="milestone-card locked"><div class="milestone-head"><div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div><h2 class="display">' + esc(m.title) + '</h2></div></div><div class="milestone-lock-note">🔒 Complete Milestone ' + (m.id - 1) + ' first.</div></div>';
+      return '<div class="milestone-card locked"><div class="milestone-head"><div><div class="eyebrow">Milestone ' + m.id + ' · ' + esc(m.tie) + '</div><h2 class="display">' + esc(m.title) + '</h2></div></div><div class="milestone-lock-note">Complete Milestone ' + (m.id - 1) + ' first.</div></div>';
     }
     var checklistHtml = m.checklist.map(function (item, cidx) {
       var checked = ms.checks[cidx];
